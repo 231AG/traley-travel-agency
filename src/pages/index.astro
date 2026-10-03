@@ -1,0 +1,11 @@
+---
+import { hero, meta } from "@content/site";
+import BaseA from "@a/layouts/BaseA.astro";
+---
+
+<BaseA meta={meta.home} jsonLd>
+  <section class="container-page py-24">
+    <h1 class="text-4xl md:text-5xl">{hero.title}</h1>
+    <p class="mt-4 max-w-prose text-muted">{hero.subtitle}</p>
+  </section>
+</BaseA>

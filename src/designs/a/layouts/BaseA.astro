@@ -1,0 +1,35 @@
+---
+import "../../../styles/a.css";
+import playfair from "../../../assets/fonts/playfair-600.woff2?url";
+import type { PageMeta } from "@shared/types";
+import { ctas } from "@content/site";
+import Head from "@shared/components/Head.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
+
+interface Props {
+  meta: PageMeta;
+  jsonLd?: boolean;
+}
+
+const { meta, jsonLd = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" id="top">
+  <head>
+    <Head meta={meta} jsonLd={jsonLd} preloadFonts={[playfair]} />
+  </head>
+  <body>
+    <a href="#main" class="sr-only-focusable btn btn-navy">
+      {ctas.skip}
+    </a>
+    <Header />
+    <main id="main" tabindex="-1" class="focus:outline-none">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingWhatsApp />
+  </body>
+</html>

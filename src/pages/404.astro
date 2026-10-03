@@ -1,0 +1,35 @@
+---
+import { meta, notFoundPage, services } from "@content/site";
+import BaseA from "@a/layouts/BaseA.astro";
+import Icon from "@shared/components/Icon.astro";
+---
+
+<BaseA meta={meta.notFound}>
+  <section class="container-page py-20 md:py-28">
+    <h1 class="max-w-2xl text-4xl md:text-5xl">{notFoundPage.title}</h1>
+    <p class="mt-5 max-w-prose text-lg text-muted">{notFoundPage.text}</p>
+    <ul class="mt-10 grid gap-4 md:grid-cols-3">
+      {services.map((service) => (
+        <li>
+          <a
+            href={service.slug}
+            class="flex min-h-full gap-4 rounded-md border border-border bg-white p-5 shadow-card hover:border-navy"
+          >
+            <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-navy text-gold">
+              <Icon name={service.icon} size={22} />
+            </span>
+            <span>
+              <span class="block font-display text-xl text-navy">{service.title}</span>
+              <span class="mt-1 block text-sm text-muted">{service.summary}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-10">
+      <a href="/" class="btn btn-navy">
+        {notFoundPage.home}
+      </a>
+    </p>
+  </section>
+</BaseA>

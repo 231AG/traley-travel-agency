@@ -1,0 +1,16 @@
+{
+  "extends": "astro/tsconfigs/strictest",
+  "include": [".astro/types.d.ts", "src/**/*", "scripts/**/*", "tests/**/*", "*.ts", "*.mjs"],
+  "exclude": ["dist", "node_modules", ".claude"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@content/*": ["src/content/*"],
+      "@shared/*": ["src/shared/*"],
+      "@a/*": ["src/designs/a/*"],
+      "@b/*": ["src/designs/b/*"]
+    },
+    "types": ["node"],
+    "verbatimModuleSyntax": true
+  }
+}

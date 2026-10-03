@@ -1,0 +1,33 @@
+---
+import { business } from "@content/site";
+
+interface Props {
+  href: string;
+  /** Footer places the logo on a white plate because the files have no reversed version yet. */
+  plate?: boolean;
+  class?: string;
+}
+
+const { href, plate = false, class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "inline-flex shrink-0 items-center",
+    plate && "rounded-md bg-white px-3 py-2",
+    className,
+  ]}
+>
+  <picture>
+    <source type="image/webp" srcset="/brand/wordmark-96.webp 2x, /brand/wordmark-144.webp 3x" />
+    <img
+      src="/brand/wordmark-96.png"
+      srcset="/brand/wordmark-96.png 2x, /brand/wordmark-144.png 3x"
+      width="143"
+      height="48"
+      class="h-11 w-auto md:h-12"
+      alt={`${business.name}, home`}
+    />
+  </picture>
+</a>

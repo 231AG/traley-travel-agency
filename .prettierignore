@@ -1,0 +1,11 @@
+dist
+.astro
+node_modules
+.claude
+reference
+screenshots
+test-results
+playwright-report
+.lighthouseci
+package-lock.json
+public

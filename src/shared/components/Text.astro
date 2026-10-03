@@ -1,0 +1,22 @@
+---
+/**
+ * Renders a content string and marks any [BRACKETED PLACEHOLDER] inside it,
+ * so missing facts stay visible on the page.
+ */
+interface Props {
+  value: string;
+}
+
+const { value } = Astro.props;
+const parts = value.split(/(\[[A-Z][^\]]*\])/g).filter(Boolean);
+---
+
+{parts.map((part) =>
+  /^\[[A-Z]/.test(part) ? (
+    <span class="placeholder-text" data-placeholder>
+      {part}
+    </span>
+  ) : (
+    part
+  ),
+)}

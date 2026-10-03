@@ -1,0 +1,46 @@
+---
+/**
+ * Responsive photo from a content image slot. When the slot has no photo yet,
+ * renders the caption in a styled placeholder so the gap is obvious.
+ */
+import type { ImageSlot } from "@shared/types";
+import photos from "@content/photos.json";
+import Icon from "./Icon.astro";
+
+interface Props {
+  slot: ImageSlot;
+  sizes: string;
+  class?: string;
+  placeholderClass?: string;
+  priority?: boolean;
+}
+
+const { slot, sizes, class: className, placeholderClass, priority = false } = Astro.props;
+const manifest: Record<string, { width: number; height: number; widths: number[] }> = photos;
+const photo = slot.file ? manifest[slot.file] : undefined;
+const srcset = (format: "avif" | "webp") =>
+  photo?.widths.map((w) => `/img/${slot.file}-${w}.${format} ${w}w`).join(", ");
+const fallbackWidth = photo?.widths.at(-1);
+---
+
+{photo ? (
+  <picture>
+    <source type="image/avif" srcset={srcset("avif")} sizes={sizes} />
+    <source type="image/webp" srcset={srcset("webp")} sizes={sizes} />
+    <img
+      class={className}
+      src={`/img/${slot.file}-${fallbackWidth}.webp`}
+      alt={slot.alt}
+      width={photo.width}
+      height={photo.height}
+      loading={priority ? "eager" : "lazy"}
+      decoding={priority ? "sync" : "async"}
+      fetchpriority={priority ? "high" : "auto"}
+    />
+  </picture>
+) : (
+  <div class={placeholderClass} data-photo-slot={slot.id}>
+    <Icon name="image" size={22} />
+    <span>{slot.caption}</span>
+  </div>
+)}
