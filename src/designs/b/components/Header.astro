@@ -16,7 +16,7 @@ const links = nav.map((item) => ({ ...item, href: withBase("/b", item.href) }));
   <div class="container-page flex min-h-16 flex-wrap items-center justify-between gap-x-6 md:min-h-20">
     <Logo href={withBase("/b", "/")} />
     <nav aria-label="Main" class="order-last w-full md:order-none md:w-auto">
-      <ul class="-mx-2 flex flex-wrap md:mx-0">
+      <ul class="-mx-2 flex flex-nowrap overflow-x-auto md:mx-0 md:overflow-visible">
         {links.map((item) => (
           <li
             class:list={["shrink-0", item.href.endsWith("#how-it-works") && "max-[399px]:hidden"]}

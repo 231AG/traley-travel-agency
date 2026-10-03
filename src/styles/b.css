@@ -29,8 +29,8 @@
 }
 @font-face {
   font-family: "Atkinson Fallback";
-  src: local("Verdana"), local("Arial");
-  size-adjust: 96%;
+  src: local("Arial"), local("Helvetica"), local("Roboto");
+  size-adjust: 104%;
 }
 
 @theme {

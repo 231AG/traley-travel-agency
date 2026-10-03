@@ -34,20 +34,28 @@ let failed = false;
 try {
   for (const route of routes) {
     const out = `.lighthouseci/${route.replace(/\W+/g, "_") || "home"}.json`;
-    execFileSync(
-      "npx",
-      [
-        "lighthouse",
-        `http://localhost:${PORT}${route}`,
-        "--quiet",
-        "--output=json",
-        `--output-path=${out}`,
-        `--chrome-path=${chrome}`,
-        "--chrome-flags=--headless=new --no-sandbox",
-        "--only-categories=performance,accessibility,best-practices,seo",
-      ],
-      { stdio: "inherit", env: { ...process.env, CHROME_PATH: chrome } },
-    );
+    // Lighthouse occasionally fails to record a trace (NO_NAVSTART); one retry covers it.
+    for (let attempt = 1; ; attempt++) {
+      try {
+        execFileSync(
+          "npx",
+          [
+            "lighthouse",
+            `http://localhost:${PORT}${route}`,
+            "--quiet",
+            "--output=json",
+            `--output-path=${out}`,
+            `--chrome-path=${chrome}`,
+            "--chrome-flags=--headless=new --no-sandbox",
+            "--only-categories=performance,accessibility,best-practices,seo",
+          ],
+          { stdio: "inherit", env: { ...process.env, CHROME_PATH: chrome } },
+        );
+        break;
+      } catch (error) {
+        if (attempt >= 2) throw error;
+      }
+    }
     const report = JSON.parse(await readFile(out, "utf8")) as {
       categories: Record<string, { score: number }>;
       audits: Record<string, { numericValue?: number }>;

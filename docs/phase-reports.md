@@ -119,3 +119,16 @@ One entry per build phase: what was built, the audit, check results, and carryov
 | Photo strip downloads a 3:2 file for a wide crop                                                                                                                                                     | Low      | Lazy-loaded below the fold, under 75 KB; strip-specific crops are a later optimization                                                  | Accepted             |
 
 **Checks.** Lighthouse mobile on every B page: Performance 98–100, Accessibility 100, Best Practices 100; SEO 69 only because of the required `noindex` (every other SEO audit passes). JS 11 KB gz on pages with a form. 350 Playwright tests green.
+
+## Phase 6: Launch readiness
+
+**Built.** Unique titles and descriptions per page; Open Graph images (logo card for most pages, photo cards with the unaltered logo for flights, visa and concierge); canonical URLs (Design B points at Design A); `sitemap-index.xml` with Design A pages only; `robots.txt`; schema.org `TravelAgency` with confirmed facts only (no ratings); Cloudflare `_headers` (strict CSP with hashed styles and no inline scripts, HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options, COOP, `noindex` on `/b/*`, long caching for hashed assets); `CREDITS.md`; `README.md` with run, content, check and Cloudflare Pages deploy steps; `npm run check:links`; `npm run check:remove-b`.
+
+**Audit and fixes.**
+
+| Issue | Severity | Fix | Status |
+| --- | --- | --- | --- |
+| Design B pages shifted by 0.32 CLS on load: the mobile nav wrapped differently with the fallback font | High | Single-row nav and a closer fallback font for Atkinson | Fixed (CLS ≤ 0.03) |
+| Lighthouse occasionally fails to record a trace | Low | One automatic retry in `npm run lighthouse` | Fixed |
+
+**Checks.** Lighthouse mobile, all 26 pages: Performance 98–100, Accessibility 100, Best Practices 100, SEO 100 on Design A (Design B 69 only because of the required `noindex`). LCP 1.3–2.2 s, CLS ≤ 0.03. JS ≤ 11 KB gz per page; largest image file 138 KB. `npm run check` green: types 0 errors, ESLint 0/0, project rules clean, 13 unit tests, 360 Playwright tests (axe 0 serious/critical on every page, both viewports).
