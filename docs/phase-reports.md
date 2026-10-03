@@ -1,0 +1,32 @@
+# Phase reports
+
+One entry per build phase: what was built, the audit, check results, and carryovers for the owner. Phases are auto-approved once their audit passes, as the owner asked.
+
+## Phase 1: Foundation
+
+**Built.** Astro 7 static site (TypeScript strictest, Tailwind 4 with brand tokens only, default palette and type scale removed). Self-hosted subset fonts (Design A total 41 KB; Cinzel cut to digits only, 1.6 KB). `src/content/site.ts` with every word, contact detail, placeholder and photo slot. Shared quote logic (message templates, zod validation, `wa.me` builder). Design A shell: header with accessible mobile menu, footer, floating WhatsApp button, skip link, 404 page. Brand assets cropped (never redrawn) from Logo A: nav wordmark, favicon set, OG image. Tooling: ESLint, Prettier, `astro check`, Vitest, Playwright + axe, Lighthouse runner, JS/hero budget checker, a source checker (no hex colors, no TODOs, no em dashes, arrows or emoji in copy, every placeholder registered), a Cloudflare-like test server that applies `_headers`, and generated `_headers` (strict CSP with hashed styles), `robots.txt`, `PLACEHOLDERS.md`. Skills `webapp-testing` and `frontend-design` copied from Anthropic's official repo into `.claude/skills/`.
+
+**Audit** (fresh sub-agent, then fixed):
+
+| Issue | Severity | Fix | Status |
+| --- | --- | --- | --- |
+| Empty optional dates failed validation (one-way flights blocked) | High | Optional dates accept "" | Fixed, unit-tested |
+| Empty arrival date showed a generic error first | High | Same message on both checks | Fixed, unit-tested |
+| Source checker let `"#hex"` through | High | Strip only real anchor links before checking | Fixed, proven with a failing sample |
+| Hard-coded theme color in Head | High | `src/shared/brand.ts` constant | Fixed |
+| Three service claims not confirmed by Tarley | Medium | Reworded to mockup-backed claims | Fixed |
+| China "official source" was a private visa center | Medium | Embassy of China in Liberia | Fixed |
+| Floating button focus ring invisible on navy | Medium | White ring with navy halo | Fixed |
+| Test server crashed on malformed URLs; path check too loose | Medium | try/catch, `path.relative` check | Fixed |
+| 404 expectation mismatch | Medium | 404 page built; missing paths return 404 | Fixed, tested |
+| Backdrop blur on sticky header (jank on cheap phones) | Medium | Solid white | Fixed |
+| Mobile menu dividers, `aria-current` on sections, new-tab warnings, footer copy in component, JSON-LD duplicating facts, decode order, facts list in script, Lighthouse server lifecycle, `withBase` tests | Low | All fixed | Fixed |
+| CSS inlined on every page | Low | Kept: saves a render-blocking request on first visit over slow data (8.7 KB gz per page including CSS) | Accepted, deviation |
+| Copyright year set at build time | Low | Listed under "Facts to confirm" (rebuild yearly) | Accepted |
+
+**Checks.** `astro check` 0/0/0 · ESLint 0/0 · source check clean · Vitest 13/13 · build ok · Playwright 31/31 (mobile + desktop, axe 0 serious/critical, no overflow 360–1440, text ≥ 15 px, targets ≥ 44 px) · Lighthouse mobile `/` and `/404`: 100/100/100/100, LCP 1.5 s, CLS 0 · JS 0.3 KB gz per page.
+
+**Carryovers for the owner.**
+1. The Unsplash connector refuses requests until the Unsplash account's email address is confirmed. Photos come from Wikimedia Commons (free licenses, credited) instead. Confirming the email would let me use Unsplash later.
+2. There is no `main` branch on GitHub yet, so a pull request cannot be opened. All work is on `claude/new-session-m7djov`.
+3. Logo: still waiting on SVGs (horizontal, reversed for navy, mark alone). The nav and footer use a straight crop of Logo A meanwhile.
