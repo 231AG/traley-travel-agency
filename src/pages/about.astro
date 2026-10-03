@@ -1,0 +1,85 @@
+---
+import {
+  aboutPage,
+  business,
+  ctas,
+  images,
+  meta,
+  placeholders,
+  whatsappGreeting,
+} from "@content/site";
+import BaseA from "@a/layouts/BaseA.astro";
+import CheckList from "@a/components/CheckList.astro";
+import CtaBand from "@a/components/CtaBand.astro";
+import PageHeader from "@a/components/PageHeader.astro";
+import SectionTitle from "@a/components/SectionTitle.astro";
+import Picture from "@shared/components/Picture.astro";
+import Text from "@shared/components/Text.astro";
+import { whatsappUrl } from "@shared/quote/whatsapp";
+---
+
+<BaseA meta={meta.about}>
+  <PageHeader title={aboutPage.title} lead={aboutPage.lead} />
+  <div class="container-page grid gap-12 py-14 md:py-20 lg:grid-cols-2 lg:gap-16">
+    <section aria-labelledby="story-title">
+      <SectionTitle id="story-title">{aboutPage.storyTitle}</SectionTitle>
+      <p class="mt-4 text-lg">
+        <Text value={placeholders.about.token} />
+      </p>
+    </section>
+    <section aria-labelledby="how-title" class="lg:col-start-1">
+      <SectionTitle id="how-title">{aboutPage.howWeWorkTitle}</SectionTitle>
+      <CheckList items={aboutPage.howWeWork} />
+    </section>
+    <section aria-labelledby="team-title">
+      <SectionTitle id="team-title">{aboutPage.teamTitle}</SectionTitle>
+      <div class="mt-5">
+        <Picture
+          image={images.team}
+          sizes="(min-width: 64rem) 560px, 100vw"
+          class="aspect-[4/3] w-full rounded-md object-cover"
+          placeholderClass="photo-slot aspect-[4/3] w-full rounded-md border border-border"
+        />
+      </div>
+      <p class="mt-4 text-muted">
+        <Text value={placeholders.team.token} />
+      </p>
+    </section>
+  </div>
+  <section class="bg-cream py-14 md:py-20" aria-labelledby="visit-title">
+    <div class="container-page grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <SectionTitle id="visit-title">{aboutPage.visitTitle}</SectionTitle>
+        <p class="mt-4 text-lg">{business.addressLine}</p>
+        <p class="mt-1 text-muted">{business.hours}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href={business.mapsSearch}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            {ctas.mapsOpen}
+            <span class="sr-only">{ctas.newTab}</span>
+          </a>
+          <a
+            href={whatsappUrl(whatsappGreeting)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-navy"
+          >
+            {ctas.messageTeam}
+            <span class="sr-only">{ctas.newTab}</span>
+          </a>
+        </div>
+      </div>
+      <Picture
+        image={images.office}
+        sizes="(min-width: 64rem) 560px, 100vw"
+        class="aspect-[4/3] w-full rounded-md object-cover"
+        placeholderClass="photo-slot aspect-[4/3] w-full rounded-md border border-border"
+      />
+    </div>
+  </section>
+  <CtaBand />
+</BaseA>

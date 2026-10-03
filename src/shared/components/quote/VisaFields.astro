@@ -32,8 +32,20 @@ const f = quote.fields;
       <option value={f.otherDestination}>{f.otherDestination}</option>
     </select>
   </Field>
+  <div data-other-destination hidden>
+    <Field id={`${p}-destinationOther`} label={f.otherCountry}>
+      <input
+        id={`${p}-destinationOther`}
+        name="destinationOther"
+        class="field-input"
+        autocomplete="off"
+        aria-describedby={`${p}-destinationOther-error`}
+      />
+    </Field>
+  </div>
   <Field id={`${p}-reason`} label={f.reason}>
     <select id={`${p}-reason`} name="reason" class="field-input">
+      <option value="">{f.choose}</option>
       {quote.reasons.map((reason) => (
         <option>{reason}</option>
       ))}

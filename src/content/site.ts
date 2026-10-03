@@ -8,6 +8,7 @@
  */
 import type {
   Destination,
+  IconName,
   ImageSlot,
   Link,
   PageMeta,
@@ -77,13 +78,19 @@ export const factsToConfirm = [
   {
     item: "Official visa links",
     value: "One official link per destination page",
-    why: "Checked at build time; government sites move pages, so recheck every few months.",
+    why: "Checked by hand on 3 October 2026. Government sites move pages, so run `npm run check:links` every few months.",
   },
   {
     item: "Service promises from the approved mockup",
     value:
       "Full price shown before you pay with the service fee included; receipts for every payment; visa extensions and renewals; car rental on arrival; day trips outside Monrovia",
     why: "These come from the approved homepage design, not from a written answer. A one-line yes from Tarley confirms each one.",
+  },
+  {
+    item: "Service details written for the inner pages",
+    value:
+      "We compare fares from the airlines flying out of Roberts International; we book visa appointments; e-tickets arrive on WhatsApp and email; family and group seats on one booking; a driver waiting at the airport; holiday, honeymoon and group packages on request",
+    why: "These expand the approved homepage copy. Tarley should confirm each one, and confirm which visa types it handles for each country.",
   },
   {
     item: "Copyright year",
@@ -510,6 +517,8 @@ export const quote = {
     reason: "Reason for travel",
     month: "Planned travel month",
     monthUnsure: "Not sure yet",
+    choose: "Choose (optional)",
+    otherCountry: "Which country?",
     arrival: "Arrival date",
     services: "What do you need?",
     optional: "optional",
@@ -531,10 +540,14 @@ export const quote = {
     destination: "Choose a destination.",
     arrival: "Enter your arrival date.",
     pastDate: "Choose a date from today onward.",
+    invalidDate: "Enter the date as day, month and year.",
+    tooLong: "Keep this under 120 characters.",
     returnBeforeDeparture: "The return date is before the departure date.",
     summary: "Check the highlighted field before sending.",
   },
   opened: "WhatsApp opened in a new tab. If it did not, use the link below.",
+  blocked:
+    "Your browser blocked the new tab. Use the link below to open WhatsApp with your message.",
   openFallback: "Open WhatsApp with this message",
   noscript: "The quote form needs JavaScript. You can still message us directly on WhatsApp.",
   /** Visible only on the stub ornament; the stub is a live preview, hidden from screen readers to avoid duplicate output. */
@@ -566,16 +579,22 @@ export const flightsPage = {
   includedTitle: "What we book",
   included: [
     {
+      icon: "plane",
       title: "Flights",
       text: "One-way, return and multi-city tickets, for one person or a whole family.",
     },
-    { title: "Hotels", text: "Rooms at your destination, close to where you need to be." },
-    { title: "Car rental", text: "A car waiting when you land, if you want one." },
     {
+      icon: "bed",
+      title: "Hotels",
+      text: "Rooms at your destination, close to where you need to be.",
+    },
+    { icon: "car", title: "Car rental", text: "A car waiting when you land, if you want one." },
+    {
+      icon: "people",
       title: "Family and group bookings",
       text: "Seats for everyone traveling together, on one booking.",
     },
-  ],
+  ] satisfies { icon: IconName; title: string; text: string }[],
   pricingTitle: "How pricing works",
   pricing: [
     "Each option we send shows the full price: the fare, taxes and our service fee.",
@@ -673,11 +692,11 @@ export const contactPage = {
   title: "Contact Tarley Travel",
   lead: "The fastest way to reach us is WhatsApp. You can also call, email or visit the office.",
   methods: {
-    whatsapp: { title: "WhatsApp", text: business.replyTime },
-    phone: { title: "Phone", text: business.hours },
-    email: { title: "Email", text: "For documents and longer questions." },
-    office: { title: "Office", text: business.addressLine },
-  },
+    whatsapp: { icon: "whatsapp", title: "WhatsApp", text: business.replyTime },
+    phone: { icon: "phone", title: "Phone", text: business.hours },
+    email: { icon: "mail", title: "Email", text: "For documents and longer questions." },
+    office: { icon: "pin", title: "Office", text: business.addressLine },
+  } satisfies Record<string, { icon: IconName; title: string; text: string }>,
   hoursTitle: "Opening hours",
   mapTitle: "Find the office",
   followTitle: "Follow us",
@@ -688,6 +707,9 @@ export const notFoundPage = {
   text: "The link may be old or mistyped. These are the places most people are looking for:",
   home: "Go to the homepage",
 };
+
+/** Label for the header button that jumps to the quote form on long inner pages. */
+export const jumpToQuote = "Get a free quote";
 
 /* ---------- Page metadata ---------- */
 
@@ -734,3 +756,22 @@ export function destinationMeta(destination: Destination): PageMeta {
     description: `Help preparing your ${destination.name} visa application from Monrovia: visa types, document review and appointment booking.`,
   };
 }
+
+/* ---------- Design B: departures board ---------- */
+
+export const board = {
+  title: "Departures from Monrovia (ROB)",
+  columns: { destination: "Destination", help: "Usually for", ask: "Ask us" },
+  flight: "Flight quote",
+  visa: "Visa help",
+  elsewhere: { name: "Somewhere else", purposes: "Flights and visas for any destination" },
+  arriving: {
+    title: "Arriving in Liberia",
+    text: "Airport pickup, hotels, a car with driver, day trips",
+    action: "Plan arrival",
+  },
+  formTitle: "Your request",
+  servicesTitle: "What we do",
+  trustTitle: "Why people use Tarley",
+  readMore: "Read more",
+};

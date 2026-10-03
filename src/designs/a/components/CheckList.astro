@@ -1,0 +1,23 @@
+---
+import Icon from "@shared/components/Icon.astro";
+
+interface Props {
+  items: string[];
+  icon?: "check" | "close";
+}
+
+const { items, icon = "check" } = Astro.props;
+---
+
+<ul class="mt-5 grid gap-3">
+  {items.map((item) => (
+    <li class="flex gap-3">
+      <Icon
+        name={icon}
+        size={20}
+        class:list={["mt-1 shrink-0", icon === "check" ? "text-gold-text" : "text-muted"]}
+      />
+      <span>{item}</span>
+    </li>
+  ))}
+</ul>

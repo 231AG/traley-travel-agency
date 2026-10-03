@@ -1,0 +1,34 @@
+---
+import { conciergePage, meta } from "@content/site";
+import BaseA from "@a/layouts/BaseA.astro";
+import FeatureGrid from "@a/components/FeatureGrid.astro";
+import PageHeader from "@a/components/PageHeader.astro";
+import SectionTitle from "@a/components/SectionTitle.astro";
+import WithQuote from "@a/components/WithQuote.astro";
+---
+
+<BaseA meta={meta.concierge}>
+  <PageHeader quote title={conciergePage.title} lead={conciergePage.lead} />
+  <WithQuote initial="concierge" title={conciergePage.formTitle}>
+    <section aria-labelledby="included-title">
+      <SectionTitle id="included-title">{conciergePage.includedTitle}</SectionTitle>
+      <FeatureGrid items={conciergePage.included} />
+    </section>
+    <section class="mt-14" aria-labelledby="how-title">
+      <SectionTitle id="how-title">{conciergePage.howTitle}</SectionTitle>
+      <ol class="mt-6 grid gap-5">
+        {conciergePage.how.map((step, index) => (
+          <li class="flex gap-4">
+            <span
+              class="font-numeral w-6 shrink-0 text-2xl leading-none font-bold text-gold-text"
+              aria-hidden="true"
+            >
+              {index + 1}
+            </span>
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </WithQuote>
+</BaseA>

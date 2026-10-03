@@ -266,7 +266,7 @@ A single, simplified line map (Africa, Europe, the Americas, the Gulf, East Asia
 
 ## 8. WhatsApp templates
 
-Empty fields are left out. Footer line on all three: `Sent from tarleytravelllc.com`.
+Empty fields are left out. Footer line on all three: `Sent from tarleytravel.com`.
 
 ```
 Hello Tarley Travel, I'd like a flight quote.
@@ -275,7 +275,7 @@ To: {to}
 Departure: {departure}
 Return: {return}
 Travelers: {travelers}
-Sent from tarleytravelllc.com
+Sent from tarleytravel.com
 ```
 
 ```
@@ -283,14 +283,14 @@ Hello Tarley Travel, I'd like help with a visa.
 Destination: {destination}
 Reason for travel: {reason}
 Planned travel month: {month}
-Sent from tarleytravelllc.com
+Sent from tarleytravel.com
 ```
 
 ```
 Hello Tarley Travel, I'm planning a trip to Liberia.
 Arrival date: {arrival}
 Services needed: {services}
-Sent from tarleytravelllc.com
+Sent from tarleytravel.com
 ```
 
 Reason options: tourism, visiting family, study, business, other. Concierge services: airport pickup, hotel or guesthouse, car with driver, day trips. Submit labels: "Send flight request on WhatsApp", "Send visa request on WhatsApp", "Send arrival request on WhatsApp". Only "To" (flight), "Destination" (visa) and "Arrival date" (concierge) are required, which keeps a complete request under 60 seconds.

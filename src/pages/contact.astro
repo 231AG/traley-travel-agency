@@ -1,0 +1,107 @@
+---
+import {
+  business,
+  contactPage,
+  ctas,
+  meta,
+  placeholders,
+  social,
+  whatsappGreeting,
+} from "@content/site";
+import type { IconName } from "@shared/types";
+import BaseA from "@a/layouts/BaseA.astro";
+import PageHeader from "@a/components/PageHeader.astro";
+import SectionTitle from "@a/components/SectionTitle.astro";
+import Icon from "@shared/components/Icon.astro";
+import Text from "@shared/components/Text.astro";
+import { whatsappUrl } from "@shared/quote/whatsapp";
+
+const m = contactPage.methods;
+const methods: {
+  icon: IconName;
+  title: string;
+  text: string;
+  label: string;
+  href: string;
+  external?: boolean;
+}[] = [
+  {
+    ...m.whatsapp,
+    label: business.phoneDisplay,
+    href: whatsappUrl(whatsappGreeting),
+    external: true,
+  },
+  { ...m.phone, label: ctas.call, href: business.phoneHref },
+  { ...m.email, label: business.email, href: `mailto:${business.email}` },
+  { ...m.office, label: ctas.mapsOpen, href: business.mapsSearch, external: true },
+];
+---
+
+<BaseA meta={meta.contact} jsonLd>
+  <PageHeader title={contactPage.title} lead={contactPage.lead} />
+  <div class="container-page py-14 md:py-20">
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {methods.map((method) => (
+        <li class="flex flex-col rounded-md border border-border p-5">
+          <span class="inline-flex size-11 items-center justify-center rounded-full bg-navy text-gold">
+            <Icon name={method.icon} size={22} />
+          </span>
+          <h2 class="mt-4 font-sans text-lg font-semibold">{method.title}</h2>
+          <p class="mt-1 text-sm text-muted">{method.text}</p>
+          <a
+            href={method.href}
+            class="link mt-auto inline-flex min-h-11 items-center pt-3 break-words"
+            target={method.external ? "_blank" : undefined}
+            rel={method.external ? "noopener noreferrer" : undefined}
+          >
+            {method.label}
+            {method.external && <span class="sr-only">{ctas.newTab}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-14 grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-2">
+      <section aria-labelledby="map-title">
+        <SectionTitle id="map-title">{contactPage.mapTitle}</SectionTitle>
+        <div
+          class="photo-slot mt-5 aspect-[16/10] w-full rounded-md border border-border"
+          data-photo-slot="map"
+        >
+          <Icon name="pin" size={28} />
+          <span>
+            <Text value={placeholders.mapPin.token} />
+          </span>
+        </div>
+      </section>
+      <div>
+        <section aria-labelledby="hours-title">
+          <SectionTitle id="hours-title">{contactPage.hoursTitle}</SectionTitle>
+          <p class="mt-4 flex items-center gap-3 text-lg">
+            <Icon name="clock" size={22} class="text-gold-text" />
+            {business.hours}
+          </p>
+          <p class="mt-2 text-muted">{business.replyTime}</p>
+        </section>
+        <section class="mt-12" aria-labelledby="follow-title">
+          <SectionTitle id="follow-title">{contactPage.followTitle}</SectionTitle>
+          <ul class="mt-4 flex flex-wrap gap-3">
+            {social.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-outline"
+                >
+                  <Icon name={item.icon} size={18} />
+                  {item.label}
+                  <span class="sr-only">{ctas.newTab}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseA>

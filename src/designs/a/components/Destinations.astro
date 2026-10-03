@@ -3,12 +3,10 @@ import { destinations, destinationsIntro, visaNote } from "@content/site";
 import Icon from "@shared/components/Icon.astro";
 
 interface Props {
-  /** Where "Start a request" sends people: the quote card on this page. */
-  quoteHref?: string;
   title?: string;
 }
 
-const { quoteHref = "#quote", title = destinationsIntro.title } = Astro.props;
+const { title = destinationsIntro.title } = Astro.props;
 ---
 
 <section id="destinations" class="scroll-mt-20 py-16 md:py-24" aria-labelledby="destinations-title">
@@ -23,7 +21,7 @@ const { quoteHref = "#quote", title = destinationsIntro.title } = Astro.props;
           <p class="mt-1 text-sm text-muted">{d.purposes}</p>
           <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1">
             <a
-              href={quoteHref}
+              href="#quote"
               class="inline-flex min-h-11 items-center text-sm font-semibold text-royal hover:underline hover:underline-offset-4"
               data-quote-select="visa"
               data-quote-destination={d.name}

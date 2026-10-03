@@ -47,6 +47,8 @@ const human = (iso: string) => {
 
 const card = (page: Page) => page.locator("#quote");
 
+test.use({ reducedMotion: "reduce" });
+
 test.beforeEach(async ({ page }) => {
   await captureOpen(page);
 });
@@ -133,11 +135,36 @@ test("a destination card selects the visa tab and that country", async ({ page }
   await expect(destination).toBeFocused();
   await card(page).getByLabel("Reason for travel").selectOption("Study");
   await card(page).getByRole("button", { name: "Send visa request on WhatsApp" }).click();
-  const message = await openedMessage(page);
-  expect(message).toMatch(
-    /^Hello Tarley Travel, I'd like help with a visa\.\nDestination: Canada\nReason for travel: Study\n/,
+  expect(await openedMessage(page)).toBe(
+    [
+      "Hello Tarley Travel, I'd like help with a visa.",
+      "Destination: Canada",
+      "Reason for travel: Study",
+      "Sent from tarleytravel.com",
+    ].join("\n"),
   );
-  expect(message.endsWith("Sent from tarleytravel.com")).toBe(true);
+});
+
+test("unchosen selects never put words in the visitor's mouth", async ({ page }) => {
+  await page.goto("/?quote=visa&to=Canada#quote");
+  await card(page).getByRole("button", { name: "Send visa request on WhatsApp" }).click();
+  expect(await openedMessage(page)).toBe(
+    [
+      "Hello Tarley Travel, I'd like help with a visa.",
+      "Destination: Canada",
+      "Sent from tarleytravel.com",
+    ].join("\n"),
+  );
+});
+
+test("an unknown destination becomes Somewhere else with the country typed in", async ({
+  page,
+}) => {
+  await page.goto("/?quote=visa&to=Ghana#quote");
+  await expect(card(page).getByLabel("Destination")).toHaveValue("Somewhere else");
+  await expect(card(page).getByLabel("Which country?")).toHaveValue("Ghana");
+  await card(page).getByRole("button", { name: "Send visa request on WhatsApp" }).click();
+  expect(await openedMessage(page)).toContain("Destination: Ghana");
 });
 
 test("a service button opens the concierge tab and sends the arrival request", async ({ page }) => {
@@ -166,24 +193,48 @@ test("a service button opens the concierge tab and sends the arrival request", a
 test("the whole flow works with the keyboard alone", async ({ page }, info) => {
   test.skip(info.project.name !== "desktop", "keyboard run on desktop");
   await page.goto("/");
-  const flightsTab = card(page).getByRole("tab", { name: "Flights" });
-  await flightsTab.focus();
-  await page.keyboard.press("ArrowRight");
-  await expect(card(page).getByRole("tab", { name: "Visa" })).toBeFocused();
-  await expect(card(page).getByRole("tab", { name: "Visa" })).toHaveAttribute(
+  // From the top of the page: Tab to the hero CTA, which moves focus into the form.
+  for (let i = 0; i < 25; i++) {
+    await page.keyboard.press("Tab");
+    if (
+      await page
+        .getByRole("link", { name: "Get a free quote" })
+        .evaluate((el) => el === document.activeElement)
+    )
+      break;
+  }
+  await page.keyboard.press("Enter");
+  await expect(card(page).getByLabel("From")).toBeFocused();
+  // Back to the tabs and over to Concierge with the arrow keys.
+  await page.keyboard.press("Shift+Tab");
+  await expect(card(page).getByRole("tab", { name: "Flights" })).toBeFocused();
+  await page.keyboard.press("End");
+  await expect(card(page).getByRole("tab", { name: "Concierge" })).toHaveAttribute(
     "aria-selected",
     "true",
   );
-  await page.keyboard.press("End");
-  await expect(card(page).getByRole("tab", { name: "Concierge" })).toBeFocused();
-  await page.keyboard.press("Home");
-  await expect(flightsTab).toBeFocused();
+  // Submitting empty puts focus on the first invalid field.
   await page.keyboard.press("Tab");
-  await expect(card(page).getByLabel("From")).toBeFocused();
-  await page.keyboard.press("Tab");
-  await page.keyboard.type("Nairobi");
+  await expect(card(page).getByLabel("Arrival date")).toBeFocused();
+  // Chromium tabs through the day, month and year parts of a date input, so tab until the button.
+  const send = card(page).getByRole("button", { name: "Send arrival request on WhatsApp" });
+  for (let i = 0; i < 15 && !(await send.evaluate((el) => el === document.activeElement)); i++) {
+    await page.keyboard.press("Tab");
+  }
+  await expect(send).toBeFocused();
   await page.keyboard.press("Enter");
-  expect(await openedMessage(page)).toContain("To: Nairobi");
+  await expect(card(page).getByLabel("Arrival date")).toBeFocused();
+  await expect(card(page).getByText("Enter your arrival date.")).toBeVisible();
+  // Fill it in, tick a service with Space, send with Enter.
+  await card(page).getByLabel("Arrival date").fill(isoInDays(15));
+  await card(page).getByLabel("Airport pickup").focus();
+  await page.keyboard.press("Space");
+  await expect(card(page).getByLabel("Airport pickup")).toBeChecked();
+  for (let i = 0; i < 15 && !(await send.evaluate((el) => el === document.activeElement)); i++) {
+    await page.keyboard.press("Tab");
+  }
+  await page.keyboard.press("Enter");
+  expect(await openedMessage(page)).toContain("Services needed: Airport pickup");
 });
 
 test("a link with quote parameters preselects the form", async ({ page }) => {
@@ -195,14 +246,32 @@ test("a link with quote parameters preselects the form", async ({ page }) => {
   await expect(card(page).getByLabel("Destination")).toHaveValue("Schengen Area");
 });
 
-test("the floating WhatsApp button steps aside while the form is on screen", async ({
+test("the floating WhatsApp button steps aside while the form covers its corner", async ({
   page,
 }, info) => {
   test.skip(info.project.name !== "mobile", "overlap only matters on phones");
   await page.goto("/");
   const floating = page.locator("[data-floating-whatsapp]");
-  await card(page).scrollIntoViewIfNeeded();
+  // Put the card under the button's corner: its top near the top of the screen.
+  await page.evaluate(() => {
+    const top = document.querySelector("#quote")?.getBoundingClientRect().top ?? 0;
+    window.scrollBy(0, top - 80);
+  });
   await expect(floating).toHaveAttribute("data-hidden", "");
+  await expect(floating).toHaveAttribute("aria-hidden", "true");
+  await expect(floating).toHaveAttribute("tabindex", "-1");
   await page.locator("#how-it-works").scrollIntoViewIfNeeded();
   await expect(floating).not.toHaveAttribute("data-hidden", "");
+  await expect(floating).toHaveCSS("opacity", "1");
+});
+
+test("the floating button stays visible next to the sticky card on desktop", async ({
+  page,
+}, info) => {
+  test.skip(info.project.name !== "desktop", "sticky card is desktop only");
+  await page.goto("/flights-hotels");
+  const floating = page.locator("[data-floating-whatsapp]");
+  await page.mouse.wheel(0, 600);
+  await expect(floating).not.toHaveAttribute("data-hidden", "");
+  await expect(floating).toBeVisible();
 });

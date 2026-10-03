@@ -1,5 +1,6 @@
 @import "tailwindcss" source(none);
 @source "../designs/a";
+@source "../shared/components";
 @source "../pages";
 @source not "../pages/b";
 @import "./tokens.css";

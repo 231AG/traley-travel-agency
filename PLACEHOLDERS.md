@@ -8,10 +8,10 @@ Every item below shows on the live pages as a visible, shaded placeholder, so no
 
 | Placeholder | Pages | What Tarley supplies |
 | --- | --- | --- |
-| [ABOUT: 2–3 sentences from Tarley: when they started, who runs it, who they mostly serve and what they do best] | `/about`, `/` | A short company story in Tarley's own words. No figures unless Tarley can stand behind them. |
-| [TEAM: names and roles of the people customers talk to, only if Tarley wants them shown] | `/about` | Optional. First names and roles, with each person's consent. |
-| [MAP PIN: Google Maps link to the exact office location] | `/contact` | A shared Google Maps link for the office, or a landmark that helps people find it. |
-| [REQUIREMENTS: checklist Tarley confirms for this country, or leave as a WhatsApp check] | `/visa/canada`, `/visa/china`, `/visa/schengen`, `/visa/uae`, `/visa/united-kingdom`, `/visa/united-states` | Decide per country: either Tarley writes and maintains a current checklist, or the page keeps sending people to WhatsApp for a check. The site never lists requirements from memory. |
+| [ABOUT: 2–3 sentences from Tarley: when they started, who runs it, who they mostly serve and what they do best] | `/about`, `/b`, `/b/about`, `/` | A short company story in Tarley's own words. No figures unless Tarley can stand behind them. |
+| [TEAM: names and roles of the people customers talk to, only if Tarley wants them shown] | `/about`, `/b/about` | Optional. First names and roles, with each person's consent. |
+| [MAP PIN: Google Maps link to the exact office location] | `/b/contact`, `/contact` | A shared Google Maps link for the office, or a landmark that helps people find it. |
+| [REQUIREMENTS: checklist Tarley confirms for this country, or leave as a WhatsApp check] | `/b/visa/canada`, `/b/visa/china`, `/b/visa/schengen`, `/b/visa/uae`, `/b/visa/united-kingdom`, `/b/visa/united-states`, `/visa/canada`, `/visa/china`, `/visa/schengen`, `/visa/uae`, `/visa/united-kingdom`, `/visa/united-states` | Decide per country: either Tarley writes and maintains a current checklist, or the page keeps sending people to WhatsApp for a check. The site never lists requirements from memory. |
 
 ## Photos
 
@@ -19,8 +19,8 @@ Each slot shows its caption until a photo is added to `assets/photos/{slot}.jpg`
 
 | Slot | Shot needed | Pages |
 | --- | --- | --- |
-| `team` | Photo: the real Tarley team at their Monrovia office | `/about`, `/` |
-| `office` | Photo: the Tarley office entrance on Old Road, so visitors recognize it | `/about` |
+| `team` | Photo: the real Tarley team at their Monrovia office | `/about`, `/b`, `/b/about`, `/` |
+| `office` | Photo: the Tarley office entrance on Old Road, so visitors recognize it | `/about`, `/b/about` |
 
 ## Facts to confirm
 
@@ -28,6 +28,7 @@ Each slot shows its caption until a photo is added to `assets/photos/{slot}.jpg`
 | --- | --- | --- |
 | Email | info@tarleytravelllc.com | It is on a different domain from the website (tarleytravel.com). Confirm it receives mail, or supply an @tarleytravel.com address. |
 | Office address spelling | Old Road, Oldest Congo Town, Monrovia | Supplied as "Old Road, OldestCongo Monrovia-Liberia" and spelled out as the area name. |
-| Official visa links | One official link per destination page | Checked at build time; government sites move pages, so recheck every few months. |
+| Official visa links | One official link per destination page | Checked by hand on 3 October 2026. Government sites move pages, so run `npm run check:links` every few months. |
 | Service promises from the approved mockup | Full price shown before you pay with the service fee included; receipts for every payment; visa extensions and renewals; car rental on arrival; day trips outside Monrovia | These come from the approved homepage design, not from a written answer. A one-line yes from Tarley confirms each one. |
+| Service details written for the inner pages | We compare fares from the airlines flying out of Roberts International; we book visa appointments; e-tickets arrive on WhatsApp and email; family and group seats on one booking; a driver waiting at the airport; holiday, honeymoon and group packages on request | These expand the approved homepage copy. Tarley should confirm each one, and confirm which visa types it handles for each country. |
 | Copyright year | Set when the site is built | Rebuild once a year (or on any content change) to keep it current. |

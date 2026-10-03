@@ -1,5 +1,6 @@
 ---
-import { meta, notFoundPage, services } from "@content/site";
+import { ctas, meta, notFoundPage, services, whatsappGreeting } from "@content/site";
+import { whatsappUrl } from "@shared/quote/whatsapp";
 import BaseA from "@a/layouts/BaseA.astro";
 import Icon from "@shared/components/Icon.astro";
 ---
@@ -26,9 +27,18 @@ import Icon from "@shared/components/Icon.astro";
         </li>
       ))}
     </ul>
-    <p class="mt-10">
+    <p class="mt-10 flex flex-wrap gap-3">
       <a href="/" class="btn btn-navy">
         {notFoundPage.home}
+      </a>
+      <a
+        href={whatsappUrl(whatsappGreeting)}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-outline"
+      >
+        {ctas.whatsappLong}
+        <span class="sr-only">{ctas.newTab}</span>
       </a>
     </p>
   </section>

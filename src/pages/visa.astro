@@ -1,0 +1,28 @@
+---
+import { meta, visaPage } from "@content/site";
+import BaseA from "@a/layouts/BaseA.astro";
+import CheckList from "@a/components/CheckList.astro";
+import Destinations from "@a/components/Destinations.astro";
+import PageHeader from "@a/components/PageHeader.astro";
+import SectionTitle from "@a/components/SectionTitle.astro";
+import WithQuote from "@a/components/WithQuote.astro";
+---
+
+<BaseA meta={meta.visa}>
+  <PageHeader quote title={visaPage.title} lead={visaPage.lead} />
+  <WithQuote initial="visa" title={visaPage.formTitle}>
+    <div class="grid gap-10 md:grid-cols-2">
+      <section aria-labelledby="does-title">
+        <SectionTitle id="does-title">{visaPage.doesTitle}</SectionTitle>
+        <CheckList items={visaPage.does} />
+      </section>
+      <section aria-labelledby="does-not-title">
+        <SectionTitle id="does-not-title">{visaPage.doesNotTitle}</SectionTitle>
+        <CheckList items={visaPage.doesNot} icon="close" />
+      </section>
+    </div>
+  </WithQuote>
+  <div class="border-t border-border">
+    <Destinations title={visaPage.destinationsTitle} />
+  </div>
+</BaseA>

@@ -4,7 +4,6 @@ import Field from "./Field.astro";
 
 interface Props {
   idPrefix: string;
-  selected?: string | undefined;
 }
 
 const { idPrefix: p } = Astro.props;
@@ -36,7 +35,7 @@ const f = quote.fields;
     />
   </Field>
   <div class="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-3">
-    <Field id={`${p}-departure`} label={f.departure}>
+    <Field id={`${p}-departure`} label={f.departure} optional={f.optional}>
       <input
         id={`${p}-departure`}
         name="departure"
@@ -46,18 +45,19 @@ const f = quote.fields;
         aria-describedby={`${p}-departure-error`}
       />
     </Field>
-    <Field id={`${p}-return`} label={f.return} optional={f.optional}>
+    <Field id={`${p}-return`} label={f.return} optional={f.optional} hint={f.returnHint}>
       <input
         id={`${p}-return`}
         name="return"
         type="date"
         class="field-input min-w-0"
-        aria-describedby={`${p}-return-error`}
+        aria-describedby={`${p}-return-hint ${p}-return-error`}
       />
     </Field>
   </div>
   <Field id={`${p}-travelers`} label={f.travelers}>
     <select id={`${p}-travelers`} name="travelers" class="field-input">
+      <option value="">{f.choose}</option>
       {quote.travelerOptions.map((option) => (
         <option>{option}</option>
       ))}

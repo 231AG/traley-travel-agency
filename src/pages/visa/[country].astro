@@ -1,0 +1,97 @@
+---
+import type { GetStaticPaths } from "astro";
+import {
+  ctas,
+  destinationMeta,
+  destinationPage,
+  destinations,
+  placeholders,
+  visaPage,
+  visaPageNote,
+} from "@content/site";
+import type { Destination } from "@shared/types";
+import BaseA from "@a/layouts/BaseA.astro";
+import PageHeader from "@a/components/PageHeader.astro";
+import SectionTitle from "@a/components/SectionTitle.astro";
+import WithQuote from "@a/components/WithQuote.astro";
+import Icon from "@shared/components/Icon.astro";
+import Text from "@shared/components/Text.astro";
+
+export const getStaticPaths = (() =>
+  destinations.map((destination) => ({
+    params: { country: destination.slug },
+    props: { destination },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  destination: Destination;
+}
+
+const { destination: d } = Astro.props;
+const others = destinations.filter((other) => other.slug !== d.slug);
+---
+
+<BaseA meta={destinationMeta(d)}>
+  <PageHeader
+    quote
+    title={`${d.name} ${destinationPage.titleSuffix}`}
+    lead={visaPage.lead}
+    breadcrumb={{ label: destinationPage.backToVisa, href: "/visa" }}
+  />
+  <WithQuote initial="visa" title={visaPage.formTitle} destination={d.name}>
+    <section aria-labelledby="types-title">
+      <SectionTitle id="types-title">{destinationPage.typesTitle}</SectionTitle>
+      <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+        {d.visaTypes.map((type) => (
+          <li class="rounded-md border border-border p-5">
+            <h3 class="font-sans text-lg font-semibold">{type.name}</h3>
+            <p class="mt-1 text-muted">{type.forWho}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+    <section class="mt-14" aria-labelledby="requirements-title">
+      <SectionTitle id="requirements-title">{destinationPage.requirementsTitle}</SectionTitle>
+      <p class="mt-5 flex items-start gap-3 rounded-md border border-border bg-cream px-5 py-4">
+        <Icon name="info" size={22} class="mt-0.5 shrink-0 text-navy" />
+        <span>{visaPageNote}</span>
+      </p>
+      <p class="mt-4 text-muted">
+        <Text value={placeholders.requirements.token} />
+      </p>
+      <a
+        href="#quote"
+        class="btn btn-gold mt-6"
+        data-quote-select="visa"
+        data-quote-destination={d.name}
+      >
+        {`${destinationPage.cta} ${d.shortName}`}
+      </a>
+    </section>
+    <section class="mt-14" aria-labelledby="official-title">
+      <SectionTitle id="official-title">{destinationPage.officialTitle}</SectionTitle>
+      <p class="mt-3 text-muted">{destinationPage.officialText}</p>
+      <a
+        href={d.officialSource.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="link mt-3 inline-flex min-h-11 items-center"
+      >
+        {d.officialSource.label}
+        <span class="sr-only">{ctas.newTab}</span>
+      </a>
+    </section>
+    <nav class="mt-14" aria-labelledby="others-title">
+      <SectionTitle id="others-title">{destinationPage.otherTitle}</SectionTitle>
+      <ul class="mt-4 flex flex-wrap gap-x-6">
+        {others.map((other) => (
+          <li>
+            <a href={`/visa/${other.slug}`} class="link inline-flex min-h-11 items-center">
+              {other.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </WithQuote>
+</BaseA>

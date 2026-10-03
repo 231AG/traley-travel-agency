@@ -82,6 +82,7 @@ for (const route of routes) {
 
     test("interactive elements are at least 44 px", async ({ page }) => {
       await page.goto(route);
+      await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)));
       const tooSmall = await page.evaluate(() =>
         [
           ...document.querySelectorAll<HTMLElement>(
@@ -91,7 +92,13 @@ for (const route of routes) {
           .filter((el) => {
             const rect = el.getBoundingClientRect();
             if (rect.width === 0 && rect.height === 0) return false;
-            if (el.closest("p, li p")) return false;
+            // WCAG 2.5.8 exempts links inside running text, not every link that sits in a <p>.
+            const paragraph = el.closest("p");
+            if (
+              paragraph &&
+              (paragraph.textContent ?? "").trim().length > (el.textContent ?? "").trim().length + 3
+            )
+              return false;
             if (el.classList.contains("sr-only-focusable")) return false;
             if (el.matches("input[type='checkbox'], input[type='radio']")) return false;
             return rect.height < 44 || rect.width < 44;

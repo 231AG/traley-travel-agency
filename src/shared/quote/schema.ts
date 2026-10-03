@@ -1,11 +1,13 @@
 import * as z from "zod/mini";
 import { quote } from "@content/site";
 
-const text = z.string().check(z.trim(), z.maxLength(120));
+const text = z.string().check(z.trim(), z.maxLength(120, quote.errors.tooLong));
 const optionalText = z.optional(text);
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 /** Date inputs submit "" when left empty, so empty is allowed for optional dates. */
-const optionalDate = z.optional(z.union([z.literal(""), z.string().check(z.regex(ISO_DATE))]));
+const optionalDate = z.optional(
+  z.union([z.literal(""), z.string().check(z.regex(ISO_DATE, quote.errors.invalidDate))]),
+);
 
 export const flightSchema = z.object({
   from: optionalText,
@@ -17,6 +19,7 @@ export const flightSchema = z.object({
 
 export const visaSchema = z.object({
   destination: text.check(z.minLength(1, quote.errors.destination)),
+  destinationOther: optionalText,
   reason: optionalText,
   month: optionalText,
 });

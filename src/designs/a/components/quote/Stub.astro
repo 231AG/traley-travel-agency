@@ -3,13 +3,25 @@
 import { quote } from "@content/site";
 import Icon from "@shared/components/Icon.astro";
 
+import { business } from "@content/site";
+import type { QuoteType } from "@shared/types";
+
 interface Props {
   /** Color of the punched notches; matches the section behind the card. */
   notchClass?: string | undefined;
+  initial?: QuoteType;
+  destination?: string | undefined;
 }
 
-const { notchClass = "bg-navy" } = Astro.props;
+const { notchClass = "bg-navy", initial = "flights", destination } = Astro.props;
 const s = quote.stub;
+/** Same mapping as the controller's updateStub, so the stub is right before scripts run. */
+const views: Record<QuoteType, [string, string, string, string]> = {
+  flights: [s.from, business.airportShort, s.to, s.destinationFallback],
+  visa: [s.from, business.airportShort, s.visa, destination ?? s.destinationFallback],
+  concierge: [s.arriving, s.arrivalFallback, s.to, s.arrivingAt],
+};
+const [leftLabel, left, rightLabel, right] = views[initial];
 ---
 
 <div class="relative border-t-2 border-dashed border-border px-5 py-4 sm:px-7" aria-hidden="true">
@@ -18,19 +30,19 @@ const s = quote.stub;
   <div class="flex items-center justify-between gap-3">
     <div class="min-w-0">
       <p class="text-sm text-muted" data-stub-label="left">
-        {s.from}
+        {leftLabel}
       </p>
       <p class="text-base leading-snug font-semibold break-words text-navy" data-stub="left">
-        {s.arrivingAt}
+        {left}
       </p>
     </div>
     <Icon name="plane" size={22} class="shrink-0 text-gold-text" />
     <div class="min-w-0 text-right">
       <p class="text-sm text-muted" data-stub-label="right">
-        {s.to}
+        {rightLabel}
       </p>
       <p class="text-base leading-snug font-semibold break-words text-navy" data-stub="right">
-        {s.destinationFallback}
+        {right}
       </p>
     </div>
   </div>

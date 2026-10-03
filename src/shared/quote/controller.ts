@@ -11,7 +11,8 @@
  *   [data-stub=left|right]      live boarding-pass stub values, [data-stub-label=left|right]
  *   [data-month-select]         month options, refreshed in the browser
  * Anywhere on the page:
- *   [data-quote-select=type]    selects that tab, optional [data-quote-destination]
+ *   [data-quote-select=type]    selects that tab; optional [data-quote-destination] (visa)
+ *                               or [data-quote-to] (flights) fills the destination
  *   [data-quote-focus]          scrolls to the form and focuses its first field
  *   [data-floating-whatsapp]    hidden while a quote form is on screen
  */
@@ -47,9 +48,23 @@ function readFields(form: HTMLFormElement): QuoteFields {
   return fields as QuoteFields;
 }
 
+/** "Somewhere else" plus a typed country becomes that country in the message. */
+function withOtherDestination(fields: QuoteFields): QuoteFields {
+  const { destinationOther, ...rest } = fields as QuoteFields & { destinationOther?: string };
+  if (
+    rest.destination === quote.fields.otherDestination &&
+    typeof destinationOther === "string" &&
+    destinationOther
+  ) {
+    return { ...rest, destination: destinationOther };
+  }
+  return rest;
+}
+
 class QuoteCard {
   private readonly tabs: HTMLButtonElement[];
   private current: QuoteType;
+  private lastSent = { url: "", at: 0 };
 
   constructor(private readonly root: HTMLElement) {
     this.tabs = [...root.querySelectorAll<HTMLButtonElement>("[data-quote-tab]")];
@@ -65,6 +80,7 @@ class QuoteCard {
       form.addEventListener("change", (event) => this.onInput(event));
     });
     this.refreshMonths();
+    this.setDateLimits();
     this.updateStub();
   }
 
@@ -83,16 +99,21 @@ class QuoteCard {
   }
 
   setDestination(name: string): void {
-    const select = this.form("visa")?.querySelector<HTMLSelectElement>('[name="destination"]');
+    const form = this.form("visa");
+    const select = form?.querySelector<HTMLSelectElement>('[name="destination"]');
     if (!select) return;
-    select.value = [...select.options].some((o) => o.value === name) ? name : "";
+    const known = [...select.options].some((o) => o.value === name);
+    select.value = known ? name : quote.fields.otherDestination;
+    const other = form?.querySelector<HTMLInputElement>('[name="destinationOther"]');
+    if (other && !known) other.value = name.slice(0, 120);
     this.clearError(select);
+    this.syncOtherDestination();
     this.updateStub();
   }
 
   setFlightDestination(name: string): void {
     const input = this.form("flights")?.querySelector<HTMLInputElement>('[name="to"]');
-    if (input) input.value = name;
+    if (input) input.value = name.slice(0, 120);
     this.updateStub();
   }
 
@@ -114,6 +135,8 @@ class QuoteCard {
     const next: Record<string, number> = {
       ArrowRight: index === last ? 0 : index + 1,
       ArrowLeft: index === 0 ? last : index - 1,
+      ArrowDown: index === last ? 0 : index + 1,
+      ArrowUp: index === 0 ? last : index - 1,
       Home: 0,
       End: last,
     };
@@ -126,8 +149,12 @@ class QuoteCard {
 
   private onInput(event: Event): void {
     const target = event.target;
-    if (target instanceof HTMLInputElement || target instanceof HTMLSelectElement)
+    if (target instanceof HTMLInputElement || target instanceof HTMLSelectElement) {
       this.clearError(target);
+      this.resetStatus(target.form);
+    }
+    this.syncOtherDestination();
+    this.setDateLimits();
     this.updateStub();
   }
 
@@ -140,21 +167,57 @@ class QuoteCard {
     this.showErrors(form, errors);
     if (Object.keys(errors).length > 0) return;
 
-    const url = whatsappUrl(buildMessage(type, fields));
+    const url = whatsappUrl(buildMessage(type, withOtherDestination(fields)));
+    // A second click or Enter within two seconds would open a duplicate chat.
+    if (url === this.lastSent.url && Date.now() - this.lastSent.at < 2000) return;
+    this.lastSent = { url, at: Date.now() };
+
     const opened = window.open(url, "_blank");
-    if (opened) {
-      opened.opener = null;
-    } else {
-      window.location.href = url;
-    }
-    // The live region stays in the DOM from page load; only its text changes, so it is announced.
+    if (opened) opened.opener = null;
+    this.showStatus(form, url, opened ? "openedText" : "blockedText");
+  }
+
+  /** The live region stays in the DOM from page load; clearing it first makes repeat sends announce again. */
+  private showStatus(form: HTMLFormElement, url: string, key: "openedText" | "blockedText"): void {
     const status = form.querySelector<HTMLElement>("[data-quote-status-text]");
     const fallback = form.querySelector<HTMLAnchorElement>("[data-quote-fallback]");
     if (fallback) {
       fallback.href = url;
       fallback.hidden = false;
     }
-    if (status) status.textContent = status.dataset["openedText"] ?? "";
+    if (!status) return;
+    status.textContent = "";
+    window.requestAnimationFrame(() => {
+      status.textContent = status.dataset[key] ?? "";
+    });
+  }
+
+  /** Any edit after sending makes the old link stale. */
+  private resetStatus(form: HTMLFormElement | null): void {
+    const fallback = form?.querySelector<HTMLAnchorElement>("[data-quote-fallback]");
+    const status = form?.querySelector<HTMLElement>("[data-quote-status-text]");
+    if (fallback) fallback.hidden = true;
+    if (status) status.textContent = "";
+    this.lastSent = { url: "", at: 0 };
+  }
+
+  private syncOtherDestination(): void {
+    const form = this.form("visa");
+    const wrapper = form?.querySelector<HTMLElement>("[data-other-destination]");
+    const select = form?.querySelector<HTMLSelectElement>('[name="destination"]');
+    if (wrapper && select) wrapper.hidden = select.value !== quote.fields.otherDestination;
+  }
+
+  /** Phone date pickers then grey out past days; the return day can't precede departure. */
+  private setDateLimits(): void {
+    const today = todayIso();
+    this.root.querySelectorAll<HTMLInputElement>('input[type="date"]').forEach((input) => {
+      input.min = today;
+    });
+    const flights = this.form("flights");
+    const departure = flights?.querySelector<HTMLInputElement>('[name="departure"]');
+    const back = flights?.querySelector<HTMLInputElement>('[name="return"]');
+    if (departure?.value && back) back.min = departure.value;
   }
 
   private validate(type: QuoteType, fields: QuoteFields): FieldErrors {
@@ -273,21 +336,38 @@ class QuoteCard {
   }
 }
 
+/** Hides the floating WhatsApp button only while a quote form actually sits under it. */
 function floatingButtonAvoids(cards: HTMLElement[]): void {
   const button = document.querySelector<HTMLElement>("[data-floating-whatsapp]");
-  if (!button || cards.length === 0 || !("IntersectionObserver" in window)) return;
-  const visible = new Set<Element>();
-  const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) visible.add(entry.target);
-      else visible.delete(entry.target);
-    }
-    const hide = visible.size > 0;
-    button.toggleAttribute("data-hidden", hide);
-    button.setAttribute("aria-hidden", String(hide));
-    button.tabIndex = hide ? -1 : 0;
-  });
-  cards.forEach((card) => observer.observe(card));
+  if (!button || cards.length === 0) return;
+  let frame = 0;
+  let hidden = false;
+  const update = () => {
+    frame = 0;
+    // Measure where the button sits even while it is faded out.
+    const spot = button.getBoundingClientRect();
+    const margin = 8;
+    const covers = cards.some((card) => {
+      const r = card.getBoundingClientRect();
+      return (
+        r.left < spot.right + margin &&
+        r.right > spot.left - margin &&
+        r.top < spot.bottom + margin &&
+        r.bottom > spot.top - margin
+      );
+    });
+    if (covers === hidden) return;
+    hidden = covers;
+    button.toggleAttribute("data-hidden", covers);
+    button.setAttribute("aria-hidden", String(covers));
+    button.tabIndex = covers ? -1 : 0;
+  };
+  const schedule = () => {
+    if (!frame) frame = window.requestAnimationFrame(update);
+  };
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule, { passive: true });
+  update();
 }
 
 export function initQuote(): void {
@@ -306,6 +386,8 @@ export function initQuote(): void {
     if (isQuoteType(type)) primary.select(type);
     const destination = trigger.dataset["quoteDestination"];
     if (destination) primary.setDestination(destination);
+    const to = trigger.dataset["quoteTo"];
+    if (to) primary.setFlightDestination(to);
     primary.reveal();
   });
 
