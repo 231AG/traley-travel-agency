@@ -2,21 +2,20 @@
 /**
  * The departures board: one row per destination, each with real buttons that
  * open the quote form already filled in. Shows no times, gates or prices.
+ * `show` trims it to a one-row strip for inner pages.
  */
 import { board, business, destinations } from "@content/site";
 import { withBase } from "@shared/paths";
 
 interface Props {
-  /** Highlights one destination (visa destination pages). */
+  show?: "all" | "destinations" | "current" | "arriving";
+  /** The destination this page is about; highlighted, and the only row when show="current". */
   current?: string;
-  /** Where the buttons send people when the form is on this page. */
-  quoteHref?: string;
-  headingLevel?: "h1" | "h2";
 }
 
-const { current, quoteHref = "#quote", headingLevel = "h2" } = Astro.props;
-const Heading = headingLevel;
-const rows = [
+const { show = "all", current } = Astro.props;
+
+const destinationRows = [
   ...destinations.map((d) => ({
     name: d.name,
     purposes: d.purposes,
@@ -25,48 +24,54 @@ const rows = [
   })),
   { name: board.elsewhere.name, purposes: board.elsewhere.purposes, href: undefined, value: "" },
 ];
+const rows =
+  show === "current"
+    ? destinationRows.filter((row) => row.value === current)
+    : show === "arriving"
+      ? []
+      : destinationRows;
+const showArriving = show === "all" || show === "arriving";
+
+const rowClass =
+  "board-flip grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 border-b border-white/10 px-4 py-3 sm:px-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_var(--spacing-board)] md:gap-x-4 md:py-4";
+const nameClass = "font-board text-2xl leading-tight md:text-3xl";
+const purposeClass = "col-start-1 text-sm text-on-navy-muted md:col-start-auto md:text-base";
+const actionsClass = "row-span-2 flex gap-2 md:row-span-1 md:justify-end";
 const buttonClass = "btn btn-board min-h-11 px-3 text-sm";
+const linkClass = "inline-flex min-h-11 items-center hover:underline hover:underline-offset-4";
 ---
 
-<section class="on-dark bg-navy text-white" aria-labelledby="board-title">
+<section class="on-dark bg-navy text-white" aria-labelledby="board-title" data-floating-avoid>
   <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-white/15 px-4 py-4 sm:px-6">
-    <Heading id="board-title" class="font-board text-3xl text-gold md:text-4xl">
+    <h2 id="board-title" class="font-board text-3xl text-gold md:text-4xl">
       {board.title}
-    </Heading>
+    </h2>
     <p class="text-sm text-on-navy-muted">{business.replyTime}</p>
   </div>
   <div
-    class="hidden grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] gap-4 border-b border-white/15 px-6 py-2 text-sm text-on-navy-muted md:grid"
+    class="hidden grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_var(--spacing-board)] gap-4 border-b border-white/15 px-6 py-2 text-sm text-on-navy-muted md:grid"
     aria-hidden="true"
   >
     <span>{board.columns.destination}</span>
     <span>{board.columns.help}</span>
-    <span class="w-[15.5rem]">{board.columns.ask}</span>
+    <span>{board.columns.ask}</span>
   </div>
   <ul>
     {rows.map((row) => (
-      <li
-        class:list={[
-          "board-flip grid gap-x-4 gap-y-1.5 border-b border-white/10 px-4 py-3 sm:px-6 md:py-4 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] md:items-center",
-          row.value && row.value === current && "bg-royal",
-        ]}
-      >
-        <p class="font-board text-2xl leading-tight text-gold md:text-3xl">
+      <li class:list={[rowClass, row.value !== "" && row.value === current && "bg-royal"]}>
+        <h3 class:list={[nameClass, "text-gold"]}>
           {row.href ? (
-            <a
-              href={row.href}
-              class="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4"
-            >
+            <a href={row.href} class={linkClass}>
               {row.name}
             </a>
           ) : (
             row.name
           )}
-        </p>
-        <p class="text-on-navy-muted">{row.purposes}</p>
-        <div class="flex gap-2 md:w-[15.5rem] md:justify-end">
+        </h3>
+        <p class={purposeClass}>{row.purposes}</p>
+        <div class={actionsClass}>
           <a
-            href={quoteHref}
+            href="#quote"
             class={buttonClass}
             data-quote-select="flights"
             data-quote-to={row.value}
@@ -74,43 +79,32 @@ const buttonClass = "btn btn-board min-h-11 px-3 text-sm";
             {board.flight}
             {row.value && <span class="sr-only">, {row.name}</span>}
           </a>
-          {row.value ? (
-            <a
-              href={quoteHref}
-              class={buttonClass}
-              data-quote-select="visa"
-              data-quote-destination={row.value}
-            >
-              {board.visa}
-              <span class="sr-only">, {row.name}</span>
-            </a>
-          ) : (
-            <a href={quoteHref} class={buttonClass} data-quote-select="visa">
-              {board.visa}
-            </a>
-          )}
+          <a
+            href="#quote"
+            class={buttonClass}
+            data-quote-select="visa"
+            data-quote-destination={row.value}
+          >
+            {board.visa}
+            {row.value && <span class="sr-only">, {row.name}</span>}
+          </a>
         </div>
       </li>
     ))}
-    <li class="board-flip grid gap-x-4 gap-y-2 bg-navy-deep px-4 py-5 sm:px-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] md:items-center">
-      <p class="font-board text-2xl leading-tight text-white md:text-3xl">
-        <a
-          href={withBase("/b", "/concierge")}
-          class="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4"
-        >
-          {board.arriving.title}
-        </a>
-      </p>
-      <p class="text-on-navy-muted">{board.arriving.text}</p>
-      <div class="md:flex md:w-[15.5rem] md:justify-end">
-        <a
-          href={quoteHref}
-          class="btn btn-gold min-h-11 px-4 text-sm"
-          data-quote-select="concierge"
-        >
-          {board.arriving.action}
-        </a>
-      </div>
-    </li>
+    {showArriving && (
+      <li class:list={[rowClass, "bg-navy-deep"]}>
+        <h3 class:list={[nameClass, "text-white"]}>
+          <a href={withBase("/b", "/concierge")} class={linkClass}>
+            {board.arriving.title}
+          </a>
+        </h3>
+        <p class={purposeClass}>{board.arriving.text}</p>
+        <div class={actionsClass}>
+          <a href="#quote" class="btn btn-gold min-h-11 px-3 text-sm" data-quote-select="concierge">
+            {board.arriving.action}
+          </a>
+        </div>
+      </li>
+    )}
   </ul>
 </section>

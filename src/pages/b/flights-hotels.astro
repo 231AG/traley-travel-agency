@@ -1,6 +1,7 @@
 ---
 import { flightsPage, meta } from "@content/site";
 import BaseB from "@b/layouts/BaseB.astro";
+import Board from "@b/components/Board.astro";
 import ListRows from "@b/components/ListRows.astro";
 import PageHeader from "@b/components/PageHeader.astro";
 import QuotePanel from "@b/components/QuotePanel.astro";
@@ -28,6 +29,7 @@ import QuotePanel from "@b/components/QuotePanel.astro";
         {flightsPage.packagesCta}
       </a>
     </section>
+    <Board show="destinations" />
     <QuotePanel initial="flights" title={flightsPage.formTitle} />
   </div>
 </BaseB>

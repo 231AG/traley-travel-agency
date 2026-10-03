@@ -14,7 +14,8 @@
  *   [data-quote-select=type]    selects that tab; optional [data-quote-destination] (visa)
  *                               or [data-quote-to] (flights) fills the destination
  *   [data-quote-focus]          scrolls to the form and focuses its first field
- *   [data-floating-whatsapp]    hidden while a quote form is on screen
+ *   [data-floating-whatsapp]    hidden while a quote form or [data-floating-avoid] sits under it
+ *   [data-vertical-from=query]  tablist whose aria-orientation follows a media query
  */
 import { business, quote } from "@content/site";
 import type { QuoteType } from "@shared/types";
@@ -102,10 +103,11 @@ class QuoteCard {
     const form = this.form("visa");
     const select = form?.querySelector<HTMLSelectElement>('[name="destination"]');
     if (!select) return;
-    const known = [...select.options].some((o) => o.value === name);
+    // An empty name clears an earlier prefill (e.g. the board's "Somewhere else" row).
+    const known = name === "" || [...select.options].some((o) => o.value === name);
     select.value = known ? name : quote.fields.otherDestination;
     const other = form?.querySelector<HTMLInputElement>('[name="destinationOther"]');
-    if (other && !known) other.value = name.slice(0, 120);
+    if (other) other.value = known ? "" : name.slice(0, 120);
     this.clearError(select);
     this.syncOtherDestination();
     this.updateStub();
@@ -370,6 +372,17 @@ function floatingButtonAvoids(cards: HTMLElement[]): void {
   update();
 }
 
+/** Tablists that stack vertically on wide screens say so to assistive tech. */
+function syncTabOrientation(): void {
+  document.querySelectorAll<HTMLElement>("[data-vertical-from]").forEach((list) => {
+    const query = window.matchMedia(list.dataset["verticalFrom"] ?? "");
+    const apply = () =>
+      list.setAttribute("aria-orientation", query.matches ? "vertical" : "horizontal");
+    apply();
+    query.addEventListener("change", apply);
+  });
+}
+
 export function initQuote(): void {
   const roots = [...document.querySelectorAll<HTMLElement>("[data-quote]")];
   const cards = roots.map((root) => new QuoteCard(root));
@@ -384,10 +397,11 @@ export function initQuote(): void {
     event.preventDefault();
     const type = trigger.dataset["quoteSelect"];
     if (isQuoteType(type)) primary.select(type);
+    // Present-but-empty attributes reset the field, so an earlier choice never leaks into a new request.
     const destination = trigger.dataset["quoteDestination"];
-    if (destination) primary.setDestination(destination);
+    if (destination !== undefined) primary.setDestination(destination);
     const to = trigger.dataset["quoteTo"];
-    if (to) primary.setFlightDestination(to);
+    if (to !== undefined) primary.setFlightDestination(to);
     primary.reveal();
   });
 
@@ -400,5 +414,9 @@ export function initQuote(): void {
     if (to && requested === "flights") primary.setFlightDestination(to);
   }
 
-  floatingButtonAvoids(roots);
+  floatingButtonAvoids([
+    ...roots,
+    ...document.querySelectorAll<HTMLElement>("[data-floating-avoid]"),
+  ]);
+  syncTabOrientation();
 }

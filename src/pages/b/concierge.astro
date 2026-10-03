@@ -1,6 +1,7 @@
 ---
 import { conciergePage, images, meta } from "@content/site";
 import BaseB from "@b/layouts/BaseB.astro";
+import Board from "@b/components/Board.astro";
 import ListRows from "@b/components/ListRows.astro";
 import PageHeader from "@b/components/PageHeader.astro";
 import PhotoStrip from "@b/components/PhotoStrip.astro";
@@ -17,6 +18,7 @@ import QuotePanel from "@b/components/QuotePanel.astro";
       items={conciergePage.how.map((text) => ({ text }))}
       numbered
     />
+    <Board show="arriving" />
     <QuotePanel initial="concierge" title={conciergePage.formTitle} />
   </div>
 </BaseB>

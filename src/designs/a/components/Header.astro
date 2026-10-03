@@ -2,7 +2,7 @@
 import { ctas, nav, whatsappGreeting } from "@content/site";
 import Icon from "@shared/components/Icon.astro";
 import { whatsappUrl } from "@shared/quote/whatsapp";
-import Logo from "./Logo.astro";
+import Logo from "@shared/components/Logo.astro";
 
 const current = Astro.url.pathname.replace(/\.html$/, "");
 /** Marks the section a page belongs to; hash links point into the homepage and are never "current". */
@@ -13,7 +13,7 @@ const wa = whatsappUrl(whatsappGreeting);
 
 <header class="sticky top-0 z-40 border-b border-border bg-white">
   <div class="container-page flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
-    <Logo href="/" />
+    <Logo href="/" imgClass="h-11 w-auto md:h-12" />
     <nav aria-label="Main" class="hidden lg:block">
       <ul class="flex items-center gap-1">
         {nav.map((item) => (

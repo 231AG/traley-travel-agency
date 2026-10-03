@@ -52,7 +52,7 @@ export const business = {
     opens: "07:30",
     closes: "18:00",
   },
-  replyTime: "We usually reply within 30 minutes during opening hours.",
+  replyTime: "We usually reply in under 30 minutes.",
   airport: "Roberts International Airport (ROB)",
   airportShort: "Monrovia (ROB)",
   domain: "tarleytravel.com",
@@ -219,6 +219,8 @@ export const nav: Link[] = [
 export const ctas = {
   whatsapp: "WhatsApp us",
   whatsappLong: "Chat on WhatsApp",
+  whatsappShort: "WhatsApp",
+  photoCredits: "Photos:",
   quote: "Get a free quote",
   call: `Call ${business.phoneDisplay}`,
   email: "Email us",
@@ -760,10 +762,10 @@ export function destinationMeta(destination: Destination): PageMeta {
 /* ---------- Design B: departures board ---------- */
 
 export const board = {
-  title: "Departures from Monrovia (ROB)",
+  title: "From Monrovia (ROB): where we help you go",
   columns: { destination: "Destination", help: "Usually for", ask: "Ask us" },
-  flight: "Flight quote",
-  visa: "Visa help",
+  flight: "Flights",
+  visa: "Visa",
   elsewhere: { name: "Somewhere else", purposes: "Flights and visas for any destination" },
   arriving: {
     title: "Arriving in Liberia",

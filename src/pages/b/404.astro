@@ -23,7 +23,7 @@ import { withBase } from "@shared/paths";
       ))}
     </ul>
     <div class="mt-10 flex flex-wrap gap-3">
-      <a href="/b" class="btn btn-navy">
+      <a href={withBase("/b", "/")} class="btn btn-navy">
         {notFoundPage.home}
       </a>
       <a

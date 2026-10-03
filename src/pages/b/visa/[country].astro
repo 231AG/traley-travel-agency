@@ -11,6 +11,8 @@ import {
 } from "@content/site";
 import type { Destination } from "@shared/types";
 import BaseB from "@b/layouts/BaseB.astro";
+import Board from "@b/components/Board.astro";
+import { withBase } from "@shared/paths";
 import ListRows from "@b/components/ListRows.astro";
 import Note from "@b/components/Note.astro";
 import PageHeader from "@b/components/PageHeader.astro";
@@ -36,9 +38,10 @@ const others = destinations.filter((other) => other.slug !== d.slug);
     quote
     title={`${d.name} ${destinationPage.titleSuffix}`}
     lead={visaPage.lead}
-    breadcrumb={{ label: destinationPage.backToVisa, href: "/b/visa" }}
+    breadcrumb={{ label: destinationPage.backToVisa, href: withBase("/b", "/visa") }}
   />
   <div class="container-page grid grid-cols-[minmax(0,1fr)] gap-16 py-14 md:py-20">
+    <Board show="current" current={d.name} />
     <ListRows
       title={destinationPage.typesTitle}
       items={d.visaTypes.map((t) => ({ title: t.name, text: t.forWho }))}
@@ -85,7 +88,10 @@ const others = destinations.filter((other) => other.slug !== d.slug);
       <ul class="mt-4 flex flex-wrap gap-x-6">
         {others.map((other) => (
           <li>
-            <a href={`/b/visa/${other.slug}`} class="link inline-flex min-h-11 items-center">
+            <a
+              href={withBase("/b", `/visa/${other.slug}`)}
+              class="link inline-flex min-h-11 items-center"
+            >
               {other.name}
             </a>
           </li>

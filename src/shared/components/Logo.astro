@@ -1,0 +1,33 @@
+---
+/** The cropped Logo A wordmark (see scripts/brand.ts). Never recolored; a white plate is used on navy. */
+import { business } from "@content/site";
+
+interface Props {
+  href: string;
+  plate?: boolean;
+  /** Classes for the plate around the logo (radius and padding differ per design). */
+  plateClass?: string;
+  imgClass?: string;
+}
+
+const {
+  href,
+  plate = false,
+  plateClass = "rounded-sm bg-white px-2 py-1.5",
+  imgClass = "h-11 w-auto",
+} = Astro.props;
+---
+
+<a href={href} class:list={["inline-flex shrink-0 items-center", plate && plateClass]}>
+  <picture>
+    <source type="image/webp" srcset="/brand/wordmark-96.webp 2x, /brand/wordmark-144.webp 3x" />
+    <img
+      src="/brand/wordmark-96.png"
+      srcset="/brand/wordmark-96.png 2x, /brand/wordmark-144.png 3x"
+      width="143"
+      height="48"
+      class={imgClass}
+      alt={`${business.name}, home`}
+    />
+  </picture>
+</a>
