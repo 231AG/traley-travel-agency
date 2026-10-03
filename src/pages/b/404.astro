@@ -1,0 +1,40 @@
+---
+import { ctas, meta, notFoundPage, services, whatsappGreeting } from "@content/site";
+import { whatsappUrl } from "@shared/quote/whatsapp";
+import BaseB from "@b/layouts/BaseB.astro";
+import PageHeader from "@b/components/PageHeader.astro";
+import { withBase } from "@shared/paths";
+---
+
+<BaseB meta={meta.notFound}>
+  <PageHeader title={notFoundPage.title} lead={notFoundPage.text} />
+  <div class="container-page py-12">
+    <ul class="border-t-2 border-navy">
+      {services.map((service) => (
+        <li class="border-b border-border">
+          <a
+            href={withBase("/b", service.slug)}
+            class="flex min-h-16 items-center justify-between gap-4 py-3 hover:bg-cream"
+          >
+            <span class="font-board text-3xl text-navy">{service.title}</span>
+            <span class="hidden text-muted md:block md:max-w-md">{service.summary}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/b" class="btn btn-navy">
+        {notFoundPage.home}
+      </a>
+      <a
+        href={whatsappUrl(whatsappGreeting)}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-line"
+      >
+        {ctas.whatsappLong}
+        <span class="sr-only">{ctas.newTab}</span>
+      </a>
+    </div>
+  </div>
+</BaseB>

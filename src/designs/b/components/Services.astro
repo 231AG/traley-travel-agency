@@ -1,0 +1,41 @@
+---
+import { board, services, servicesIntro } from "@content/site";
+import Icon from "@shared/components/Icon.astro";
+import { withBase } from "@shared/paths";
+---
+
+<section id="services" class="scroll-mt-6 bg-cream py-16 md:py-24" aria-labelledby="services-title">
+  <div class="container-page">
+    <h2 id="services-title" class="text-4xl md:text-5xl">
+      {board.servicesTitle}
+    </h2>
+    <p class="mt-3 max-w-2xl text-lg text-muted">{servicesIntro.text}</p>
+    <ul class="mt-10 border-t-2 border-navy">
+      {services.map((service) => (
+        <li class="grid gap-4 border-b border-border py-8 lg:grid-cols-[16rem_minmax(0,1fr)_auto] lg:gap-10">
+          <h3 class="text-3xl md:text-4xl">{service.title}</h3>
+          <div>
+            <p class="text-lg">{service.summary}</p>
+            <ul class="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+              {service.checklist.map((item) => (
+                <li class="flex gap-2">
+                  <Icon name="check" size={20} class="mt-0.5 shrink-0 text-gold-text" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="flex flex-wrap gap-3 lg:flex-col lg:items-stretch">
+            <a href="#quote" class="btn btn-navy" data-quote-select={service.id}>
+              {service.cta}
+            </a>
+            <a href={withBase("/b", service.slug)} class="btn btn-line">
+              {board.readMore}
+              <span class="sr-only">: {service.title}</span>
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

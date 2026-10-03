@@ -1,0 +1,39 @@
+---
+/** Content as ruled rows, the Design B equivalent of cards and checklists. */
+interface Props {
+  title: string;
+  items: readonly { title?: string; text: string }[];
+  numbered?: boolean;
+  id?: string;
+}
+
+const {
+  title,
+  items,
+  numbered = false,
+  id = title.toLowerCase().replace(/\W+/g, "-"),
+} = Astro.props;
+const List = numbered ? "ol" : "ul";
+---
+
+<section aria-labelledby={id}>
+  <h2 id={id} class="text-4xl">
+    {title}
+  </h2>
+  <List class="mt-6 border-t-2 border-navy">
+    {items.map((item, index) => (
+      <li class="grid gap-x-6 gap-y-1 border-b border-border py-4 md:grid-cols-[16rem_minmax(0,1fr)]">
+        {item.title ? (
+          <p class="font-bold text-navy">{item.title}</p>
+        ) : (
+          numbered && (
+            <p class="font-board text-3xl leading-none text-gold-text" aria-hidden="true">
+              {index + 1}
+            </p>
+          )
+        )}
+        <p class:list={[!item.title && !numbered && "md:col-span-2"]}>{item.text}</p>
+      </li>
+    ))}
+  </List>
+</section>

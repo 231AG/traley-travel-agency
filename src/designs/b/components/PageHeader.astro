@@ -1,0 +1,30 @@
+---
+import { jumpToQuote } from "@content/site";
+import type { Link } from "@shared/types";
+
+interface Props {
+  title: string;
+  lead: string;
+  breadcrumb?: Link;
+  quote?: boolean;
+}
+
+const { title, lead, breadcrumb, quote = false } = Astro.props;
+---
+
+<section class="border-b-2 border-navy py-12 md:py-16">
+  <div class="container-page">
+    {breadcrumb && (
+      <a href={breadcrumb.href} class="link mb-2 inline-flex min-h-11 items-center">
+        {breadcrumb.label}
+      </a>
+    )}
+    <h1 class="max-w-4xl text-5xl md:text-6xl">{title}</h1>
+    <p class="mt-4 max-w-2xl text-lg text-muted">{lead}</p>
+    {quote && (
+      <a href="#quote" class="btn btn-navy mt-6" data-quote-focus>
+        {jumpToQuote}
+      </a>
+    )}
+  </div>
+</section>

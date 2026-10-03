@@ -1,0 +1,17 @@
+---
+import { ctas, whatsappGreeting } from "@content/site";
+import Icon from "@shared/components/Icon.astro";
+import { whatsappUrl } from "@shared/quote/whatsapp";
+---
+
+<a
+  href={whatsappUrl(whatsappGreeting)}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="btn btn-navy focus-ring-dual fixed right-3 bottom-3 z-30 border-2 border-gold shadow-card transition-opacity data-[hidden]:pointer-events-none data-[hidden]:opacity-0 md:right-6 md:bottom-6"
+  data-floating-whatsapp
+>
+  <Icon name="whatsapp" size={20} class="text-gold" />
+  WhatsApp
+  <span class="sr-only">{ctas.newTab}</span>
+</a>

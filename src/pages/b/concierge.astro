@@ -1,0 +1,22 @@
+---
+import { conciergePage, images, meta } from "@content/site";
+import BaseB from "@b/layouts/BaseB.astro";
+import ListRows from "@b/components/ListRows.astro";
+import PageHeader from "@b/components/PageHeader.astro";
+import PhotoStrip from "@b/components/PhotoStrip.astro";
+import QuotePanel from "@b/components/QuotePanel.astro";
+---
+
+<BaseB meta={meta.concierge}>
+  <PageHeader quote title={conciergePage.title} lead={conciergePage.lead} />
+  <PhotoStrip image={images.concierge} />
+  <div class="container-page grid grid-cols-[minmax(0,1fr)] gap-16 py-14 md:py-20">
+    <ListRows title={conciergePage.includedTitle} items={conciergePage.included} />
+    <ListRows
+      title={conciergePage.howTitle}
+      items={conciergePage.how.map((text) => ({ text }))}
+      numbered
+    />
+    <QuotePanel initial="concierge" title={conciergePage.formTitle} />
+  </div>
+</BaseB>

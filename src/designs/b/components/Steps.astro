@@ -1,0 +1,27 @@
+---
+import { steps, stepsIntro } from "@content/site";
+---
+
+<section id="how-it-works" class="scroll-mt-6 py-16 md:py-24" aria-labelledby="steps-title">
+  <div class="container-page">
+    <h2 id="steps-title" class="text-4xl md:text-5xl">
+      {stepsIntro.title}
+    </h2>
+    <ol class="mt-10 border-t-2 border-navy md:grid md:grid-cols-4">
+      {steps.map((step, index) => (
+        <li class="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-3 border-b border-border py-6 md:block md:border-r md:border-b-0 md:px-5 md:first:pl-0 md:last:border-r-0">
+          <span
+            class="font-board text-5xl leading-none text-gold-text md:text-6xl"
+            aria-hidden="true"
+          >
+            {index + 1}
+          </span>
+          <div class="md:mt-4">
+            <h3 class="font-sans text-lg font-bold">{step.title}</h3>
+            <p class="mt-1 text-muted">{step.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

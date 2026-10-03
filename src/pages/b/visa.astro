@@ -1,0 +1,24 @@
+---
+import { meta, visaPage, visaNote } from "@content/site";
+import BaseB from "@b/layouts/BaseB.astro";
+import Board from "@b/components/Board.astro";
+import ListRows from "@b/components/ListRows.astro";
+import Note from "@b/components/Note.astro";
+import PageHeader from "@b/components/PageHeader.astro";
+import QuotePanel from "@b/components/QuotePanel.astro";
+---
+
+<BaseB meta={meta.visa}>
+  <PageHeader quote title={visaPage.title} lead={visaPage.lead} />
+  <div class="container-page grid grid-cols-[minmax(0,1fr)] gap-16 py-14 md:py-20">
+    <div class="grid gap-12 lg:grid-cols-2">
+      <ListRows title={visaPage.doesTitle} items={visaPage.does.map((text) => ({ text }))} />
+      <ListRows title={visaPage.doesNotTitle} items={visaPage.doesNot.map((text) => ({ text }))} />
+    </div>
+    <div class="grid gap-6">
+      <Board />
+      <Note text={visaNote} />
+    </div>
+    <QuotePanel initial="visa" title={visaPage.formTitle} />
+  </div>
+</BaseB>

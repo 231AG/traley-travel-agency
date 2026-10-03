@@ -1,0 +1,75 @@
+---
+import { business, ctas, footer, social, whatsappGreeting } from "@content/site";
+import { withBase } from "@shared/paths";
+import { whatsappUrl } from "@shared/quote/whatsapp";
+import Logo from "./Logo.astro";
+
+const linkClass =
+  "inline-flex min-h-11 items-center text-on-navy-muted hover:text-white hover:underline";
+const columns = [
+  { title: footer.columns.services, links: footer.services },
+  { title: footer.columns.company, links: footer.company },
+];
+---
+
+<footer class="on-dark bg-navy-deep text-on-navy-muted">
+  <div class="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1.4fr]">
+    <div>
+      <Logo href="/b" plate />
+      <p class="mt-4 font-board text-2xl text-gold">{business.tagline}</p>
+    </div>
+    {columns.map((column) => (
+      <nav aria-label={column.title}>
+        <h2 class="font-board text-xl text-white">{column.title}</h2>
+        <ul class="mt-2">
+          {column.links.map((item) => (
+            <li>
+              <a href={withBase("/b", item.href)} class={linkClass}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+    <div>
+      <h2 class="font-board text-xl text-white">{footer.columns.contact}</h2>
+      <ul class="mt-2">
+        <li>
+          <a
+            href={whatsappUrl(whatsappGreeting)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={linkClass}
+          >
+            {footer.whatsappLabel}&nbsp;{business.phoneDisplay}
+            <span class="sr-only">{ctas.newTab}</span>
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${business.email}`} class={`${linkClass} break-all`}>
+            {business.email}
+          </a>
+        </li>
+        {social.map((item) => (
+          <li>
+            <a href={item.href} target="_blank" rel="noopener noreferrer" class={linkClass}>
+              {item.label}
+              <span class="sr-only">{ctas.newTab}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-3">{business.addressLine}</p>
+      <p class="mt-1">{business.hours}</p>
+    </div>
+  </div>
+  <div class="border-t border-white/15">
+    <div class="container-page flex flex-wrap items-center justify-between gap-4 py-4 text-sm">
+      <p>{footer.copyright}</p>
+      <a href="#top" class={linkClass}>
+        {ctas.backToTop}
+      </a>
+    </div>
+  </div>
+</footer>

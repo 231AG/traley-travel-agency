@@ -1,0 +1,197 @@
+@import "tailwindcss" source(none);
+@source "../designs/b";
+@source "../pages/b";
+@source "../shared/components";
+@import "./tokens.css";
+
+@font-face {
+  font-family: "Big Shoulders Display";
+  src: url("../assets/fonts/big-shoulders-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("../assets/fonts/atkinson-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("../assets/fonts/atkinson-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Signage Fallback";
+  src: local("Arial Narrow"), local("Roboto Condensed"), local("Arial");
+  size-adjust: 88%;
+}
+@font-face {
+  font-family: "Atkinson Fallback";
+  src: local("Verdana"), local("Arial");
+  size-adjust: 96%;
+}
+
+@theme {
+  --font-*: initial;
+  --font-board: "Big Shoulders Display", "Signage Fallback", "Arial Narrow", sans-serif;
+  --font-sans: "Atkinson Hyperlegible", "Atkinson Fallback", system-ui, sans-serif;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --text-6xl: 5.25rem;
+  --text-6xl--line-height: 0.95;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-board);
+    font-weight: 700;
+    color: var(--color-navy);
+    letter-spacing: -0.005em;
+  }
+}
+
+/* Board rows turn over once on load, like split-flap signage. Skipped under reduced motion. */
+@keyframes flap {
+  from {
+    opacity: 0;
+    transform: perspective(600px) rotateX(-80deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@utility board-flip {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: flap 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    transform-origin: top center;
+    &:nth-child(2) {
+      animation-delay: 60ms;
+    }
+    &:nth-child(3) {
+      animation-delay: 120ms;
+    }
+    &:nth-child(4) {
+      animation-delay: 180ms;
+    }
+    &:nth-child(5) {
+      animation-delay: 240ms;
+    }
+    &:nth-child(6) {
+      animation-delay: 300ms;
+    }
+    &:nth-child(7) {
+      animation-delay: 360ms;
+    }
+    &:nth-child(n + 8) {
+      animation-delay: 420ms;
+    }
+  }
+}
+
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+@utility btn-gold {
+  background: var(--color-gold);
+  color: var(--color-navy);
+  &:hover {
+    background: color-mix(in srgb, var(--color-gold) 85%, white);
+  }
+}
+@utility btn-navy {
+  background: var(--color-navy);
+  color: var(--color-white);
+  &:hover {
+    background: var(--color-royal);
+  }
+}
+@utility btn-line {
+  border: 2px solid var(--color-navy);
+  color: var(--color-navy);
+  &:hover {
+    background: var(--color-navy);
+    color: var(--color-white);
+  }
+}
+@utility btn-board {
+  border: 1.5px solid var(--color-gold);
+  color: var(--color-gold);
+  &:hover {
+    background: var(--color-gold);
+    color: var(--color-navy);
+  }
+}
+@utility link {
+  color: var(--color-royal);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+@utility photo-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  text-align: center;
+  background: var(--color-mist);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+@utility field-label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+@utility field-input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0.625rem 0.75rem;
+  border: 0;
+  border-bottom: 2px solid var(--color-navy);
+  border-radius: 0;
+  background: var(--color-white);
+  color: var(--color-ink);
+  font-size: 1.0625rem;
+  &:focus-visible {
+    outline: 3px solid var(--color-royal);
+    outline-offset: 2px;
+  }
+  &[aria-invalid="true"] {
+    border-bottom-color: var(--color-error);
+    border-bottom-width: 3px;
+  }
+}
+@utility field-error {
+  margin-top: 0.375rem;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-error);
+}

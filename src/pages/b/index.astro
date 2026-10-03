@@ -1,0 +1,29 @@
+---
+import { images, meta, visaNote } from "@content/site";
+import BaseB from "@b/layouts/BaseB.astro";
+import About from "@b/components/About.astro";
+import Board from "@b/components/Board.astro";
+import CtaBand from "@b/components/CtaBand.astro";
+import Intro from "@b/components/Intro.astro";
+import Note from "@b/components/Note.astro";
+import PhotoStrip from "@b/components/PhotoStrip.astro";
+import QuotePanel from "@b/components/QuotePanel.astro";
+import Services from "@b/components/Services.astro";
+import Steps from "@b/components/Steps.astro";
+import Trust from "@b/components/Trust.astro";
+---
+
+<BaseB meta={meta.home}>
+  <Intro />
+  <div class="container-page grid gap-6 pb-16">
+    <Board />
+    <Note text={visaNote} />
+    <QuotePanel />
+  </div>
+  <PhotoStrip image={images.hero} />
+  <Steps />
+  <Services />
+  <Trust />
+  <About />
+  <CtaBand />
+</BaseB>
