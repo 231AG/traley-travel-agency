@@ -11,18 +11,19 @@ interface Props {
   /** Font files worth preloading for this design (the hero heading face). */
   preloadFonts?: string[];
   jsonLd?: boolean;
-  ogImage?: string;
 }
 
-const {
-  meta,
-  noindex = false,
-  preloadFonts = [],
-  jsonLd = false,
-  ogImage = "/og/default.jpg",
-} = Astro.props;
-const url = canonical(Astro.url.pathname);
-const image = `${business.url}${ogImage}`;
+const { meta, noindex = false, preloadFonts = [], jsonLd = false } = Astro.props;
+/** Design B mirrors Design A, so its pages point search engines at the Design A original. */
+const designAPath = Astro.url.pathname.replace(/^\/b(?=\/|\.html$|$)/, "") || "/";
+const url = canonical(designAPath);
+const section = designAPath.split("/")[1]?.replace(/\.html$/, "");
+const ogImages: Record<string, string> = {
+  "flights-hotels": "/og/flights.jpg",
+  visa: "/og/visa.jpg",
+  concierge: "/og/concierge.jpg",
+};
+const image = `${business.url}${ogImages[section ?? ""] ?? "/og/default.jpg"}`;
 ---
 
 <meta charset="utf-8" />

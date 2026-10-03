@@ -4,7 +4,7 @@
   "description": "Tarley Travel LLC website",
   "scripts": {
     "dev": "astro dev",
-    "assets": "tsx scripts/brand.ts && tsx scripts/images.ts",
+    "assets": "tsx scripts/brand.ts && tsx scripts/images.ts && tsx scripts/og.ts",
     "build": "astro build && tsx scripts/postbuild.ts && tsx scripts/budget.ts",
     "preview": "astro preview --port 4321",
     "typecheck": "astro check",
@@ -15,12 +15,14 @@
     "test:e2e": "playwright test",
     "placeholders": "tsx scripts/placeholders.ts",
     "lighthouse": "tsx scripts/lighthouse.ts",
-    "screenshots": "playwright test --config playwright.screenshots.config.ts",
+    "screenshots": "playwright test --config playwright.screenshots.config.ts && tsx scripts/gallery.ts",
     "check": "npm run typecheck && npm run lint && npm run format:check && npm test && npm run build && npm run test:e2e",
     "serve": "tsx scripts/serve.ts",
     "budget": "tsx scripts/budget.ts",
     "fonts": "bash scripts/fonts.sh",
-    "check:links": "tsx scripts/check-links.ts"
+    "check:links": "tsx scripts/check-links.ts",
+    "credits": "tsx scripts/credits.ts",
+    "check:remove-b": "bash scripts/check-remove-b.sh"
   },
   "repository": {
     "type": "git",
