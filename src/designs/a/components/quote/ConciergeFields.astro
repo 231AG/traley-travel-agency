@@ -1,0 +1,37 @@
+---
+import { quote } from "@content/site";
+import Field from "./Field.astro";
+
+interface Props {
+  idPrefix: string;
+  selected?: string | undefined;
+}
+
+const { idPrefix: p } = Astro.props;
+const f = quote.fields;
+---
+
+<div class="grid gap-4">
+  <Field id={`${p}-arrival`} label={f.arrival}>
+    <input
+      id={`${p}-arrival`}
+      name="arrival"
+      type="date"
+      class="field-input"
+      required
+      data-stub-source="arrival"
+      aria-describedby={`${p}-arrival-error`}
+    />
+  </Field>
+  <fieldset>
+    <legend class="field-label">{f.services}</legend>
+    <div class="grid gap-1 sm:grid-cols-2">
+      {quote.conciergeServices.map((service) => (
+        <label class="flex min-h-11 cursor-pointer items-center gap-3 rounded-sm text-base text-ink">
+          <input type="checkbox" name="services" value={service} class="size-5 accent-navy" />
+          {service}
+        </label>
+      ))}
+    </div>
+  </fieldset>
+</div>

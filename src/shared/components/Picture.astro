@@ -8,14 +8,25 @@ import photos from "@content/photos.json";
 import Icon from "./Icon.astro";
 
 interface Props {
-  slot: ImageSlot;
+  image: ImageSlot;
   sizes: string;
   class?: string;
   placeholderClass?: string;
   priority?: boolean;
+  /** Only load the photo when this media query matches (e.g. desktop-only hero photos). */
+  media?: string;
 }
 
-const { slot, sizes, class: className, placeholderClass, priority = false } = Astro.props;
+const {
+  image: slot,
+  sizes,
+  class: className,
+  placeholderClass,
+  priority = false,
+  media,
+} = Astro.props;
+/** A 1x1 transparent GIF: when `media` does not match, the browser picks this and downloads nothing. */
+const EMPTY = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 const manifest: Record<string, { width: number; height: number; widths: number[] }> = photos;
 const photo = slot.file ? manifest[slot.file] : undefined;
 const srcset = (format: "avif" | "webp") =>
@@ -25,8 +36,9 @@ const fallbackWidth = photo?.widths.at(-1);
 
 {photo ? (
   <picture>
-    <source type="image/avif" srcset={srcset("avif")} sizes={sizes} />
-    <source type="image/webp" srcset={srcset("webp")} sizes={sizes} />
+    {media && <source media={`not all and ${media}`} srcset={EMPTY} />}
+    <source type="image/avif" srcset={srcset("avif")} sizes={sizes} media={media} />
+    <source type="image/webp" srcset={srcset("webp")} sizes={sizes} media={media} />
     <img
       class={className}
       src={`/img/${slot.file}-${fallbackWidth}.webp`}

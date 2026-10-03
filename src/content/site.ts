@@ -44,8 +44,8 @@ export const business = {
   countryCode: "LR",
   street: "Old Road, Oldest Congo Town",
   addressLine: "Old Road, Oldest Congo Town, Monrovia, Liberia",
-  hours: "Monday to Saturday, 7:30 am to 6:00 pm",
-  hoursShort: "Mon to Sat, 7:30 am to 6:00 pm",
+  hours: "Monday to Saturday, 7:30\u00a0am to 6:00\u00a0pm",
+  hoursShort: "Mon to Sat, 7:30\u00a0am to 6:00\u00a0pm",
   openingHoursSpec: {
     days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     opens: "07:30",
@@ -78,6 +78,12 @@ export const factsToConfirm = [
     item: "Official visa links",
     value: "One official link per destination page",
     why: "Checked at build time; government sites move pages, so recheck every few months.",
+  },
+  {
+    item: "Service promises from the approved mockup",
+    value:
+      "Full price shown before you pay with the service fee included; receipts for every payment; visa extensions and renewals; car rental on arrival; day trips outside Monrovia",
+    why: "These come from the approved homepage design, not from a written answer. A one-line yes from Tarley confirms each one.",
   },
   {
     item: "Copyright year",
@@ -141,22 +147,47 @@ export const images = {
   hero: {
     id: "hero",
     caption: "Hero photo: traveler holding a passport at the airport, full-bleed",
-    alt: "A traveler holding a passport and boarding pass in an airport terminal",
+    alt: "The passenger terminal at Roberts International Airport, Liberia",
+    file: "hero",
+    credit: {
+      photographer: "Bethel Anthony Chisom",
+      source:
+        "https://commons.wikimedia.org/wiki/File:Robert_International_Airport,_Margibi_County,_Liberia.jpg",
+      license: "CC BY-SA 4.0",
+    },
   },
   flights: {
     id: "flights",
     caption: "Photo: aircraft on the apron at Roberts International",
-    alt: "A passenger jet parked at an airport gate",
+    alt: "A passenger jet flying overhead against a blue sky",
+    file: "flights",
+    credit: {
+      photographer: "Jordan Sanchez (Unsplash)",
+      source: "https://commons.wikimedia.org/wiki/File:Passenger_airplane_(Unsplash).jpg",
+      license: "CC0",
+    },
   },
   visa: {
     id: "visa",
     caption: "Photo: passport and application documents on a desk",
-    alt: "A passport resting on printed application forms",
+    alt: "A passport and printed travel papers on a desk",
+    file: "visa",
+    credit: {
+      photographer: "Alex Robert (Unsplash)",
+      source: "https://commons.wikimedia.org/wiki/File:Passport_documents_desk_(Unsplash).jpg",
+      license: "CC0",
+    },
   },
   concierge: {
     id: "concierge",
     caption: "Photo: a real Liberian location, Monrovia or the coast",
-    alt: "",
+    alt: "A Welcome to Liberia sign in the arrivals hall at Roberts International Airport",
+    file: "concierge",
+    credit: {
+      photographer: "Sm105",
+      source: "https://commons.wikimedia.org/wiki/File:Arrivals_at_new_terminal_GLRB.jpg",
+      license: "CC BY-SA 4.0",
+    },
   },
   team: {
     id: "team",
@@ -202,6 +233,8 @@ export const hero = {
     "Flights, visa assistance, and arrival arrangements for visitors to Liberia, handled by one team on WhatsApp.",
   location: "Based in Monrovia, serving travelers across Liberia and the diaspora",
 };
+
+export const trustLabel = "Why travelers use Tarley";
 
 export const trust: TrustItem[] = [
   {
@@ -308,7 +341,11 @@ export const visaNote =
 export const visaPageNote =
   "Requirements change. We check the current list with you before you start.";
 
-export const destinationsIntro = { title: "Planning to travel? Start with your destination." };
+export const destinationsIntro = {
+  title: "Planning to travel? Start with your destination.",
+  start: "Start a request",
+  details: "Visa details",
+};
 
 export const destinations: Destination[] = [
   {
@@ -575,6 +612,7 @@ export const visaPage = {
 };
 
 export const destinationPage = {
+  titleSuffix: "visa help",
   typesTitle: "Common visa types",
   requirementsTitle: "Requirements",
   officialTitle: "Official source",

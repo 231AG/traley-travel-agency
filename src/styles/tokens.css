@@ -86,6 +86,16 @@
   .on-dark :focus-visible {
     outline-color: var(--color-gold);
   }
+  .on-dark .on-light :focus-visible {
+    outline-color: var(--color-navy);
+  }
+  ::placeholder {
+    color: var(--color-muted);
+    opacity: 1;
+  }
+  picture {
+    display: contents;
+  }
   [hidden] {
     display: none !important;
   }

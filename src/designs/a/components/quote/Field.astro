@@ -1,0 +1,26 @@
+---
+/** Label, control slot and error line, wired together for screen readers. */
+interface Props {
+  id: string;
+  label: string;
+  hint?: string;
+  optional?: string;
+  class?: string;
+}
+
+const { id, label, hint, optional, class: className } = Astro.props;
+---
+
+<div class={className}>
+  <label for={id} class="field-label">
+    {label}
+    {optional && <span class="ml-1 font-normal text-muted">({optional})</span>}
+  </label>
+  <slot />
+  {hint && (
+    <p id={`${id}-hint`} class="mt-1 text-sm text-muted">
+      {hint}
+    </p>
+  )}
+  <p id={`${id}-error`} class="field-error" data-error-for={id} hidden></p>
+</div>

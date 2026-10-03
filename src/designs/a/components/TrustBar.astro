@@ -1,0 +1,18 @@
+---
+import { trust, trustLabel } from "@content/site";
+import Icon from "@shared/components/Icon.astro";
+---
+
+<section class="border-b border-border bg-cream" aria-label={trustLabel}>
+  <ul class="container-page grid gap-6 py-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+    {trust.map((item) => (
+      <li class="flex gap-3">
+        <Icon name={item.icon} size={26} class="mt-0.5 shrink-0 text-gold-text" />
+        <div>
+          <p class="font-semibold text-navy">{item.title}</p>
+          <p class="mt-1 text-sm text-muted">{item.text}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>

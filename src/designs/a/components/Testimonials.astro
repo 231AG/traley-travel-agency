@@ -1,0 +1,25 @@
+---
+/** Hidden until Tarley supplies real, attributable quotes (features.testimonials). */
+import { features, testimonials, testimonialsIntro } from "@content/site";
+
+const show = features.testimonials && testimonials.length > 0;
+---
+
+{show && (
+  <section class="bg-cream py-16 md:py-24" aria-labelledby="testimonials-title">
+    <div class="container-page">
+      <h2 id="testimonials-title" class="text-3xl md:text-4xl">
+        {testimonialsIntro.title}
+      </h2>
+      <ul class="mt-10 grid gap-6 md:grid-cols-3">
+        {testimonials.map((t) => (
+          <li class="rounded-md border border-border bg-white p-6">
+            <blockquote class="text-lg">{t.quote}</blockquote>
+            <p class="mt-4 text-sm font-semibold text-navy">{t.name}</p>
+            <p class="text-sm text-muted">{t.trip}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}

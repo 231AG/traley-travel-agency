@@ -1,0 +1,37 @@
+---
+/** The boarding-pass stub: a live, decorative echo of what the visitor typed. */
+import { quote } from "@content/site";
+import Icon from "@shared/components/Icon.astro";
+
+interface Props {
+  /** Color of the punched notches; matches the section behind the card. */
+  notchClass?: string | undefined;
+}
+
+const { notchClass = "bg-navy" } = Astro.props;
+const s = quote.stub;
+---
+
+<div class="relative border-t-2 border-dashed border-border px-5 py-4 sm:px-7" aria-hidden="true">
+  <span class:list={["absolute -top-3 -left-3 size-6 rounded-full", notchClass]}></span>
+  <span class:list={["absolute -top-3 -right-3 size-6 rounded-full", notchClass]}></span>
+  <div class="flex items-center justify-between gap-3">
+    <div class="min-w-0">
+      <p class="text-sm text-muted" data-stub-label="left">
+        {s.from}
+      </p>
+      <p class="text-base leading-snug font-semibold break-words text-navy" data-stub="left">
+        {s.arrivingAt}
+      </p>
+    </div>
+    <Icon name="plane" size={22} class="shrink-0 text-gold-text" />
+    <div class="min-w-0 text-right">
+      <p class="text-sm text-muted" data-stub-label="right">
+        {s.to}
+      </p>
+      <p class="text-base leading-snug font-semibold break-words text-navy" data-stub="right">
+        {s.destinationFallback}
+      </p>
+    </div>
+  </div>
+</div>

@@ -6,26 +6,28 @@ Every item below shows on the live pages as a visible, shaded placeholder, so no
 
 ## Text
 
-| Placeholder                                                                                                     | Pages         | What Tarley supplies                                                                                                                                                                 |
-| --------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [ABOUT: 2–3 sentences from Tarley: when they started, who runs it, who they mostly serve and what they do best] | not shown yet | A short company story in Tarley's own words. No figures unless Tarley can stand behind them.                                                                                         |
-| [TEAM: names and roles of the people customers talk to, only if Tarley wants them shown]                        | not shown yet | Optional. First names and roles, with each person's consent.                                                                                                                         |
-| [MAP PIN: Google Maps link to the exact office location]                                                        | not shown yet | A shared Google Maps link for the office, or a landmark that helps people find it.                                                                                                   |
-| [REQUIREMENTS: checklist Tarley confirms for this country, or leave as a WhatsApp check]                        | not shown yet | Decide per country: either Tarley writes and maintains a current checklist, or the page keeps sending people to WhatsApp for a check. The site never lists requirements from memory. |
+| Placeholder | Pages | What Tarley supplies |
+| --- | --- | --- |
+| [ABOUT: 2–3 sentences from Tarley: when they started, who runs it, who they mostly serve and what they do best] | `/about`, `/` | A short company story in Tarley's own words. No figures unless Tarley can stand behind them. |
+| [TEAM: names and roles of the people customers talk to, only if Tarley wants them shown] | `/about` | Optional. First names and roles, with each person's consent. |
+| [MAP PIN: Google Maps link to the exact office location] | `/contact` | A shared Google Maps link for the office, or a landmark that helps people find it. |
+| [REQUIREMENTS: checklist Tarley confirms for this country, or leave as a WhatsApp check] | `/visa/canada`, `/visa/china`, `/visa/schengen`, `/visa/uae`, `/visa/united-kingdom`, `/visa/united-states` | Decide per country: either Tarley writes and maintains a current checklist, or the page keeps sending people to WhatsApp for a check. The site never lists requirements from memory. |
 
 ## Photos
 
 Each slot shows its caption until a photo is added to `assets/photos/{slot}.jpg` and `file` is set on the slot in `site.ts`. Real Tarley photos replace any stock photo. Stock photos in use are listed in `CREDITS.md`.
 
-| Slot | Shot needed           | Pages |
-| ---- | --------------------- | ----- |
-| none | All slots have photos |       |
+| Slot | Shot needed | Pages |
+| --- | --- | --- |
+| `team` | Photo: the real Tarley team at their Monrovia office | `/about`, `/` |
+| `office` | Photo: the Tarley office entrance on Old Road, so visitors recognize it | `/about` |
 
 ## Facts to confirm
 
-| Item                    | Current value                          | Why it needs a check                                                                                                               |
-| ----------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Email                   | info@tarleytravelllc.com               | It is on a different domain from the website (tarleytravel.com). Confirm it receives mail, or supply an @tarleytravel.com address. |
-| Office address spelling | Old Road, Oldest Congo Town, Monrovia  | Supplied as "Old Road, OldestCongo Monrovia-Liberia" and spelled out as the area name.                                             |
-| Official visa links     | One official link per destination page | Checked at build time; government sites move pages, so recheck every few months.                                                   |
-| Copyright year          | Set when the site is built             | Rebuild once a year (or on any content change) to keep it current.                                                                 |
+| Item | Current value | Why it needs a check |
+| --- | --- | --- |
+| Email | info@tarleytravelllc.com | It is on a different domain from the website (tarleytravel.com). Confirm it receives mail, or supply an @tarleytravel.com address. |
+| Office address spelling | Old Road, Oldest Congo Town, Monrovia | Supplied as "Old Road, OldestCongo Monrovia-Liberia" and spelled out as the area name. |
+| Official visa links | One official link per destination page | Checked at build time; government sites move pages, so recheck every few months. |
+| Service promises from the approved mockup | Full price shown before you pay with the service fee included; receipts for every payment; visa extensions and renewals; car rental on arrival; day trips outside Monrovia | These come from the approved homepage design, not from a written answer. A one-line yes from Tarley confirms each one. |
+| Copyright year | Set when the site is built | Rebuild once a year (or on any content change) to keep it current. |

@@ -8,25 +8,26 @@ One entry per build phase: what was built, the audit, check results, and carryov
 
 **Audit** (fresh sub-agent, then fixed):
 
-| Issue | Severity | Fix | Status |
-| --- | --- | --- | --- |
-| Empty optional dates failed validation (one-way flights blocked) | High | Optional dates accept "" | Fixed, unit-tested |
-| Empty arrival date showed a generic error first | High | Same message on both checks | Fixed, unit-tested |
-| Source checker let `"#hex"` through | High | Strip only real anchor links before checking | Fixed, proven with a failing sample |
-| Hard-coded theme color in Head | High | `src/shared/brand.ts` constant | Fixed |
-| Three service claims not confirmed by Tarley | Medium | Reworded to mockup-backed claims | Fixed |
-| China "official source" was a private visa center | Medium | Embassy of China in Liberia | Fixed |
-| Floating button focus ring invisible on navy | Medium | White ring with navy halo | Fixed |
-| Test server crashed on malformed URLs; path check too loose | Medium | try/catch, `path.relative` check | Fixed |
-| 404 expectation mismatch | Medium | 404 page built; missing paths return 404 | Fixed, tested |
-| Backdrop blur on sticky header (jank on cheap phones) | Medium | Solid white | Fixed |
-| Mobile menu dividers, `aria-current` on sections, new-tab warnings, footer copy in component, JSON-LD duplicating facts, decode order, facts list in script, Lighthouse server lifecycle, `withBase` tests | Low | All fixed | Fixed |
-| CSS inlined on every page | Low | Kept: saves a render-blocking request on first visit over slow data (8.7 KB gz per page including CSS) | Accepted, deviation |
-| Copyright year set at build time | Low | Listed under "Facts to confirm" (rebuild yearly) | Accepted |
+| Issue                                                                                                                                                                                                      | Severity | Fix                                                                                                    | Status                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| Empty optional dates failed validation (one-way flights blocked)                                                                                                                                           | High     | Optional dates accept ""                                                                               | Fixed, unit-tested                  |
+| Empty arrival date showed a generic error first                                                                                                                                                            | High     | Same message on both checks                                                                            | Fixed, unit-tested                  |
+| Source checker let `"#hex"` through                                                                                                                                                                        | High     | Strip only real anchor links before checking                                                           | Fixed, proven with a failing sample |
+| Hard-coded theme color in Head                                                                                                                                                                             | High     | `src/shared/brand.ts` constant                                                                         | Fixed                               |
+| Three service claims not confirmed by Tarley                                                                                                                                                               | Medium   | Reworded to mockup-backed claims                                                                       | Fixed                               |
+| China "official source" was a private visa center                                                                                                                                                          | Medium   | Embassy of China in Liberia                                                                            | Fixed                               |
+| Floating button focus ring invisible on navy                                                                                                                                                               | Medium   | White ring with navy halo                                                                              | Fixed                               |
+| Test server crashed on malformed URLs; path check too loose                                                                                                                                                | Medium   | try/catch, `path.relative` check                                                                       | Fixed                               |
+| 404 expectation mismatch                                                                                                                                                                                   | Medium   | 404 page built; missing paths return 404                                                               | Fixed, tested                       |
+| Backdrop blur on sticky header (jank on cheap phones)                                                                                                                                                      | Medium   | Solid white                                                                                            | Fixed                               |
+| Mobile menu dividers, `aria-current` on sections, new-tab warnings, footer copy in component, JSON-LD duplicating facts, decode order, facts list in script, Lighthouse server lifecycle, `withBase` tests | Low      | All fixed                                                                                              | Fixed                               |
+| CSS inlined on every page                                                                                                                                                                                  | Low      | Kept: saves a render-blocking request on first visit over slow data (8.7 KB gz per page including CSS) | Accepted, deviation                 |
+| Copyright year set at build time                                                                                                                                                                           | Low      | Listed under "Facts to confirm" (rebuild yearly)                                                       | Accepted                            |
 
 **Checks.** `astro check` 0/0/0 · ESLint 0/0 · source check clean · Vitest 13/13 · build ok · Playwright 31/31 (mobile + desktop, axe 0 serious/critical, no overflow 360–1440, text ≥ 15 px, targets ≥ 44 px) · Lighthouse mobile `/` and `/404`: 100/100/100/100, LCP 1.5 s, CLS 0 · JS 0.3 KB gz per page.
 
 **Carryovers for the owner.**
+
 1. The Unsplash connector refuses requests until the Unsplash account's email address is confirmed. Photos come from Wikimedia Commons (free licenses, credited) instead. Confirming the email would let me use Unsplash later.
 2. There is no `main` branch on GitHub yet, so a pull request cannot be opened. All work is on `claude/new-session-m7djov`.
 3. Logo: still waiting on SVGs (horizontal, reversed for navy, mark alone). The nav and footer use a straight crop of Logo A meanwhile.

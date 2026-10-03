@@ -1,11 +1,23 @@
 ---
-import { hero, meta } from "@content/site";
+import { meta } from "@content/site";
 import BaseA from "@a/layouts/BaseA.astro";
+import AboutBlock from "@a/components/AboutBlock.astro";
+import CtaBand from "@a/components/CtaBand.astro";
+import Destinations from "@a/components/Destinations.astro";
+import Hero from "@a/components/Hero.astro";
+import Services from "@a/components/Services.astro";
+import Steps from "@a/components/Steps.astro";
+import Testimonials from "@a/components/Testimonials.astro";
+import TrustBar from "@a/components/TrustBar.astro";
 ---
 
 <BaseA meta={meta.home} jsonLd>
-  <section class="container-page py-24">
-    <h1 class="text-4xl md:text-5xl">{hero.title}</h1>
-    <p class="mt-4 max-w-prose text-muted">{hero.subtitle}</p>
-  </section>
+  <Hero />
+  <TrustBar />
+  <Services />
+  <Steps />
+  <Destinations />
+  <Testimonials />
+  <AboutBlock />
+  <CtaBand />
 </BaseA>
