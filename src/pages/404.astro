@@ -1,15 +1,74 @@
 ---
-import { ctas, meta, notFoundPage, services, whatsappGreeting } from "@content/site";
+import {
+  business,
+  ctas,
+  destinations,
+  meta,
+  notFoundPage as copy,
+  services,
+  whatsappGreeting,
+} from "@content/site";
 import { whatsappUrl } from "@lib/quote/whatsapp";
 import Base from "@layouts/Base.astro";
 import Icon from "@components/Icon.astro";
 ---
 
-<Base meta={meta.notFound}>
-  <section class="container-page py-20 md:py-28">
-    <h1 class="max-w-2xl text-4xl md:text-5xl">{notFoundPage.title}</h1>
-    <p class="mt-5 max-w-prose text-lg text-muted">{notFoundPage.text}</p>
-    <ul class="mt-10 grid gap-4 md:grid-cols-3">
+<Base meta={meta.notFound} noindex>
+  <section class="on-dark bg-navy py-14 md:py-20" aria-labelledby="not-found-title">
+    <div class="container-page grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16">
+      <div>
+        <h1 id="not-found-title" class="text-4xl text-white md:text-5xl">
+          {copy.title}
+        </h1>
+        <p class="mt-5 max-w-xl text-lg text-on-navy-muted">{copy.text}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/" class="btn btn-gold w-full sm:w-auto">
+            {copy.home}
+          </a>
+          <a
+            href={whatsappUrl(whatsappGreeting)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline-light w-full sm:w-auto"
+          >
+            <Icon name="whatsapp" size={18} />
+            {ctas.whatsappLong}
+            <span class="sr-only">{ctas.newTab}</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="on-light rounded-md bg-white text-ink shadow-quote">
+        <div class="flex items-start justify-between gap-4 p-6">
+          <div class="min-w-0">
+            <p class="font-display text-2xl text-navy">{copy.cardTitle}</p>
+            <p class="mt-3 text-sm text-muted">{copy.requested}</p>
+            <p class="text-base font-semibold break-words text-navy" data-requested-path>
+              {copy.requestedFallback}
+            </p>
+          </div>
+          <p class="font-numeral text-5xl leading-none font-bold text-gold-text" aria-hidden="true">
+            {copy.cardCode}
+          </p>
+        </div>
+        <div class="relative border-t-2 border-dashed border-border px-6 py-4" aria-hidden="true">
+          <span class="absolute -top-3 -left-3 size-6 rounded-full bg-navy"></span>
+          <span class="absolute -top-3 -right-3 size-6 rounded-full bg-navy"></span>
+          <div class="flex items-center justify-between gap-3 text-navy">
+            <span class="font-semibold">{business.shortName}</span>
+            <Icon name="plane" size={22} class="text-gold-text" />
+            <span class="font-semibold">{business.domain}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-14 md:py-20" aria-labelledby="services-title">
+    <h2 id="services-title" class="text-3xl">
+      {copy.servicesTitle}
+    </h2>
+    <ul class="mt-8 grid gap-4 md:grid-cols-3">
       {services.map((service) => (
         <li>
           <a
@@ -27,19 +86,47 @@ import Icon from "@components/Icon.astro";
         </li>
       ))}
     </ul>
-    <p class="mt-10 flex flex-wrap gap-3">
-      <a href="/" class="btn btn-navy">
-        {notFoundPage.home}
-      </a>
+
+    <h2 class="mt-14 text-3xl" id="destinations-title">
+      {copy.destinationsTitle}
+    </h2>
+    <ul class="mt-6 flex flex-wrap gap-3" aria-labelledby="destinations-title">
+      {destinations.map((d) => (
+        <li>
+          <a href={`/visa/${d.slug}`} class="btn btn-outline">
+            {d.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-14 rounded-md border border-border bg-cream p-6">
+      <h2 class="text-2xl">{copy.helpTitle}</h2>
+      <p class="mt-2 text-muted">{copy.helpText}</p>
       <a
         href={whatsappUrl(whatsappGreeting)}
         target="_blank"
         rel="noopener noreferrer"
-        class="btn btn-outline"
+        class="btn btn-navy mt-5"
       >
+        <Icon name="whatsapp" size={18} />
         {ctas.whatsappLong}
         <span class="sr-only">{ctas.newTab}</span>
       </a>
-    </p>
+    </div>
   </section>
 </Base>
+
+<script>
+  // Show the address the visitor tried, so they can spot a typo. textContent keeps it inert.
+  const target = document.querySelector("[data-requested-path]");
+  if (target && window.location.pathname !== "/404") {
+    let path = window.location.pathname;
+    try {
+      path = decodeURIComponent(path);
+    } catch {
+      // Malformed escapes: show the raw path.
+    }
+    target.textContent = path;
+  }
+</script>

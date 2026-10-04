@@ -54,3 +54,15 @@ test("Open Graph images exist for every page", async ({ page, request }) => {
     expect((await request.get(local)).status(), `${route} ${local}`).toBe(200);
   }
 });
+
+test("the 404 page shows the missing address, helpful links and stays out of search", async ({
+  page,
+}) => {
+  const response = await page.goto("/visa/narnia");
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("We couldn't find that page");
+  await expect(page.locator("[data-requested-path]")).toHaveText("/visa/narnia");
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex");
+  await expect(page.getByRole("link", { name: "Canada" })).toHaveAttribute("href", "/visa/canada");
+  await expect(page.getByRole("link", { name: "Go to the homepage" })).toBeVisible();
+});
