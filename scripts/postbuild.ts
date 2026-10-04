@@ -68,12 +68,6 @@ const headers = `/*
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   Cross-Origin-Opener-Policy: same-origin
 
-/b/*
-  X-Robots-Tag: noindex, nofollow
-
-/b
-  X-Robots-Tag: noindex, nofollow
-
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 

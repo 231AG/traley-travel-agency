@@ -1,7 +1,7 @@
 /**
  * Runs Lighthouse (mobile, simulated slow 4G) on a list of pages against the
  * static server and fails below: Performance 90, Accessibility 100,
- * Best Practices 100, SEO 100 (SEO is skipped for noindex Design B pages).
+ * Best Practices 100, SEO 100, LCP under 2.5 s, CLS under 0.1.
  * Usage: npm run lighthouse -- /path /other-path
  */
 import { spawn, execFileSync } from "node:child_process";
@@ -63,7 +63,6 @@ try {
     const score = (key: string) => Math.round((report.categories[key]?.score ?? 0) * 100);
     const lcp = report.audits["largest-contentful-paint"]?.numericValue ?? 0;
     const cls = report.audits["cumulative-layout-shift"]?.numericValue ?? 0;
-    const isB = route === "/b" || route.startsWith("/b/");
     const scores = {
       perf: score("performance"),
       a11y: score("accessibility"),
@@ -74,12 +73,12 @@ try {
       scores.perf >= 90 &&
       scores.a11y === 100 &&
       scores.bp === 100 &&
-      (isB || scores.seo === 100) &&
+      scores.seo === 100 &&
       lcp < 2500 &&
       cls < 0.1;
     failed ||= !ok;
     console.log(
-      `${ok ? "ok  " : "FAIL"} ${route.padEnd(28)} perf ${scores.perf}  a11y ${scores.a11y}  bp ${scores.bp}  seo ${scores.seo}${isB ? " (noindex)" : ""}  LCP ${(lcp / 1000).toFixed(2)}s  CLS ${cls.toFixed(3)}`,
+      `${ok ? "ok  " : "FAIL"} ${route.padEnd(28)} perf ${scores.perf}  a11y ${scores.a11y}  bp ${scores.bp}  seo ${scores.seo}  LCP ${(lcp / 1000).toFixed(2)}s  CLS ${cls.toFixed(3)}`,
     );
   }
 } finally {

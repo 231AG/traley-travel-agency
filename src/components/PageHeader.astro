@@ -1,0 +1,34 @@
+---
+import { jumpToQuote } from "@content/site";
+import type { Link } from "@lib/types";
+
+interface Props {
+  title: string;
+  lead: string;
+  breadcrumb?: Link;
+  /** Pages with a quote form get a jump link; on phones the form sits below the content. */
+  quote?: boolean;
+}
+
+const { title, lead, breadcrumb, quote = false } = Astro.props;
+---
+
+<section class="on-dark bg-navy py-12 md:py-16">
+  <div class="container-page">
+    {breadcrumb && (
+      <a
+        href={breadcrumb.href}
+        class="mb-3 inline-flex min-h-11 items-center text-sm font-medium text-on-navy-muted hover:text-white hover:underline hover:underline-offset-4"
+      >
+        {breadcrumb.label}
+      </a>
+    )}
+    <h1 class="max-w-3xl text-4xl text-white md:text-5xl">{title}</h1>
+    <p class="mt-4 max-w-2xl text-lg text-on-navy-muted">{lead}</p>
+    {quote && (
+      <a href="#quote" class="btn btn-gold mt-6" data-quote-focus>
+        {jumpToQuote}
+      </a>
+    )}
+  </div>
+</section>

@@ -5,10 +5,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@components/*": ["src/components/*"],
       "@content/*": ["src/content/*"],
-      "@shared/*": ["src/shared/*"],
-      "@a/*": ["src/designs/a/*"],
-      "@b/*": ["src/designs/b/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@lib/*": ["src/lib/*"]
     },
     "types": ["node"],
     "verbatimModuleSyntax": true

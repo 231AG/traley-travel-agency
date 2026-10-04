@@ -1,17 +1,17 @@
 ---
 import { meta } from "@content/site";
-import BaseA from "@a/layouts/BaseA.astro";
-import AboutBlock from "@a/components/AboutBlock.astro";
-import CtaBand from "@a/components/CtaBand.astro";
-import Destinations from "@a/components/Destinations.astro";
-import Hero from "@a/components/Hero.astro";
-import Services from "@a/components/Services.astro";
-import Steps from "@a/components/Steps.astro";
-import Testimonials from "@a/components/Testimonials.astro";
-import TrustBar from "@a/components/TrustBar.astro";
+import Base from "@layouts/Base.astro";
+import AboutBlock from "@components/AboutBlock.astro";
+import CtaBand from "@components/CtaBand.astro";
+import Destinations from "@components/Destinations.astro";
+import Hero from "@components/Hero.astro";
+import Services from "@components/Services.astro";
+import Steps from "@components/Steps.astro";
+import Testimonials from "@components/Testimonials.astro";
+import TrustBar from "@components/TrustBar.astro";
 ---
 
-<BaseA meta={meta.home} jsonLd>
+<Base meta={meta.home} jsonLd>
   <Hero />
   <TrustBar />
   <Services />
@@ -20,4 +20,4 @@ import TrustBar from "@a/components/TrustBar.astro";
   <Testimonials />
   <AboutBlock />
   <CtaBand />
-</BaseA>
+</Base>

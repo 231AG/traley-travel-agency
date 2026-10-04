@@ -1,0 +1,28 @@
+---
+/** Attribution for every credited photo that requires it (CC BY / CC BY-SA). */
+import { ctas, images } from "@content/site";
+import type { ImageSlot } from "@lib/types";
+
+interface Props {
+  linkClass?: string;
+}
+
+const { linkClass = "underline underline-offset-2" } = Astro.props;
+const slots: ImageSlot[] = Object.values(images);
+const credited = slots.filter((slot) => slot.credit && slot.credit.license.startsWith("CC BY"));
+---
+
+{credited.length > 0 && (
+  <p class="text-sm">
+    {ctas.photoCredits}{" "}
+    {credited.map((slot, index) => (
+      <>
+        <a href={slot.credit?.source} target="_blank" rel="noopener noreferrer" class={linkClass}>
+          {slot.credit?.photographer}, {slot.credit?.license}
+          <span class="sr-only">{ctas.newTab}</span>
+        </a>
+        {index < credited.length - 1 && "; "}
+      </>
+    ))}
+  </p>
+)}

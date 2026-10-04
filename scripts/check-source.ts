@@ -10,7 +10,7 @@ import path from "node:path";
 import { placeholders } from "../src/content/site";
 
 const ROOTS = ["src"];
-const TOKEN_FILES = new Set(["src/styles/tokens.css", "src/shared/brand.ts"]);
+const TOKEN_FILES = new Set(["src/styles/tokens.css", "src/lib/brand.ts"]);
 const problems: string[] = [];
 
 async function walk(dir: string): Promise<string[]> {

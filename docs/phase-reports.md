@@ -140,3 +140,13 @@ One entry per build phase: what was built, the audit, check results, and carryov
 **Audit.** The fresh-sub-agent final review stopped early when the account hit its weekly usage limit. I ran the checklist in this session instead: `npm run check` green (types, lint, project rules, format, 13 unit tests, build, 360 Playwright tests with axe); Lighthouse on all 26 pages within budget; every `wa.me` link points to 231886504519 and decodes; no `any`, no component over 150 lines, no hard-coded copy in components; README commands all exist; Design B removal check passes. Screenshots were reviewed for both designs at both sizes.
 
 **Carryovers for the owner.** Listed in `REPORT.md` section 6: logo SVGs, email domain, team and office photos, facts to confirm, a `main` branch so a pull request can be opened, and the design choice.
+
+## Phase 8: Design A chosen, Design B removed, cleanup (4 October 2026)
+
+The owner chose Design A after reviewing both in the hosted preview.
+
+**Removed.** Design B's pages (`/b/*`), components, layout and stylesheet; its fonts (Big Shoulders Display, Atkinson Hyperlegible) and their npm packages; its board copy; its tests and screenshots; the side-by-side gallery; the "Design B removable" check; `/b` handling in the head (noindex and canonical rewrite), `_headers`, sitemap filter, Lighthouse script and tests; quote-controller hooks only B used (`data-quote-to`, `data-floating-avoid`, vertical tab orientation); the `withBase` path helper; one unused content key and one unused label.
+
+**Restructured.** One design now, so the folders are flat: `src/components` (with `quote/`), `src/layouts/Base.astro`, `src/lib` (types, SEO, icons, `quote/`), `src/styles/site.css` + `tokens.css`. Import aliases are `@components`, `@layouts`, `@lib`, `@content`. The quote controller was split into `fields.ts` (pure reading and validation, now unit-tested), `floating-button.ts` and `controller.ts`. Screenshots moved to `screenshots/desktop` and `screenshots/mobile`. README rewritten with a project-layout table.
+
+**Checks.** Type check 0 errors; ESLint 0/0 and project rules clean; 17 unit tests; 194 Playwright tests (mobile and desktop, axe on every page); budgets met (JS 0.3–11.5 KB gz, hero image 138 KB); Lighthouse rechecked on home, a visa page and contact: 98–100 / 100 / 100 / 100.

@@ -14,7 +14,7 @@ export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes("/b/") && !page.endsWith("/b") && !page.includes("404"),
+      filter: (page) => !page.includes("404"),
     }),
   ],
   vite: {

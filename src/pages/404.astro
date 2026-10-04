@@ -1,11 +1,11 @@
 ---
 import { ctas, meta, notFoundPage, services, whatsappGreeting } from "@content/site";
-import { whatsappUrl } from "@shared/quote/whatsapp";
-import BaseA from "@a/layouts/BaseA.astro";
-import Icon from "@shared/components/Icon.astro";
+import { whatsappUrl } from "@lib/quote/whatsapp";
+import Base from "@layouts/Base.astro";
+import Icon from "@components/Icon.astro";
 ---
 
-<BaseA meta={meta.notFound}>
+<Base meta={meta.notFound}>
   <section class="container-page py-20 md:py-28">
     <h1 class="max-w-2xl text-4xl md:text-5xl">{notFoundPage.title}</h1>
     <p class="mt-5 max-w-prose text-lg text-muted">{notFoundPage.text}</p>
@@ -42,4 +42,4 @@ import Icon from "@shared/components/Icon.astro";
       </a>
     </p>
   </section>
-</BaseA>
+</Base>

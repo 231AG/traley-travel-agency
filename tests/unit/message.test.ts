@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { buildMessage, formatDate, formatMonth } from "@shared/quote/message";
-import { whatsappUrl } from "@shared/quote/whatsapp";
-import { conciergeSchema, dateErrors, flightSchema } from "@shared/quote/schema";
-import { withBase } from "@shared/paths";
+import { buildMessage, formatDate, formatMonth } from "@lib/quote/message";
+import { whatsappUrl } from "@lib/quote/whatsapp";
+import { conciergeSchema, dateErrors, flightSchema } from "@lib/quote/schema";
+import { validateQuote, withOtherDestination } from "@lib/quote/fields";
 
 describe("buildMessage", () => {
   it("builds the flight template in order", () => {
@@ -98,17 +98,6 @@ describe("dateErrors", () => {
   });
 });
 
-describe("withBase", () => {
-  it("maps paths into a design", () => {
-    expect(withBase("", "/visa")).toBe("/visa");
-    expect(withBase("/b", "/")).toBe("/b");
-    expect(withBase("/b", "/visa/canada")).toBe("/b/visa/canada");
-    expect(withBase("/b", "/#services")).toBe("/b#services");
-    expect(withBase("/b", "https://wa.me/1")).toBe("https://wa.me/1");
-    expect(withBase("/b", "//evil.example")).toBe("//evil.example");
-  });
-});
-
 describe("schemas", () => {
   it("accepts a one-way flight with empty dates", () => {
     expect(flightSchema.safeParse({ to: "Accra", departure: "", return: "" }).success).toBe(true);
@@ -121,5 +110,34 @@ describe("schemas", () => {
   it("gives the arrival message for an empty concierge date", () => {
     const result = conciergeSchema.safeParse({ arrival: "", services: [] });
     expect(result.error?.issues.every((i) => i.message === "Enter your arrival date.")).toBe(true);
+  });
+});
+
+describe("validateQuote", () => {
+  const today = "2026-10-04";
+  it("passes a complete flight request", () => {
+    expect(validateQuote("flights", { to: "Accra", departure: "2026-11-01" }, today)).toEqual({});
+  });
+  it("reports the first problem per field", () => {
+    const errors = validateQuote("flights", { to: "", departure: "2026-01-01" }, today);
+    expect(errors["to"]).toBe("Enter where you want to fly to.");
+    expect(errors["departure"]).toBe("Choose a date from today onward.");
+  });
+  it("needs an arrival date for concierge", () => {
+    expect(validateQuote("concierge", { arrival: "", services: [] }, today)).toHaveProperty(
+      "arrival",
+    );
+  });
+});
+
+describe("withOtherDestination", () => {
+  it("uses the typed country when Somewhere else is chosen", () => {
+    const fields = { destination: "Somewhere else", destinationOther: "Ghana" } as Parameters<
+      typeof withOtherDestination
+    >[0];
+    expect(withOtherDestination(fields)).toEqual({ destination: "Ghana" });
+  });
+  it("leaves a listed destination alone", () => {
+    expect(withOtherDestination({ destination: "Canada" })).toEqual({ destination: "Canada" });
   });
 });

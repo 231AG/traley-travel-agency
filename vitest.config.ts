@@ -7,7 +7,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@content": dir("./src/content"),
-      "@shared": dir("./src/shared"),
+      "@lib": dir("./src/lib"),
     },
   },
   test: { include: ["tests/unit/**/*.test.ts"] },

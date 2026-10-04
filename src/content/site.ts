@@ -1,6 +1,6 @@
 /**
  * Every word, contact detail and image slot on the site lives here.
- * Both designs read from this file; components never hard-code copy.
+ * Every page reads from this file; components never hard-code copy.
  *
  * Honesty rule: only facts Tarley has confirmed. Anything else is a
  * bracketed placeholder registered in `placeholders` below, which
@@ -19,7 +19,7 @@ import type {
   Step,
   Testimonial,
   TrustItem,
-} from "@shared/types";
+} from "@lib/types";
 
 export const features = {
   /** Off until Tarley supplies real, attributable quotes. */
@@ -53,7 +53,6 @@ export const business = {
     closes: "18:00",
   },
   replyTime: "We usually reply in under 30 minutes.",
-  airport: "Roberts International Airport (ROB)",
   airportShort: "Monrovia (ROB)",
   domain: "tarleytravel.com",
   url: "https://www.tarleytravel.com",
@@ -219,11 +218,9 @@ export const nav: Link[] = [
 export const ctas = {
   whatsapp: "WhatsApp us",
   whatsappLong: "Chat on WhatsApp",
-  whatsappShort: "WhatsApp",
   photoCredits: "Photos:",
   quote: "Get a free quote",
   call: `Call ${business.phoneDisplay}`,
-  email: "Email us",
   messageTeam: "Message the team",
   backToTop: "Back to top",
   skip: "Skip to content",
@@ -758,22 +755,3 @@ export function destinationMeta(destination: Destination): PageMeta {
     description: `Help preparing your ${destination.name} visa application from Monrovia: visa types, document review and appointment booking.`,
   };
 }
-
-/* ---------- Design B: departures board ---------- */
-
-export const board = {
-  title: "From Monrovia (ROB): where we help you go",
-  columns: { destination: "Destination", help: "Usually for", ask: "Ask us" },
-  flight: "Flights",
-  visa: "Visa",
-  elsewhere: { name: "Somewhere else", purposes: "Flights and visas for any destination" },
-  arriving: {
-    title: "Arriving in Liberia",
-    text: "Airport pickup, hotels, a car with driver, day trips",
-    action: "Plan arrival",
-  },
-  formTitle: "Your request",
-  servicesTitle: "What we do",
-  trustTitle: "Why people use Tarley",
-  readMore: "Read more",
-};

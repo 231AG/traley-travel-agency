@@ -1,7 +1,7 @@
 /** Writes CREDITS.md from the photo slots in site.ts plus the fonts, icons and logo sources. */
 import { writeFile } from "node:fs/promises";
 import { images } from "../src/content/site";
-import type { ImageSlot } from "../src/shared/types";
+import type { ImageSlot } from "../src/lib/types";
 
 const slots: ImageSlot[] = Object.values(images);
 const photos = slots
@@ -30,11 +30,9 @@ ${photos.join("\n")}
 
 | Font | Used in | License |
 | --- | --- | --- |
-| Playfair Display | Design A headings | SIL Open Font License 1.1 |
-| Poppins | Design A body | SIL Open Font License 1.1 |
-| Cinzel (digits only) | Design A step numbers | SIL Open Font License 1.1 |
-| Big Shoulders Display | Design B headings and board | SIL Open Font License 1.1 |
-| Atkinson Hyperlegible | Design B body | SIL Open Font License 1.1 |
+| Playfair Display | Headings | SIL Open Font License 1.1 |
+| Poppins | Body text | SIL Open Font License 1.1 |
+| Cinzel (digits only) | Step numbers | SIL Open Font License 1.1 |
 
 Font files come from the Fontsource packages on npm.
 

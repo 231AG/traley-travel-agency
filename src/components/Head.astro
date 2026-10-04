@@ -1,0 +1,57 @@
+---
+import type { PageMeta } from "@lib/types";
+import { analytics, business, features } from "@content/site";
+import { canonical, travelAgencyJsonLd } from "@lib/seo";
+import { themeColor } from "@lib/brand";
+
+interface Props {
+  meta: PageMeta;
+  /** Font files worth preloading for this design (the hero heading face). */
+  preloadFonts?: string[];
+  jsonLd?: boolean;
+}
+
+const { meta, preloadFonts = [], jsonLd = false } = Astro.props;
+const url = canonical(Astro.url.pathname);
+const section = Astro.url.pathname.split("/")[1]?.replace(/\.html$/, "");
+const ogImages: Record<string, string> = {
+  "flights-hotels": "/og/flights.jpg",
+  visa: "/og/visa.jpg",
+  concierge: "/og/concierge.jpg",
+};
+const image = `${business.url}${ogImages[section ?? ""] ?? "/og/default.jpg"}`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
+<link rel="canonical" href={url} />
+<meta name="theme-color" content={themeColor} />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon-32.png" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+{preloadFonts.map((href) => (
+  <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+))}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={business.shortName} />
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={meta.description} />
+<meta property="og:url" content={url} />
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${business.name} logo`} />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary_large_image" />
+{jsonLd && <script type="application/ld+json" set:html={travelAgencyJsonLd()} />}
+{features.analytics && analytics.token && (
+  <script
+    is:inline
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon={JSON.stringify({ token: analytics.token })}
+  />
+)}

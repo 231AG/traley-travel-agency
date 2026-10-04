@@ -18,7 +18,4 @@ subset poppins 400 "$TEXT" poppins-400
 subset poppins 500 "$TEXT" poppins-500
 subset poppins 600 "$TEXT" poppins-600
 subset cinzel 700 "U+0030-0039" cinzel-700-digits
-subset big-shoulders-display 700 "$TEXT" big-shoulders-700
-subset atkinson-hyperlegible 400 "$TEXT" atkinson-400
-subset atkinson-hyperlegible 700 "$TEXT" atkinson-700
 ls -l "$OUT"

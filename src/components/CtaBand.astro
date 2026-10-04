@@ -1,0 +1,51 @@
+---
+import { business, ctas, finalCta, whatsappGreeting } from "@content/site";
+import Icon from "@components/Icon.astro";
+import { whatsappUrl } from "@lib/quote/whatsapp";
+---
+
+<section
+  class="on-dark relative overflow-hidden bg-navy py-16 md:py-20"
+  aria-labelledby="cta-title"
+>
+  <svg
+    class="pointer-events-none absolute inset-0 hidden size-full text-gold/40 md:block"
+    viewBox="0 0 1440 360"
+    preserveAspectRatio="xMidYMid slice"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M-20 330 C 320 345, 620 300, 900 318 S 1300 330, 1460 120"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-dasharray="2 10"
+      stroke-linecap="round"
+    />
+    <circle cx="900" cy="318" r="5" fill="currentColor"></circle>
+  </svg>
+  <div class="container-page relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+    <div class="max-w-2xl">
+      <h2 id="cta-title" class="text-3xl text-white md:text-4xl">
+        {finalCta.title}
+      </h2>
+      <p class="mt-4 text-lg text-on-navy-muted">{finalCta.text}</p>
+    </div>
+    <div class="flex shrink-0 flex-wrap gap-3">
+      <a
+        href={whatsappUrl(whatsappGreeting)}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-gold"
+      >
+        <Icon name="whatsapp" size={18} />
+        {ctas.whatsapp}
+        <span class="sr-only">{ctas.newTab}</span>
+      </a>
+      <a href={business.phoneHref} class="btn btn-outline-light">
+        <Icon name="phone" size={18} />
+        {ctas.call}
+      </a>
+    </div>
+  </div>
+</section>

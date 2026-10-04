@@ -8,17 +8,17 @@ import {
   placeholders,
   whatsappGreeting,
 } from "@content/site";
-import BaseA from "@a/layouts/BaseA.astro";
-import CheckList from "@a/components/CheckList.astro";
-import CtaBand from "@a/components/CtaBand.astro";
-import PageHeader from "@a/components/PageHeader.astro";
-import SectionTitle from "@a/components/SectionTitle.astro";
-import Picture from "@shared/components/Picture.astro";
-import Text from "@shared/components/Text.astro";
-import { whatsappUrl } from "@shared/quote/whatsapp";
+import Base from "@layouts/Base.astro";
+import CheckList from "@components/CheckList.astro";
+import CtaBand from "@components/CtaBand.astro";
+import PageHeader from "@components/PageHeader.astro";
+import SectionTitle from "@components/SectionTitle.astro";
+import Picture from "@components/Picture.astro";
+import Text from "@components/Text.astro";
+import { whatsappUrl } from "@lib/quote/whatsapp";
 ---
 
-<BaseA meta={meta.about}>
+<Base meta={meta.about}>
   <PageHeader title={aboutPage.title} lead={aboutPage.lead} />
   <div class="container-page grid gap-12 py-14 md:py-20 lg:grid-cols-2 lg:gap-16">
     <section aria-labelledby="story-title">
@@ -82,4 +82,4 @@ import { whatsappUrl } from "@shared/quote/whatsapp";
     </div>
   </section>
   <CtaBand />
-</BaseA>
+</Base>

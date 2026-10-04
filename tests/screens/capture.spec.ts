@@ -7,17 +7,16 @@ const VIEWPORTS = [
   { name: "mobile", width: 390, height: 844, scale: 3 },
 ] as const;
 
-/** "/" -> home, "/visa/canada" -> visa-canada, "/b/about" -> about */
+/** "/" -> home, "/visa/canada" -> visa-canada */
 function pageName(route: string): string {
-  const path = route.replace(/^\/b(?=\/|$)/, "").replace(/^\//, "");
+  const path = route.replace(/^\//, "");
   return path === "" ? "home" : path.replace(/\//g, "-");
 }
 
 for (const route of builtRoutes()) {
   for (const viewport of VIEWPORTS) {
     test(`${route} ${viewport.name}`, async ({ browser }) => {
-      const design = route === "/b" || route.startsWith("/b/") ? "design-b" : "design-a";
-      const dir = `screenshots/${design}/${viewport.name}`;
+      const dir = `screenshots/${viewport.name}`;
       mkdirSync(dir, { recursive: true });
       const context = await browser.newContext({
         viewport: { width: viewport.width, height: viewport.height },

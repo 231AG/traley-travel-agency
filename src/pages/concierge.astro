@@ -1,13 +1,13 @@
 ---
 import { conciergePage, meta } from "@content/site";
-import BaseA from "@a/layouts/BaseA.astro";
-import FeatureGrid from "@a/components/FeatureGrid.astro";
-import PageHeader from "@a/components/PageHeader.astro";
-import SectionTitle from "@a/components/SectionTitle.astro";
-import WithQuote from "@a/components/WithQuote.astro";
+import Base from "@layouts/Base.astro";
+import FeatureGrid from "@components/FeatureGrid.astro";
+import PageHeader from "@components/PageHeader.astro";
+import SectionTitle from "@components/SectionTitle.astro";
+import WithQuote from "@components/WithQuote.astro";
 ---
 
-<BaseA meta={meta.concierge}>
+<Base meta={meta.concierge}>
   <PageHeader quote title={conciergePage.title} lead={conciergePage.lead} />
   <WithQuote initial="concierge" title={conciergePage.formTitle}>
     <section aria-labelledby="included-title">
@@ -31,4 +31,4 @@ import WithQuote from "@a/components/WithQuote.astro";
       </ol>
     </section>
   </WithQuote>
-</BaseA>
+</Base>

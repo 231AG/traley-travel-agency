@@ -9,13 +9,13 @@ import {
   visaPage,
   visaPageNote,
 } from "@content/site";
-import type { Destination } from "@shared/types";
-import BaseA from "@a/layouts/BaseA.astro";
-import PageHeader from "@a/components/PageHeader.astro";
-import SectionTitle from "@a/components/SectionTitle.astro";
-import WithQuote from "@a/components/WithQuote.astro";
-import Icon from "@shared/components/Icon.astro";
-import Text from "@shared/components/Text.astro";
+import type { Destination } from "@lib/types";
+import Base from "@layouts/Base.astro";
+import PageHeader from "@components/PageHeader.astro";
+import SectionTitle from "@components/SectionTitle.astro";
+import WithQuote from "@components/WithQuote.astro";
+import Icon from "@components/Icon.astro";
+import Text from "@components/Text.astro";
 
 export const getStaticPaths = (() =>
   destinations.map((destination) => ({
@@ -31,7 +31,7 @@ const { destination: d } = Astro.props;
 const others = destinations.filter((other) => other.slug !== d.slug);
 ---
 
-<BaseA meta={destinationMeta(d)}>
+<Base meta={destinationMeta(d)}>
   <PageHeader
     quote
     title={`${d.name} ${destinationPage.titleSuffix}`}
@@ -94,4 +94,4 @@ const others = destinations.filter((other) => other.slug !== d.slug);
       </ul>
     </nav>
   </WithQuote>
-</BaseA>
+</Base>

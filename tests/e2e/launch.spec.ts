@@ -4,7 +4,7 @@ import { builtRoutes } from "./routes";
 
 test("every page has a unique title and description", () => {
   const seen = new Map<string, string>();
-  for (const route of builtRoutes().filter((r) => !r.startsWith("/b") && !r.endsWith("404"))) {
+  for (const route of builtRoutes().filter((r) => !r.endsWith("404"))) {
     const file = route === "/" ? "dist/index.html" : `dist${route}.html`;
     const html = readFileSync(file, "utf8");
     const title = /<title>([^<]+)<\/title>/.exec(html)?.[1] ?? "";
@@ -28,10 +28,9 @@ test("structured data uses only confirmed facts", async ({ page }) => {
   expect(data).not.toHaveProperty("foundingDate");
 });
 
-test("sitemap lists Design A pages only, robots points at it", async ({ request }) => {
+test("sitemap lists every page except 404, robots points at it", async ({ request }) => {
   const sitemap = await (await request.get("/sitemap-0.xml")).text();
   expect(sitemap).toContain("https://www.tarleytravel.com/visa/canada");
-  expect(sitemap).not.toContain("/b/");
   expect(sitemap).not.toContain("404");
   const robots = await (await request.get("/robots.txt")).text();
   expect(robots).toContain("Sitemap: https://www.tarleytravel.com/sitemap-index.xml");
@@ -45,12 +44,10 @@ test("security headers are served", async ({ request }) => {
   expect(headers["strict-transport-security"]).toContain("max-age=");
   expect(headers["x-content-type-options"]).toBe("nosniff");
   expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
-  const b = await request.get("/b/visa");
-  expect(b.headers()["x-robots-tag"]).toContain("noindex");
 });
 
 test("Open Graph images exist for every page", async ({ page, request }) => {
-  for (const route of ["/", "/flights-hotels", "/visa/china", "/concierge", "/b/concierge"]) {
+  for (const route of ["/", "/flights-hotels", "/visa/china", "/concierge"]) {
     await page.goto(route);
     const image = (await page.locator('meta[property="og:image"]').getAttribute("content")) ?? "";
     const local = image.replace("https://www.tarleytravel.com", "");

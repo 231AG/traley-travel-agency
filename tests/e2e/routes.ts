@@ -13,6 +13,5 @@ export function builtRoutes(): string[] {
     .map((file) =>
       `/${path.relative("dist", file)}`.replace(/\.html$/, "").replace(/\/index$/, "/"),
     )
-    .map((route) => (route === "/b/" ? "/b" : route))
     .sort();
 }

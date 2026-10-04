@@ -1,14 +1,14 @@
 ---
 import { flightsPage, meta } from "@content/site";
-import BaseA from "@a/layouts/BaseA.astro";
-import CheckList from "@a/components/CheckList.astro";
-import FeatureGrid from "@a/components/FeatureGrid.astro";
-import PageHeader from "@a/components/PageHeader.astro";
-import SectionTitle from "@a/components/SectionTitle.astro";
-import WithQuote from "@a/components/WithQuote.astro";
+import Base from "@layouts/Base.astro";
+import CheckList from "@components/CheckList.astro";
+import FeatureGrid from "@components/FeatureGrid.astro";
+import PageHeader from "@components/PageHeader.astro";
+import SectionTitle from "@components/SectionTitle.astro";
+import WithQuote from "@components/WithQuote.astro";
 ---
 
-<BaseA meta={meta.flights}>
+<Base meta={meta.flights}>
   <PageHeader quote title={flightsPage.title} lead={flightsPage.lead} />
   <WithQuote initial="flights" title={flightsPage.formTitle}>
     <section aria-labelledby="included-title">
@@ -31,4 +31,4 @@ import WithQuote from "@a/components/WithQuote.astro";
       </a>
     </section>
   </WithQuote>
-</BaseA>
+</Base>

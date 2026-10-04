@@ -1,6 +1,6 @@
 # Tarley Travel website: Phase 0 plan
 
-Status: **approved.** The owner asked me to auto-approve each phase once it passes its audit, and to list carryovers after every phase. D1 to D6 go ahead as recommended.
+Status: **built; Design A chosen and Design B removed on 4 October 2026** (see `docs/phase-reports.md`, Phase 8). Earlier status: **approved.** The owner asked me to auto-approve each phase once it passes its audit, and to list carryovers after every phase. D1 to D6 go ahead as recommended.
 
 ## Owner answers (2026-10-03)
 

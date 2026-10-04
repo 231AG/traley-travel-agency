@@ -1,14 +1,14 @@
 ---
 import { meta, visaPage } from "@content/site";
-import BaseA from "@a/layouts/BaseA.astro";
-import CheckList from "@a/components/CheckList.astro";
-import Destinations from "@a/components/Destinations.astro";
-import PageHeader from "@a/components/PageHeader.astro";
-import SectionTitle from "@a/components/SectionTitle.astro";
-import WithQuote from "@a/components/WithQuote.astro";
+import Base from "@layouts/Base.astro";
+import CheckList from "@components/CheckList.astro";
+import Destinations from "@components/Destinations.astro";
+import PageHeader from "@components/PageHeader.astro";
+import SectionTitle from "@components/SectionTitle.astro";
+import WithQuote from "@components/WithQuote.astro";
 ---
 
-<BaseA meta={meta.visa}>
+<Base meta={meta.visa}>
   <PageHeader quote title={visaPage.title} lead={visaPage.lead} />
   <WithQuote initial="visa" title={visaPage.formTitle}>
     <div class="grid gap-10 md:grid-cols-2">
@@ -25,4 +25,4 @@ import WithQuote from "@a/components/WithQuote.astro";
   <div class="border-t border-border">
     <Destinations title={visaPage.destinationsTitle} />
   </div>
-</BaseA>
+</Base>

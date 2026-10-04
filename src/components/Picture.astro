@@ -1,0 +1,58 @@
+---
+/**
+ * Responsive photo from a content image slot. When the slot has no photo yet,
+ * renders the caption in a styled placeholder so the gap is obvious.
+ */
+import type { ImageSlot } from "@lib/types";
+import photos from "@content/photos.json";
+import Icon from "./Icon.astro";
+
+interface Props {
+  image: ImageSlot;
+  sizes: string;
+  class?: string;
+  placeholderClass?: string;
+  priority?: boolean;
+  /** Only load the photo when this media query matches (e.g. desktop-only hero photos). */
+  media?: string;
+}
+
+const {
+  image: slot,
+  sizes,
+  class: className,
+  placeholderClass,
+  priority = false,
+  media,
+} = Astro.props;
+/** A 1x1 transparent GIF: when `media` does not match, the browser picks this and downloads nothing. */
+const EMPTY = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+const manifest: Record<string, { width: number; height: number; widths: number[] }> = photos;
+const photo = slot.file ? manifest[slot.file] : undefined;
+const srcset = (format: "avif" | "webp") =>
+  photo?.widths.map((w) => `/img/${slot.file}-${w}.${format} ${w}w`).join(", ");
+const fallbackWidth = photo?.widths.at(-1);
+---
+
+{photo ? (
+  <picture>
+    {media && <source media={`not all and ${media}`} srcset={EMPTY} />}
+    <source type="image/avif" srcset={srcset("avif")} sizes={sizes} media={media} />
+    <source type="image/webp" srcset={srcset("webp")} sizes={sizes} media={media} />
+    <img
+      class={className}
+      src={`/img/${slot.file}-${fallbackWidth}.webp`}
+      alt={slot.alt}
+      width={photo.width}
+      height={photo.height}
+      loading={priority ? "eager" : "lazy"}
+      decoding={priority ? "sync" : "async"}
+      fetchpriority={priority ? "high" : "auto"}
+    />
+  </picture>
+) : (
+  <div class={placeholderClass} data-photo-slot={slot.id}>
+    <Icon name="image" size={22} />
+    <span>{slot.caption}</span>
+  </div>
+)}

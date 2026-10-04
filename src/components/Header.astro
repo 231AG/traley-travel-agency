@@ -1,0 +1,99 @@
+---
+import { ctas, nav, whatsappGreeting } from "@content/site";
+import Icon from "@components/Icon.astro";
+import { whatsappUrl } from "@lib/quote/whatsapp";
+import Logo from "@components/Logo.astro";
+
+const current = Astro.url.pathname.replace(/\.html$/, "");
+/** Marks the section a page belongs to; hash links point into the homepage and are never "current". */
+const isCurrent = (href: string) =>
+  !href.includes("#") && (current === href || current.startsWith(`${href}/`)) ? "page" : undefined;
+const wa = whatsappUrl(whatsappGreeting);
+---
+
+<header class="sticky top-0 z-40 border-b border-border bg-white">
+  <div class="container-page flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
+    <Logo href="/" />
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-medium text-navy hover:text-royal hover:underline hover:underline-offset-4"
+              aria-current={isCurrent(item.href)}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a
+        href={wa}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-gold size-11 min-h-11 p-0 text-sm sm:size-auto sm:px-5"
+      >
+        <Icon name="whatsapp" size={18} />
+        <span class="sr-only sm:not-sr-only">{ctas.whatsapp}</span>
+        <span class="sr-only">{ctas.newTab}</span>
+      </a>
+      <button
+        type="button"
+        class="inline-flex size-11 items-center justify-center rounded-sm text-navy lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+        data-open-label={ctas.openMenu}
+        data-close-label={ctas.closeMenu}
+      >
+        <span class="sr-only" data-menu-label>
+          {ctas.openMenu}
+        </span>
+        <Icon name="menu" size={26} class="[[aria-expanded=true]>&]:hidden" />
+        <Icon name="close" size={26} class="hidden [[aria-expanded=true]>&]:block" />
+      </button>
+    </div>
+  </div>
+  <nav id="mobile-menu" aria-label="Main" class="border-t border-border bg-white lg:hidden" hidden>
+    <ul class="container-page flex flex-col py-2">
+      {nav.map((item) => (
+        <li class="border-b border-border last:border-0">
+          <a
+            href={item.href}
+            class="flex min-h-12 items-center text-base font-medium text-navy"
+            aria-current={isCurrent(item.href)}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const menu = document.getElementById("mobile-menu");
+  const label = toggle?.querySelector("[data-menu-label]");
+
+  function setOpen(open: boolean): void {
+    if (!toggle || !menu || !label) return;
+    toggle.setAttribute("aria-expanded", String(open));
+    menu.hidden = !open;
+    label.textContent = (open ? toggle.dataset["closeLabel"] : toggle.dataset["openLabel"]) ?? "";
+  }
+
+  toggle?.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+  menu?.addEventListener("click", (event) => {
+    if (event.target instanceof HTMLAnchorElement) setOpen(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && toggle?.getAttribute("aria-expanded") === "true") {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+</script>

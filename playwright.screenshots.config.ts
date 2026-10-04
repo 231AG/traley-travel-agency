@@ -1,7 +1,7 @@
 import { defineConfig } from "@playwright/test";
 import base from "./playwright.config";
 
-/** HD handover screenshots of every page in both designs (npm run screenshots). */
+/** HD screenshots of every page at desktop and mobile sizes (npm run screenshots). */
 export default defineConfig({
   ...base,
   testDir: "tests/screens",
