@@ -25,6 +25,8 @@ for (const route of builtRoutes()) {
         isMobile: viewport.name === "mobile",
         hasTouch: viewport.name === "mobile",
         reducedMotion: "reduce",
+        // Screenshots only: lets the test inject its "no animations" style past the site's strict CSP.
+        bypassCSP: true,
       });
       const page = await context.newPage();
       await page.goto(route, { waitUntil: "networkidle" });
