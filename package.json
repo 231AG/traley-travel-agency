@@ -22,7 +22,8 @@
     "fonts": "bash scripts/fonts.sh",
     "check:links": "tsx scripts/check-links.ts",
     "credits": "tsx scripts/credits.ts",
-    "check:remove-b": "bash scripts/check-remove-b.sh"
+    "check:remove-b": "bash scripts/check-remove-b.sh",
+    "preview:copy": "tsx scripts/preview.ts"
   },
   "repository": {
     "type": "git",
