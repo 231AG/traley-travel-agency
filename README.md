@@ -46,13 +46,18 @@ npm run preview:copy -- <dir>            # copy of the build with relative links
 
 Playwright uses `CHROMIUM_PATH` (or `/opt/pw-browsers/chromium` when `PLAYWRIGHT_BROWSERS_PATH` is set); otherwise run `npx playwright install chromium` once.
 
-## Deploy to Cloudflare Pages
+## Deploy to Cloudflare
 
-1. Cloudflare dashboard, Workers & Pages, Create, Pages, connect this GitHub repository.
-2. Build command `npm run build`, output directory `dist`, environment variable `NODE_VERSION=22`.
-3. Add the custom domain `www.tarleytravel.com` (and redirect the bare domain to it).
+The repo includes `wrangler.jsonc`, which tells Cloudflare to serve the built `dist/` folder as a static site. Keep it: without it, `wrangler deploy` runs an auto-setup that converts the project to a server app and breaks the build.
 
-`dist/_headers` sets the security headers: strict CSP with hashed styles, HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options.
+**Workers & Pages, connected to GitHub (current setup):**
+
+1. Build command `npm run build`, deploy command `npx wrangler deploy`, root directory `/`, environment variable `NODE_VERSION=22`.
+2. Add the custom domain `www.tarleytravel.com` under the Worker's Settings, Domains & Routes (and redirect the bare domain to it).
+
+From your own computer, `npm run deploy` builds and uploads (log in once with `npx wrangler login`).
+
+`dist/_headers` sets the security headers: strict CSP with hashed styles, HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options. Unknown URLs get `404.html` with a real 404 status.
 
 ## Fonts
 
