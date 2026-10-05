@@ -1,0 +1,15 @@
+// Cloudflare deploy config: a static site served from dist/ (no server code).
+// With this file present, `wrangler deploy` uploads the built files as-is instead
+// of running its auto-setup, which would convert the project to a server app.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "traley-travel-agency",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // /about serves about.html, matching the site's URLs (no trailing slash).
+    "html_handling": "drop-trailing-slash",
+    // Unknown URLs get dist/404.html with a real 404 status.
+    "not_found_handling": "404-page",
+  },
+}

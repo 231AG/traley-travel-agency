@@ -9,9 +9,11 @@ interface Props {
   /** Font files worth preloading for this design (the hero heading face). */
   preloadFonts?: string[];
   jsonLd?: boolean;
+  /** Keeps a page out of search results (the 404 page). */
+  noindex?: boolean;
 }
 
-const { meta, preloadFonts = [], jsonLd = false } = Astro.props;
+const { meta, preloadFonts = [], jsonLd = false, noindex = false } = Astro.props;
 const url = canonical(Astro.url.pathname);
 const section = Astro.url.pathname.split("/")[1]?.replace(/\.html$/, "");
 const ogImages: Record<string, string> = {
@@ -26,7 +28,7 @@ const image = `${business.url}${ogImages[section ?? ""] ?? "/og/default.jpg"}`;
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{meta.title}</title>
 <meta name="description" content={meta.description} />
-<link rel="canonical" href={url} />
+{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={url} />}
 <meta name="theme-color" content={themeColor} />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon-32.png" type="image/png" />

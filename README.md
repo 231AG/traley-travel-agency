@@ -8,7 +8,7 @@ Marketing site for Tarley Travel LLC, Monrovia, Liberia. Static Astro site; ever
 npm install
 npm run dev          # http://localhost:4321
 npm run build        # dist/ + _headers + robots.txt, then checks the JS and image budgets
-npm run serve        # serve dist/ the way Cloudflare Pages does (headers, 404s)
+npm run serve        # serve dist/ the way the hosts do (headers, clean URLs, 404s)
 ```
 
 ## Project layout
@@ -46,13 +46,20 @@ npm run preview:copy -- <dir>            # copy of the build with relative links
 
 Playwright uses `CHROMIUM_PATH` (or `/opt/pw-browsers/chromium` when `PLAYWRIGHT_BROWSERS_PATH` is set); otherwise run `npx playwright install chromium` once.
 
-## Deploy to Cloudflare Pages
+## Deploy
 
-1. Cloudflare dashboard, Workers & Pages, Create, Pages, connect this GitHub repository.
-2. Build command `npm run build`, output directory `dist`, environment variable `NODE_VERSION=22`.
-3. Add the custom domain `www.tarleytravel.com` (and redirect the bare domain to it).
+`npm run build` produces a plain static site in `dist/`. The same build deploys to Cloudflare, Netlify or Vercel; each host gets the same security headers (strict CSP with hashed styles, HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options), clean URLs (`/about` serves `about.html`) and the custom 404 page with a real 404 status. Node 22 is pinned in `.nvmrc` and `package.json`.
 
-`dist/_headers` sets the security headers: strict CSP with hashed styles, HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options.
+| Host                                   | Config in this repo                                                                                      | What to enter in the dashboard                                                                                                                        |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Cloudflare Pages**                   | none needed (reads `dist/_headers`)                                                                      | Workers & Pages, Create, Pages, connect GitHub. Build command `npm run build`, output directory `dist`.                                               |
+| **Cloudflare Workers** (static assets) | `wrangler.jsonc`                                                                                         | Build command `npm run build`, deploy command `npx wrangler deploy`. Keep `wrangler.jsonc`: without it Wrangler converts the project to a server app. |
+| **Netlify**                            | `netlify.toml` (reads `dist/_headers`)                                                                   | Add new site, import from GitHub. Settings are picked up from `netlify.toml`.                                                                         |
+| **Vercel**                             | `vercel.json`; the build writes `.vercel/output` (Build Output API) with the headers, clean URLs and 404 | Add New, Project, import from GitHub. Leave the framework preset as "Other"; settings come from `vercel.json`.                                        |
+
+Then add the custom domain `www.tarleytravel.com` in the host's domain settings and redirect the bare domain to it. Use one host at a time for the live domain.
+
+From your own computer: `npm run deploy` (Cloudflare Workers, after `npx wrangler login`). To check the Vercel bundle locally: `VERCEL_OUTPUT=1 npm run build`, then look in `.vercel/output`.
 
 ## Fonts
 

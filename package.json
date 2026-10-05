@@ -22,7 +22,8 @@
     "fonts": "bash scripts/fonts.sh",
     "check:links": "tsx scripts/check-links.ts",
     "credits": "tsx scripts/credits.ts",
-    "preview:copy": "tsx scripts/preview.ts"
+    "preview:copy": "tsx scripts/preview.ts",
+    "deploy": "npm run build && wrangler deploy"
   },
   "repository": {
     "type": "git",
@@ -59,11 +60,12 @@
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.71.0",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.3",
+    "wrangler": "^4.147.0"
   },
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": "22.x"
   }
 }

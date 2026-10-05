@@ -703,8 +703,16 @@ export const contactPage = {
 
 export const notFoundPage = {
   title: "We couldn't find that page",
-  text: "The link may be old or mistyped. These are the places most people are looking for:",
+  text: "The link may be old or mistyped. Here are the places most people are looking for.",
   home: "Go to the homepage",
+  cardTitle: "Page not found",
+  cardCode: "404",
+  requested: "You asked for",
+  requestedFallback: "an address that does not exist",
+  servicesTitle: "Our services",
+  destinationsTitle: "Visa destinations",
+  helpTitle: "Still can't find it?",
+  helpText: "Send us a message on WhatsApp and we'll point you to the right page.",
 };
 
 /** Label for the header button that jumps to the quote form on long inner pages. */
