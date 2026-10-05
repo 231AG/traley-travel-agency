@@ -29,7 +29,7 @@ npm run serve        # serve dist/ the way the hosts do (headers, clean URLs, 40
 
 Components never hard-code copy; edit `src/content/site.ts`.
 
-- **Placeholders**: bracketed text like `[ABOUT: ...]` shows shaded on the page until Tarley supplies it. `npm run build && npm run placeholders` regenerates `PLACEHOLDERS.md`.
+- **Placeholders**: each entry in `placeholders` has the real-content request (`token`) and the interim copy shown on the site meanwhile (`interim`, built only from confirmed facts). Put Tarley's text in `interim` when it arrives. Any bracketed text like `[ABOUT: ...]` used directly in copy shows shaded on the page. `npm run build && npm run placeholders` regenerates `PLACEHOLDERS.md`.
 - **Photos**: put a photo in `assets/photos/{slot}.jpg`, set `file` (and `credit` for stock) on the slot in `site.ts`, then `npm run assets` and `npm run credits`.
 - **Testimonials**: add real quotes to `testimonials` and set `features.testimonials = true`.
 - **Analytics**: set `analytics.token` (Cloudflare Web Analytics) and `features.analytics = true`; the CSP opens up for it automatically.

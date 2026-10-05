@@ -67,7 +67,7 @@ Before the decision, Design B passed the same checks (Lighthouse 98–100 / 100 
 
 ## 5. Placeholders Tarley must fill
 
-See `PLACEHOLDERS.md` (generated from the build). In short:
+See `PLACEHOLDERS.md` (generated from the build). Since 5 October 2026 every item shows interim content instead of a shaded placeholder: copy written only from confirmed facts, and CC0 stock photos (a trip-planning desk for the team, a pinned map for the office) whose alt text never claims to show Tarley's people or office. Still to replace:
 
 1. **Company story**: 2–3 sentences in Tarley's words (home, about).
 2. **Team**: names and roles, only if wanted, plus a real team photo (home, about).

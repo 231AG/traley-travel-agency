@@ -49,6 +49,8 @@ export interface ImageSlot {
 
 export interface Placeholder {
   token: string;
+  /** Stand-in copy shown on the site until Tarley supplies the real content. Built only from confirmed facts. */
+  interim: string;
   needs: string;
   pages: string[];
 }

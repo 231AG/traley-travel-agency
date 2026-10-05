@@ -117,6 +117,8 @@ export const placeholders = {
   about: {
     token:
       "[ABOUT: 2–3 sentences from Tarley: when they started, who runs it, who they mostly serve and what they do best]",
+    interim:
+      "Tarley Travel is a travel agency on Old Road, Oldest Congo Town, in Monrovia. We book flights and hotels, help with visa applications and look after visitors arriving in Liberia. Most trips start with a WhatsApp message, and we usually reply in under 30 minutes.",
     needs:
       "A short company story in Tarley's own words. No figures unless Tarley can stand behind them.",
     pages: ["/", "/about"],
@@ -124,17 +126,23 @@ export const placeholders = {
   team: {
     token:
       "[TEAM: names and roles of the people customers talk to, only if Tarley wants them shown]",
+    interim:
+      "The team works from the office on Old Road, Monday to Saturday. Message us on WhatsApp or stop by, and we will help you plan the trip.",
     needs: "Optional. First names and roles, with each person's consent.",
     pages: ["/about"],
   },
   mapPin: {
     token: "[MAP PIN: Google Maps link to the exact office location]",
+    interim:
+      "Search Google Maps for Old Road, Oldest Congo Town, or message us on WhatsApp and we will send directions.",
     needs: "A shared Google Maps link for the office, or a landmark that helps people find it.",
     pages: ["/contact"],
   },
   requirements: {
     token:
       "[REQUIREMENTS: checklist Tarley confirms for this country, or leave as a WhatsApp check]",
+    interim:
+      "Tell us which visa you need and when you travel, and we send you the current checklist on WhatsApp.",
     needs:
       "Decide per country: either Tarley writes and maintains a current checklist, or the page keeps sending people to WhatsApp for a check. The site never lists requirements from memory.",
     pages: [
@@ -198,12 +206,25 @@ export const images = {
   team: {
     id: "team",
     caption: "Photo: the real Tarley team at their Monrovia office",
-    alt: "",
+    alt: "A laptop, phone, coffee and travel magazine on a desk, ready for trip planning",
+    file: "team",
+    credit: {
+      photographer: "Ewan Robertson (Unsplash)",
+      source:
+        "https://commons.wikimedia.org/wiki/File:Round_the_world_trip_planning_(Unsplash).jpg",
+      license: "CC0",
+    },
   },
   office: {
     id: "office",
     caption: "Photo: the Tarley office entrance on Old Road, so visitors recognize it",
-    alt: "",
+    alt: "Colored pins on a wooden map",
+    file: "office",
+    credit: {
+      photographer: "delfi de la Rua (Unsplash)",
+      source: "https://commons.wikimedia.org/wiki/File:Map_with_colorful_pins_(Unsplash).jpg",
+      license: "CC0",
+    },
   },
 } satisfies Record<string, ImageSlot>;
 
@@ -451,7 +472,7 @@ export const destinations: Destination[] = [
 export const about = {
   title: "Your travel plans, handled by people who know Liberia",
   lead: `${business.name} is a travel agency based in ${business.city}, ${business.country}.`,
-  story: placeholders.about.token,
+  story: placeholders.about.interim,
   labels: { office: "Office", hours: "Hours", phone: "Phone & WhatsApp", email: "Email" },
 };
 
