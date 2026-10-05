@@ -9,3 +9,4 @@ playwright-report
 .lighthouseci
 package-lock.json
 public
+.vercel
