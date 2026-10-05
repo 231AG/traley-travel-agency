@@ -1,5 +1,5 @@
 ---
-/** Inner-page body: content on the left, the quote card in a sticky cream column on the right. */
+/** Inner-page body: content on the left, the quote card in a sticky column on the right. */
 import type { QuoteType } from "@lib/types";
 import QuoteCard from "@components/quote/QuoteCard.astro";
 
@@ -17,14 +17,13 @@ const { initial, title, destination } = Astro.props;
     <slot />
   </div>
   <aside class="lg:sticky lg:top-24 lg:self-start">
-    <div class="rounded-md sm:bg-cream sm:p-5">
-      <QuoteCard
-        initial={initial}
-        title={title}
-        notchClass="bg-white sm:bg-cream"
-        destination={destination}
-        animate={false}
-      />
-    </div>
+    <QuoteCard
+      initial={initial}
+      title={title}
+      notchClass="bg-white border border-border"
+      destination={destination}
+      animate={false}
+      inline
+    />
   </aside>
 </div>

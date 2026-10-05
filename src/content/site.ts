@@ -46,6 +46,7 @@ export const business = {
   street: "Old Road, Oldest Congo Town",
   addressLine: "Old Road, Oldest Congo Town, Monrovia, Liberia",
   hours: "Monday to Saturday, 7:30\u00a0am to 6:00\u00a0pm",
+  hoursRange: "7:30\u00a0am to 6:00\u00a0pm",
   hoursShort: "Mon to Sat, 7:30\u00a0am to 6:00\u00a0pm",
   openingHoursSpec: {
     days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -240,7 +241,6 @@ export const nav: Link[] = [
 export const ctas = {
   whatsapp: "WhatsApp us",
   whatsappLong: "Chat on WhatsApp",
-  photoCredits: "Photos:",
   quote: "Get a free quote",
   call: `Call ${business.phoneDisplay}`,
   messageTeam: "Message the team",
@@ -513,6 +513,19 @@ export const footer = {
     { label: "Contact", href: "/contact" },
   ] satisfies Link[],
   copyright: `© ${new Date().getFullYear()} ${business.name}. All rights reserved.`,
+  credits: { label: "Photo credits", href: "/credits" } satisfies Link,
+};
+
+export const creditsPage = {
+  title: "Photo credits",
+  lead: "The photos on this site and the people who took them.",
+  intro:
+    "Some photos are shared under Creative Commons licenses that ask for the photographer to be named. Photos marked CC0 are free to use without credit; we list them anyway.",
+  photographer: "Photographer",
+  license: "License",
+  source: "Source",
+  view: "View the original",
+  usedOn: "Photo",
 };
 
 /* ---------- Quote form ---------- */
@@ -642,14 +655,16 @@ export const visaPage = {
   title: "Visa assistance",
   lead: "We help you prepare a complete application, so you go to your appointment ready.",
   doesTitle: "What we do",
+  doesLead: "From the first question to the appointment, we prepare the application with you.",
   does: [
-    "Work out which visa fits your trip",
-    "Give you the document checklist for your case",
-    "Review every document before you submit",
-    "Book your appointment",
-    "Help with extensions and renewals",
-  ],
+    { icon: "compass", text: "Work out which visa fits your trip" },
+    { icon: "list", text: "Give you the document checklist for your case" },
+    { icon: "file-check", text: "Review every document before you submit" },
+    { icon: "calendar", text: "Book your appointment" },
+    { icon: "refresh", text: "Help with extensions and renewals" },
+  ] satisfies { icon: IconName; text: string }[],
   doesNotTitle: "What we do not do",
+  doesNotLead: "So there are no surprises later.",
   doesNot: [
     "Decide visas or promise approval. The embassy decides.",
     "Create, change or supply documents for you.",
@@ -727,8 +742,14 @@ export const contactPage = {
     office: { icon: "pin", title: "Office", text: business.addressLine },
   } satisfies Record<string, { icon: IconName; title: string; text: string }>,
   hoursTitle: "Opening hours",
+  closedDay: "Sunday",
+  closed: "Closed",
   mapTitle: "Find the office",
+  directions: "Ask for directions",
+  directionsMessage: "Hello Tarley Travel, could you send me directions to your office?",
   followTitle: "Follow us",
+  followText: "Find Tarley Travel on Facebook and Instagram.",
+  fastest: "Fastest",
 };
 
 export const notFoundPage = {
@@ -779,6 +800,10 @@ export const meta = {
     title: "Contact Tarley Travel | WhatsApp +231 886 504 519",
     description:
       "WhatsApp, call, email or visit Tarley Travel on Old Road, Oldest Congo Town, Monrovia. Open Monday to Saturday, 7:30 am to 6:00 pm.",
+  },
+  credits: {
+    title: "Photo credits | Tarley Travel",
+    description: "Photographers and licenses for the photos used on the Tarley Travel website.",
   },
   notFound: {
     title: "Page not found | Tarley Travel",

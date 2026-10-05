@@ -22,6 +22,8 @@ interface Props {
   destination?: string | undefined;
   /** The page-load rise animation is reserved for the homepage hero. */
   animate?: boolean;
+  /** Inner pages: a bordered card on white instead of the floating hero card. */
+  inline?: boolean;
 }
 
 const {
@@ -31,6 +33,7 @@ const {
   notchClass,
   destination,
   animate = true,
+  inline = false,
 } = Astro.props;
 const fields = { flights: FlightFields, visa: VisaFields, concierge: ConciergeFields };
 ---
@@ -38,7 +41,8 @@ const fields = { flights: FlightFields, visa: VisaFields, concierge: ConciergeFi
 <div
   id={id}
   class:list={[
-    "on-light relative scroll-mt-24 self-center rounded-md bg-white text-ink shadow-quote",
+    "on-light relative scroll-mt-24 self-center rounded-md bg-white text-ink",
+    inline ? "border border-border shadow-card" : "shadow-quote",
     animate && "motion-safe:animate-rise",
   ]}
   data-quote

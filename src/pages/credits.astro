@@ -1,0 +1,50 @@
+---
+import { creditsPage, ctas, images, meta } from "@content/site";
+import type { ImageSlot } from "@lib/types";
+import Base from "@layouts/Base.astro";
+import PageHeader from "@components/PageHeader.astro";
+import Picture from "@components/Picture.astro";
+
+const credited = Object.values(images as Record<string, ImageSlot>).filter(
+  (slot) => slot.file && slot.credit,
+);
+---
+
+<Base meta={meta.credits}>
+  <PageHeader title={creditsPage.title} lead={creditsPage.lead} />
+  <div class="container-page py-14 md:py-20">
+    <p class="reveal max-w-2xl text-muted">{creditsPage.intro}</p>
+    <ul class="reveal-stagger mt-10 grid gap-5 sm:grid-cols-[repeat(2,minmax(0,1fr))] lg:grid-cols-3">
+      {credited.map((slot) => (
+        <li class="flex flex-col overflow-hidden rounded-md border border-border bg-white">
+          <Picture
+            image={slot}
+            sizes="(min-width: 64rem) 380px, (min-width: 30rem) 50vw, 100vw"
+            class="aspect-[3/2] w-full object-cover"
+            placeholderClass="photo-slot aspect-[3/2] w-full"
+          />
+          <dl class="grid flex-1 grid-cols-[auto_minmax(0,1fr)] content-start gap-x-4 gap-y-1 p-5 text-sm">
+            <dt class="text-muted">{creditsPage.usedOn}</dt>
+            <dd class="text-ink">{slot.alt}</dd>
+            <dt class="text-muted">{creditsPage.photographer}</dt>
+            <dd class="font-medium text-ink">{slot.credit?.photographer}</dd>
+            <dt class="text-muted">{creditsPage.license}</dt>
+            <dd class="text-ink">{slot.credit?.license}</dd>
+            <dt class="self-center text-muted">{creditsPage.source}</dt>
+            <dd>
+              <a
+                href={slot.credit?.source}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link inline-flex min-h-11 items-center"
+              >
+                {creditsPage.view}
+                <span class="sr-only">{ctas.newTab}</span>
+              </a>
+            </dd>
+          </dl>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

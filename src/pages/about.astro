@@ -23,7 +23,7 @@ import { whatsappUrl } from "@lib/quote/whatsapp";
   <div class="container-page grid gap-12 py-14 md:py-20 lg:grid-cols-2 lg:gap-16">
     <section aria-labelledby="story-title">
       <SectionTitle id="story-title">{aboutPage.storyTitle}</SectionTitle>
-      <p class="mt-4 text-lg">
+      <p class="reveal mt-4 text-lg">
         <Text value={placeholders.about.interim} />
       </p>
     </section>
@@ -33,7 +33,7 @@ import { whatsappUrl } from "@lib/quote/whatsapp";
     </section>
     <section aria-labelledby="team-title">
       <SectionTitle id="team-title">{aboutPage.teamTitle}</SectionTitle>
-      <div class="mt-5">
+      <div class="reveal mt-5">
         <Picture
           image={images.team}
           sizes="(min-width: 64rem) 560px, 100vw"
@@ -50,7 +50,7 @@ import { whatsappUrl } from "@lib/quote/whatsapp";
     <div class="container-page grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div>
         <SectionTitle id="visit-title">{aboutPage.visitTitle}</SectionTitle>
-        <p class="mt-4 text-lg">{business.addressLine}</p>
+        <p class="reveal mt-4 text-lg">{business.addressLine}</p>
         <p class="mt-1 text-muted">{business.hours}</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a

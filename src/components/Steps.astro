@@ -12,7 +12,10 @@ import Icon from "@components/Icon.astro";
     <h2 id="steps-title" class="reveal max-w-3xl text-3xl md:text-4xl">
       {stepsIntro.title}
     </h2>
-    <ol class="steps-route reveal-stagger relative mt-12 grid gap-10 md:mt-14 lg:grid-cols-4 lg:grid-rows-[auto_auto_1fr] lg:gap-x-8 lg:gap-y-0">
+    <ol
+      data-reveal-columns="4"
+      class="steps-route reveal-stagger relative mt-12 grid gap-10 md:mt-14 lg:grid-cols-4 lg:grid-rows-[auto_auto_1fr] lg:gap-x-8 lg:gap-y-0"
+    >
       {steps.map((step, index) => (
         <li class="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-5 lg:row-span-3 lg:grid-cols-1 lg:grid-rows-subgrid">
           <span

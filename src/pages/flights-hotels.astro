@@ -1,5 +1,5 @@
 ---
-import { flightsPage, meta } from "@content/site";
+import { flightsPage, meta, images } from "@content/site";
 import Base from "@layouts/Base.astro";
 import CheckList from "@components/CheckList.astro";
 import FeatureGrid from "@components/FeatureGrid.astro";
@@ -9,7 +9,7 @@ import WithQuote from "@components/WithQuote.astro";
 ---
 
 <Base meta={meta.flights}>
-  <PageHeader quote title={flightsPage.title} lead={flightsPage.lead} />
+  <PageHeader quote image={images.flights} title={flightsPage.title} lead={flightsPage.lead} />
   <WithQuote initial="flights" title={flightsPage.formTitle}>
     <section aria-labelledby="included-title">
       <SectionTitle id="included-title">{flightsPage.includedTitle}</SectionTitle>
@@ -21,7 +21,7 @@ import WithQuote from "@components/WithQuote.astro";
     </section>
     <section
       id="packages"
-      class="mt-14 scroll-mt-24 rounded-md border border-border bg-cream p-6"
+      class="reveal mt-14 scroll-mt-24 rounded-md border border-border bg-cream p-6"
       aria-labelledby="packages-title"
     >
       <SectionTitle id="packages-title">{flightsPage.packagesTitle}</SectionTitle>

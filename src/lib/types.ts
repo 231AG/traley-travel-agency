@@ -21,7 +21,12 @@ export type IconName =
   | "facebook"
   | "instagram"
   | "car"
-  | "bed";
+  | "bed"
+  | "calendar"
+  | "file-check"
+  | "refresh"
+  | "compass"
+  | "list";
 
 export interface Link {
   label: string;

@@ -1,5 +1,5 @@
 ---
-import { conciergePage, meta } from "@content/site";
+import { conciergePage, meta, images } from "@content/site";
 import Base from "@layouts/Base.astro";
 import FeatureGrid from "@components/FeatureGrid.astro";
 import PageHeader from "@components/PageHeader.astro";
@@ -8,7 +8,12 @@ import WithQuote from "@components/WithQuote.astro";
 ---
 
 <Base meta={meta.concierge}>
-  <PageHeader quote title={conciergePage.title} lead={conciergePage.lead} />
+  <PageHeader
+    quote
+    image={images.concierge}
+    title={conciergePage.title}
+    lead={conciergePage.lead}
+  />
   <WithQuote initial="concierge" title={conciergePage.formTitle}>
     <section aria-labelledby="included-title">
       <SectionTitle id="included-title">{conciergePage.includedTitle}</SectionTitle>
@@ -16,7 +21,7 @@ import WithQuote from "@components/WithQuote.astro";
     </section>
     <section class="mt-14" aria-labelledby="how-title">
       <SectionTitle id="how-title">{conciergePage.howTitle}</SectionTitle>
-      <ol class="mt-6 grid gap-5">
+      <ol class="reveal-stagger mt-6 grid gap-5" data-reveal-columns="8">
         {conciergePage.how.map((step, index) => (
           <li class="flex gap-4">
             <span

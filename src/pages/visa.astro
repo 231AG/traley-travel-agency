@@ -1,28 +1,63 @@
 ---
-import { meta, visaPage } from "@content/site";
+import { meta, visaPage, images } from "@content/site";
 import Base from "@layouts/Base.astro";
-import CheckList from "@components/CheckList.astro";
 import Destinations from "@components/Destinations.astro";
+import Icon from "@components/Icon.astro";
 import PageHeader from "@components/PageHeader.astro";
 import SectionTitle from "@components/SectionTitle.astro";
 import WithQuote from "@components/WithQuote.astro";
 ---
 
 <Base meta={meta.visa}>
-  <PageHeader quote title={visaPage.title} lead={visaPage.lead} />
+  <PageHeader quote image={images.visa} title={visaPage.title} lead={visaPage.lead} />
   <WithQuote initial="visa" title={visaPage.formTitle}>
-    <div class="grid gap-10 md:grid-cols-2">
-      <section aria-labelledby="does-title">
-        <SectionTitle id="does-title">{visaPage.doesTitle}</SectionTitle>
-        <CheckList items={visaPage.does} />
-      </section>
-      <section aria-labelledby="does-not-title">
-        <SectionTitle id="does-not-title">{visaPage.doesNotTitle}</SectionTitle>
-        <CheckList items={visaPage.doesNot} icon="close" />
-      </section>
-    </div>
+    <section aria-labelledby="does-title">
+      <SectionTitle id="does-title">{visaPage.doesTitle}</SectionTitle>
+      <p class="reveal mt-3 max-w-xl text-lg text-muted">{visaPage.doesLead}</p>
+      <ol
+        class="reveal-stagger mt-8 grid gap-4 sm:grid-cols-[repeat(2,minmax(0,1fr))]"
+        data-reveal-columns="2"
+      >
+        {visaPage.does.map((item, index) => (
+          <li class="group relative flex items-start gap-4 rounded-md border border-border bg-white p-5 transition-[translate,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-card sm:last:odd:col-span-2">
+            <span class="grid size-12 shrink-0 place-items-center rounded-full bg-navy text-gold transition-colors group-hover:bg-royal">
+              <Icon name={item.icon} size={22} />
+            </span>
+            <span class="pt-0.5">
+              <span class="block font-numeral text-sm font-bold text-gold-text" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="mt-0.5 block font-medium text-ink">{item.text}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
+    <section
+      class="on-dark reveal relative mt-12 overflow-hidden rounded-md bg-navy p-6 text-on-navy-muted md:p-8"
+      aria-labelledby="does-not-title"
+    >
+      <span
+        class="absolute -top-16 -right-16 size-48 rounded-full border-[24px] border-white/5"
+        aria-hidden="true"
+      ></span>
+      <h2 id="does-not-title" class="relative text-2xl text-white md:text-3xl">
+        {visaPage.doesNotTitle}
+      </h2>
+      <p class="relative mt-2">{visaPage.doesNotLead}</p>
+      <ul class="relative mt-6 grid gap-4 md:grid-cols-3">
+        {visaPage.doesNot.map((item) => (
+          <li class="flex gap-3 border-t border-white/15 pt-4 md:flex-col md:gap-2">
+            <span class="grid size-8 shrink-0 place-items-center rounded-full bg-white/10 text-gold">
+              <Icon name="close" size={16} />
+            </span>
+            <span class="text-white">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
   </WithQuote>
-  <div class="border-t border-border">
+  <div class="border-t border-border bg-cream">
     <Destinations title={visaPage.destinationsTitle} />
   </div>
 </Base>
