@@ -63,14 +63,23 @@ const methods: {
     <div class="mt-14 grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-2">
       <section aria-labelledby="map-title">
         <SectionTitle id="map-title">{contactPage.mapTitle}</SectionTitle>
-        <div
-          class="photo-slot mt-5 aspect-[16/10] w-full rounded-md border border-border"
-          data-photo-slot="map"
-        >
-          <Icon name="pin" size={28} />
-          <span>
-            <Text value={placeholders.mapPin.token} />
-          </span>
+        <div class="mt-5 rounded-md border border-border bg-cream p-6">
+          <p class="flex items-start gap-3 text-lg">
+            <Icon name="pin" size={24} class="mt-0.5 shrink-0 text-gold-text" />
+            {business.addressLine}
+          </p>
+          <p class="mt-3 text-muted">
+            <Text value={placeholders.mapPin.interim} />
+          </p>
+          <a
+            href={business.mapsSearch}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline mt-5"
+          >
+            {ctas.mapsOpen}
+            <span class="sr-only">{ctas.newTab}</span>
+          </a>
         </div>
       </section>
       <div>

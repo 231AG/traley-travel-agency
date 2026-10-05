@@ -14,6 +14,16 @@
     "height": 2560,
     "widths": [480, 800, 1200, 1600]
   },
+  "office": {
+    "width": 1920,
+    "height": 977,
+    "widths": [480, 800, 1200, 1600]
+  },
+  "team": {
+    "width": 2000,
+    "height": 1333,
+    "widths": [480, 800, 1200, 1600]
+  },
   "visa": {
     "width": 3840,
     "height": 2560,

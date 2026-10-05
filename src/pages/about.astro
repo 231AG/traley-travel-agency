@@ -24,7 +24,7 @@ import { whatsappUrl } from "@lib/quote/whatsapp";
     <section aria-labelledby="story-title">
       <SectionTitle id="story-title">{aboutPage.storyTitle}</SectionTitle>
       <p class="mt-4 text-lg">
-        <Text value={placeholders.about.token} />
+        <Text value={placeholders.about.interim} />
       </p>
     </section>
     <section aria-labelledby="how-title" class="lg:col-start-1">
@@ -42,7 +42,7 @@ import { whatsappUrl } from "@lib/quote/whatsapp";
         />
       </div>
       <p class="mt-4 text-muted">
-        <Text value={placeholders.team.token} />
+        <Text value={placeholders.team.interim} />
       </p>
     </section>
   </div>
@@ -73,12 +73,14 @@ import { whatsappUrl } from "@lib/quote/whatsapp";
           </a>
         </div>
       </div>
-      <Picture
-        image={images.office}
-        sizes="(min-width: 64rem) 560px, 100vw"
-        class="aspect-[4/3] w-full rounded-md object-cover"
-        placeholderClass="photo-slot aspect-[4/3] w-full rounded-md border border-border"
-      />
+      <div>
+        <Picture
+          image={images.office}
+          sizes="(min-width: 64rem) 560px, 100vw"
+          class="aspect-[4/3] w-full rounded-md object-cover"
+          placeholderClass="photo-slot aspect-[4/3] w-full rounded-md border border-border"
+        />
+      </div>
     </div>
   </section>
   <CtaBand />
