@@ -5,6 +5,7 @@ import {
   destinationMeta,
   destinationPage,
   destinations,
+  images,
   placeholders,
   visaPage,
   visaPageNote,
@@ -34,6 +35,7 @@ const others = destinations.filter((other) => other.slug !== d.slug);
 <Base meta={destinationMeta(d)}>
   <PageHeader
     quote
+    image={images.visa}
     title={`${d.name} ${destinationPage.titleSuffix}`}
     lead={visaPage.lead}
     breadcrumb={{ label: destinationPage.backToVisa, href: "/visa" }}
@@ -41,7 +43,7 @@ const others = destinations.filter((other) => other.slug !== d.slug);
   <WithQuote initial="visa" title={visaPage.formTitle} destination={d.name}>
     <section aria-labelledby="types-title">
       <SectionTitle id="types-title">{destinationPage.typesTitle}</SectionTitle>
-      <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+      <ul class="reveal-stagger mt-6 grid gap-4 sm:grid-cols-2" data-reveal-columns="2">
         {d.visaTypes.map((type) => (
           <li class="rounded-md border border-border p-5">
             <h3 class="font-sans text-lg font-semibold">{type.name}</h3>
@@ -52,7 +54,7 @@ const others = destinations.filter((other) => other.slug !== d.slug);
     </section>
     <section class="mt-14" aria-labelledby="requirements-title">
       <SectionTitle id="requirements-title">{destinationPage.requirementsTitle}</SectionTitle>
-      <p class="mt-5 flex items-start gap-3 rounded-md border border-border bg-cream px-5 py-4">
+      <p class="reveal mt-5 flex items-start gap-3 rounded-md border border-border bg-cream px-5 py-4">
         <Icon name="info" size={22} class="mt-0.5 shrink-0 text-navy" />
         <span>{visaPageNote}</span>
       </p>

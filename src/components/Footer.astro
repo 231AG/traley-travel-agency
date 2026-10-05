@@ -3,7 +3,6 @@ import { business, ctas, footer, social, whatsappGreeting } from "@content/site"
 import Icon from "@components/Icon.astro";
 import { whatsappUrl } from "@lib/quote/whatsapp";
 import Logo from "@components/Logo.astro";
-import PhotoCredits from "@components/PhotoCredits.astro";
 
 const linkClass =
   "inline-flex min-h-11 items-center text-sm text-on-navy-muted hover:text-white hover:underline hover:underline-offset-4";
@@ -93,9 +92,11 @@ const headingClass = "font-sans text-sm font-semibold text-white";
   </div>
   <div class="border-t border-white/10">
     <div class="container-page flex flex-wrap items-center justify-between gap-4 py-5 text-sm">
-      <div>
+      <div class="flex flex-wrap items-center gap-x-6">
         <p>{footer.copyright}</p>
-        <PhotoCredits linkClass="underline underline-offset-2 hover:text-white" />
+        <a href={footer.credits.href} class={linkClass}>
+          {footer.credits.label}
+        </a>
       </div>
       <a href="#top" class={`${linkClass} gap-2`}>
         <Icon name="arrow-up" size={18} />

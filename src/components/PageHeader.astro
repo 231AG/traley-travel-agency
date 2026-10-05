@@ -1,6 +1,7 @@
 ---
 import { jumpToQuote } from "@content/site";
-import type { Link } from "@lib/types";
+import type { ImageSlot, Link } from "@lib/types";
+import Picture from "@components/Picture.astro";
 
 interface Props {
   title: string;
@@ -8,27 +9,44 @@ interface Props {
   breadcrumb?: Link;
   /** Pages with a quote form get a jump link; on phones the form sits below the content. */
   quote?: boolean;
+  /** Optional photo for the right half on desktop (not loaded on phones). */
+  image?: ImageSlot;
 }
 
-const { title, lead, breadcrumb, quote = false } = Astro.props;
+const { title, lead, breadcrumb, quote = false, image } = Astro.props;
 ---
 
-<section class="on-dark bg-navy py-12 md:py-16">
-  <div class="container-page">
-    {breadcrumb && (
-      <a
-        href={breadcrumb.href}
-        class="mb-3 inline-flex min-h-11 items-center text-sm font-medium text-on-navy-muted hover:text-white hover:underline hover:underline-offset-4"
-      >
-        {breadcrumb.label}
-      </a>
-    )}
-    <h1 class="max-w-3xl text-4xl text-white md:text-5xl">{title}</h1>
-    <p class="mt-4 max-w-2xl text-lg text-on-navy-muted">{lead}</p>
-    {quote && (
-      <a href="#quote" class="btn btn-gold mt-6" data-quote-focus>
-        {jumpToQuote}
-      </a>
-    )}
+<section class="on-dark relative overflow-hidden bg-navy">
+  {image && (
+    <div class="absolute inset-y-0 right-0 hidden w-[45%] lg:block" aria-hidden="true">
+      <Picture
+        image={{ ...image, alt: "" }}
+        sizes="45vw"
+        media="(min-width: 64rem)"
+        priority
+        class="size-full object-cover"
+        placeholderClass="photo-slot size-full"
+      />
+      <div class="absolute inset-0 bg-linear-to-r from-navy from-0% to-navy/10 to-50%"></div>
+    </div>
+  )}
+  <div class="container-page relative py-12 md:py-16">
+    <div class:list={["motion-safe:animate-settle", image && "lg:max-w-[52%]"]}>
+      {breadcrumb && (
+        <a
+          href={breadcrumb.href}
+          class="mb-3 inline-flex min-h-11 items-center text-sm font-medium text-on-navy-muted hover:text-white hover:underline hover:underline-offset-4"
+        >
+          {breadcrumb.label}
+        </a>
+      )}
+      <h1 class="max-w-3xl text-4xl text-white md:text-5xl">{title}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-on-navy-muted">{lead}</p>
+      {quote && (
+        <a href="#quote" class="btn btn-gold mt-6" data-quote-focus>
+          {jumpToQuote}
+        </a>
+      )}
+    </div>
   </div>
 </section>

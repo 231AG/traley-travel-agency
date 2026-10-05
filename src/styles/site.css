@@ -94,15 +94,16 @@
 }
 
 /*
- * Scroll effects. CSS scroll-driven animations only: no JavaScript, and browsers
- * without support (or visitors who ask for reduced motion) simply see the content.
+ * Scroll reveal (see src/lib/reveal.ts). The script adds `reveal-pending` only to
+ * elements below the screen, then `is-revealed` when they scroll into view.
  */
-@keyframes reveal {
-  from {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-  to {
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 420ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms),
+    transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+  &.is-revealed {
     opacity: 1;
     transform: none;
   }
@@ -115,35 +116,6 @@
 @keyframes draw-y {
   from {
     transform: scaleY(0);
-  }
-}
-@utility reveal {
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 90%;
-    }
-  }
-}
-/* Children of a grid or list cascade in, each a little after the one before. */
-@utility reveal-stagger {
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      & > * {
-        animation: reveal linear both;
-        animation-timeline: view();
-        animation-range: entry 0% entry 90%;
-      }
-      @media (width >= 48rem) {
-        & > :nth-child(3n + 2) {
-          animation-range: entry 10% entry 100%;
-        }
-        & > :nth-child(3n + 3) {
-          animation-range: entry 20% entry 110%;
-        }
-      }
-    }
   }
 }
 
@@ -263,7 +235,6 @@
  * Phones: one vertical segment below each stop but the last. Desktop: one line across.
  */
 .steps-route {
-  view-timeline: --route;
   & > li {
     position: relative;
   }
@@ -291,23 +262,17 @@
       transform-origin: left;
     }
   }
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      & > li:not(:last-child)::before {
-        animation: draw-y linear both;
-        animation-timeline: view();
-        animation-range: entry 40% cover 50%;
-      }
-      @media (width >= 64rem) {
-        &::before {
-          animation: draw-x linear both;
-          animation-timeline: --route;
-          animation-range: entry 20% cover 50%;
-        }
-        & > :nth-child(4) {
-          animation-range: entry 30% entry 120%;
-        }
-      }
+  /* The path waits while the list is below the screen, then draws in once it is revealed. */
+  &.reveal-group-pending:not(.is-revealed) > li::before,
+  &.reveal-group-pending:not(.is-revealed)::before {
+    transform: scale(0);
+  }
+  &.is-revealed > li:not(:last-child)::before {
+    animation: draw-y 500ms 250ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @media (width >= 64rem) {
+    &.is-revealed::before {
+      animation: draw-x 900ms 200ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
     }
   }
 }

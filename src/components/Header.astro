@@ -77,6 +77,10 @@ const wa = whatsappUrl(whatsappGreeting);
 </header>
 
 <script>
+  import { initReveal } from "@lib/reveal";
+
+  initReveal();
+
   const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
   const menu = document.getElementById("mobile-menu");
   const label = toggle?.querySelector("[data-menu-label]");

@@ -68,7 +68,7 @@ import Icon from "@components/Icon.astro";
     <h2 id="services-title" class="text-3xl">
       {copy.servicesTitle}
     </h2>
-    <ul class="mt-8 grid gap-4 md:grid-cols-3">
+    <ul class="reveal-stagger mt-8 grid gap-4 md:grid-cols-3">
       {services.map((service) => (
         <li>
           <a
@@ -100,7 +100,7 @@ import Icon from "@components/Icon.astro";
       ))}
     </ul>
 
-    <div class="mt-14 rounded-md border border-border bg-cream p-6">
+    <div class="reveal mt-14 rounded-md border border-border bg-cream p-6">
       <h2 class="text-2xl">{copy.helpTitle}</h2>
       <p class="mt-2 text-muted">{copy.helpText}</p>
       <a

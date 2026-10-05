@@ -9,7 +9,7 @@ interface Props {
 const { items, icon = "check" } = Astro.props;
 ---
 
-<ul class="mt-5 grid gap-3">
+<ul class="reveal-stagger mt-5 grid gap-3" data-reveal-columns="8">
   {items.map((item) => (
     <li class="flex gap-3">
       <Icon
