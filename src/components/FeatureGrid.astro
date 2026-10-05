@@ -9,7 +9,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<ul class="mt-6 grid gap-4 sm:grid-cols-2">
+<ul class="reveal-stagger mt-6 grid gap-4 sm:grid-cols-2">
   {items.map((item) => (
     <li class="rounded-md border border-border p-5">
       {item.icon && (

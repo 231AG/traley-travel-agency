@@ -24,12 +24,12 @@ const views: Record<QuoteType, [string, string, string, string]> = {
 const [leftLabel, left, rightLabel, right] = views[initial];
 ---
 
-<div class="relative border-t-2 border-dashed border-border px-5 py-4 sm:px-7" aria-hidden="true">
+<div class="relative border-t-2 border-dashed border-border px-5 py-3 sm:px-7" aria-hidden="true">
   <span class:list={["absolute -top-3 -left-3 size-6 rounded-full", notchClass]}></span>
   <span class:list={["absolute -top-3 -right-3 size-6 rounded-full", notchClass]}></span>
   <div class="flex items-center justify-between gap-3">
     <div class="min-w-0">
-      <p class="text-sm text-muted" data-stub-label="left">
+      <p class="text-sm text-muted lg:hidden" data-stub-label="left">
         {leftLabel}
       </p>
       <p class="text-base leading-snug font-semibold break-words text-navy" data-stub="left">
@@ -38,7 +38,7 @@ const [leftLabel, left, rightLabel, right] = views[initial];
     </div>
     <Icon name="plane" size={22} class="shrink-0 text-gold-text" />
     <div class="min-w-0 text-right">
-      <p class="text-sm text-muted" data-stub-label="right">
+      <p class="text-sm text-muted lg:hidden" data-stub-label="right">
         {rightLabel}
       </p>
       <p class="text-base leading-snug font-semibold break-words text-navy" data-stub="right">

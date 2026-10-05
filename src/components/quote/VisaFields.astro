@@ -13,7 +13,7 @@ const { idPrefix: p, selected } = Astro.props;
 const f = quote.fields;
 ---
 
-<div class="grid gap-4">
+<div class="grid gap-4 lg:gap-3">
   <Field id={`${p}-destination`} label={f.destination}>
     <select
       id={`${p}-destination`}

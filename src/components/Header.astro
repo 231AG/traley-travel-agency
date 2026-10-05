@@ -4,23 +4,25 @@ import Icon from "@components/Icon.astro";
 import { whatsappUrl } from "@lib/quote/whatsapp";
 import Logo from "@components/Logo.astro";
 
-const current = Astro.url.pathname.replace(/\.html$/, "");
+const current = Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "/") || "/";
 /** Marks the section a page belongs to; hash links point into the homepage and are never "current". */
 const isCurrent = (href: string) =>
-  !href.includes("#") && (current === href || current.startsWith(`${href}/`)) ? "page" : undefined;
+  !href.includes("#") && (current === href || (href !== "/" && current.startsWith(`${href}/`)))
+    ? "page"
+    : undefined;
 const wa = whatsappUrl(whatsappGreeting);
 ---
 
 <header class="sticky top-0 z-40 border-b border-border bg-white">
-  <div class="container-page flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
+  <div class="container-page flex h-16 items-center justify-between gap-4 md:h-[4.5rem] lg:h-16">
     <Logo href="/" />
     <nav aria-label="Main" class="hidden lg:block">
-      <ul class="flex items-center gap-1">
+      <ul class="flex items-center gap-0.5 xl:gap-1">
         {nav.map((item) => (
           <li>
             <a
               href={item.href}
-              class="inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-medium text-navy hover:text-royal hover:underline hover:underline-offset-4"
+              class="relative inline-flex min-h-11 items-center rounded-sm px-3 text-sm font-medium text-muted transition-colors after:absolute after:inset-x-3 after:bottom-0.5 after:h-[3px] after:origin-left after:scale-x-0 after:rounded-full after:bg-border-strong after:transition-transform after:duration-200 hover:text-navy hover:after:scale-x-100 aria-[current=page]:font-semibold aria-[current=page]:text-navy aria-[current=page]:after:scale-x-100 aria-[current=page]:after:bg-gold"
               aria-current={isCurrent(item.href)}
             >
               {item.label}
@@ -63,7 +65,7 @@ const wa = whatsappUrl(whatsappGreeting);
         <li class="border-b border-border last:border-0">
           <a
             href={item.href}
-            class="flex min-h-12 items-center text-base font-medium text-navy"
+            class="-mx-3 flex min-h-12 items-center border-l-4 border-transparent px-3 text-base font-medium text-muted aria-[current=page]:border-gold aria-[current=page]:bg-cream aria-[current=page]:font-semibold aria-[current=page]:text-navy"
             aria-current={isCurrent(item.href)}
           >
             {item.label}

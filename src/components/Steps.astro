@@ -1,5 +1,6 @@
 ---
 import { steps, stepsIntro } from "@content/site";
+import Icon from "@components/Icon.astro";
 ---
 
 <section
@@ -8,20 +9,27 @@ import { steps, stepsIntro } from "@content/site";
   aria-labelledby="steps-title"
 >
   <div class="container-page">
-    <h2 id="steps-title" class="max-w-3xl text-3xl md:text-4xl">
+    <h2 id="steps-title" class="reveal max-w-3xl text-3xl md:text-4xl">
       {stepsIntro.title}
     </h2>
-    <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <ol class="steps-route reveal-stagger relative mt-12 grid gap-10 md:mt-14 lg:grid-cols-4 lg:grid-rows-[auto_auto_1fr] lg:gap-x-8 lg:gap-y-0">
       {steps.map((step, index) => (
-        <li class="border-t-2 border-navy pt-5">
+        <li class="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-5 lg:row-span-3 lg:grid-cols-1 lg:grid-rows-subgrid">
           <span
-            class="font-numeral text-3xl leading-none font-bold text-gold-text md:text-4xl"
+            class:list={[
+              "relative z-10 row-span-2 grid size-14 place-items-center rounded-full border-2 font-numeral text-2xl leading-none font-bold lg:row-span-1",
+              index === steps.length - 1
+                ? "border-navy bg-navy text-gold"
+                : "border-navy bg-cream text-gold-text",
+            ]}
             aria-hidden="true"
           >
-            {index + 1}
+            {index === steps.length - 1 ? <Icon name="plane" size={24} /> : index + 1}
           </span>
-          <h3 class="mt-4 font-sans text-lg font-semibold">{step.title}</h3>
-          <p class="mt-2 text-muted">{step.text}</p>
+          <h3 class="self-center font-sans text-lg font-semibold lg:mt-6 lg:self-start">
+            {step.title}
+          </h3>
+          <p class="col-start-2 mt-2 text-muted lg:col-start-1">{step.text}</p>
         </li>
       ))}
     </ol>

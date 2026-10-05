@@ -10,30 +10,32 @@ const { idPrefix: p } = Astro.props;
 const f = quote.fields;
 ---
 
-<div class="grid gap-4">
-  <Field id={`${p}-from`} label={f.from}>
-    <input
-      id={`${p}-from`}
-      name="from"
-      class="field-input"
-      autocomplete="off"
-      value={business.airportShort}
-      data-stub-source="from"
-      aria-describedby={`${p}-from-error`}
-    />
-  </Field>
-  <Field id={`${p}-to`} label={f.to}>
-    <input
-      id={`${p}-to`}
-      name="to"
-      class="field-input"
-      autocomplete="off"
-      placeholder={f.toPlaceholder}
-      required
-      data-stub-source="to"
-      aria-describedby={`${p}-to-error`}
-    />
-  </Field>
+<div class="grid gap-4 lg:gap-3">
+  <div class="grid gap-4 min-[400px]:grid-cols-[repeat(2,minmax(0,1fr))] min-[400px]:gap-3">
+    <Field id={`${p}-from`} label={f.from}>
+      <input
+        id={`${p}-from`}
+        name="from"
+        class="field-input"
+        autocomplete="off"
+        value={business.airportShort}
+        data-stub-source="from"
+        aria-describedby={`${p}-from-error`}
+      />
+    </Field>
+    <Field id={`${p}-to`} label={f.to}>
+      <input
+        id={`${p}-to`}
+        name="to"
+        class="field-input"
+        autocomplete="off"
+        placeholder={f.toPlaceholder}
+        required
+        data-stub-source="to"
+        aria-describedby={`${p}-to-error`}
+      />
+    </Field>
+  </div>
   <div class="grid gap-3 min-[400px]:grid-cols-[repeat(2,minmax(0,1fr))]">
     <Field id={`${p}-departure`} label={f.departure} optional={f.optional}>
       <input
