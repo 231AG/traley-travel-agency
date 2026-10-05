@@ -7,32 +7,43 @@ interface Props {
 }
 
 const { title = destinationsIntro.title } = Astro.props;
+/** "Visit, study, business" becomes ["Visit", "Study", "Business"]. */
+const tags = (purposes: string) =>
+  purposes.split(", ").map((p) => p.charAt(0).toUpperCase() + p.slice(1));
 ---
 
 <section id="destinations" class="scroll-mt-20 py-16 md:py-24" aria-labelledby="destinations-title">
   <div class="container-page">
-    <h2 id="destinations-title" class="max-w-xl text-3xl md:text-4xl">
+    <h2 id="destinations-title" class="reveal max-w-xl text-3xl md:text-4xl">
       {title}
     </h2>
-    <ul class="mt-12 grid grid-cols-[repeat(2,minmax(0,1fr))] gap-3 sm:gap-4 lg:grid-cols-3">
+    <ul class="reveal-stagger mt-12 grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-[repeat(2,minmax(0,1fr))] lg:grid-cols-3 lg:gap-5">
       {destinations.map((d) => (
-        <li class="flex flex-col rounded-md border border-border bg-white p-4 sm:p-5">
-          <h3 class="text-xl">{d.name}</h3>
-          <p class="mt-1 text-sm text-muted">{d.purposes}</p>
-          <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1">
+        <li class="group flex flex-col rounded-md border border-border bg-white p-5 transition-[translate,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-border-strong hover:shadow-card sm:p-6">
+          <p class="flex items-center gap-2 text-sm font-medium text-gold-text">
+            <Icon name="pin" size={16} class="shrink-0" />
+            {d.region}
+          </p>
+          <h3 class="mt-2 text-2xl">{d.name}</h3>
+          <ul
+            class="mt-4 flex flex-wrap gap-2"
+            aria-label={`${destinationsIntro.purposesLabel} ${d.name}`}
+          >
+            {tags(d.purposes).map((tag) => (
+              <li class="rounded-sm bg-cream px-2.5 py-1 text-sm text-ink">{tag}</li>
+            ))}
+          </ul>
+          <div class="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-6">
             <a
               href="#quote"
-              class="inline-flex min-h-11 items-center text-sm font-semibold text-royal hover:underline hover:underline-offset-4"
+              class="btn btn-navy min-h-11 px-5 py-2 text-sm"
               data-quote-select="visa"
               data-quote-destination={d.name}
             >
               {destinationsIntro.start}
               <span class="sr-only">, {d.name}</span>
             </a>
-            <a
-              href={`/visa/${d.slug}`}
-              class="inline-flex min-h-11 items-center text-sm text-royal underline underline-offset-4"
-            >
+            <a href={`/visa/${d.slug}`} class="link inline-flex min-h-11 items-center text-sm">
               {destinationsIntro.details}
               <span class="sr-only">, {d.name}</span>
             </a>
@@ -40,9 +51,14 @@ const { title = destinationsIntro.title } = Astro.props;
         </li>
       ))}
     </ul>
-    <p class="mt-8 flex items-start gap-3 rounded-md border border-border bg-cream px-5 py-4 text-sm text-ink">
-      <Icon name="info" size={20} class="mt-0.5 shrink-0 text-navy" />
-      {visaNote}
-    </p>
+    <aside
+      class="reveal mt-8 flex items-start gap-4 rounded-r-md border-l-4 border-gold bg-cream px-5 py-4"
+      aria-label={destinationsIntro.noteLabel}
+    >
+      <span class="grid size-9 shrink-0 place-items-center rounded-full bg-white text-navy">
+        <Icon name="info" size={20} />
+      </span>
+      <p class="self-center text-ink">{visaNote}</p>
+    </aside>
   </div>
 </section>

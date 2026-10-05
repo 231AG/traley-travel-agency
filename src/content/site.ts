@@ -229,6 +229,7 @@ export const images = {
 } satisfies Record<string, ImageSlot>;
 
 export const nav: Link[] = [
+  { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
   { label: "Visa", href: "/visa" },
   { label: "How it works", href: "/#how-it-works" },
@@ -372,6 +373,8 @@ export const destinationsIntro = {
   title: "Planning to travel? Start with your destination.",
   start: "Start a request",
   details: "Visa details",
+  noteLabel: "About visa requirements",
+  purposesLabel: "Visa purposes for",
 };
 
 export const destinations: Destination[] = [
@@ -379,6 +382,7 @@ export const destinations: Destination[] = [
     slug: "united-states",
     name: "United States",
     shortName: "the US",
+    region: "North America",
     purposes: "Visit, study, business",
     visaTypes: [
       { name: "Visitor visa (B1/B2)", forWho: "Tourism, visiting family, short business trips" },
@@ -394,6 +398,7 @@ export const destinations: Destination[] = [
     slug: "united-kingdom",
     name: "United Kingdom",
     shortName: "the UK",
+    region: "Europe",
     purposes: "Visit, study, business",
     visaTypes: [
       { name: "Standard Visitor visa", forWho: "Tourism, visiting family, business meetings" },
@@ -409,6 +414,7 @@ export const destinations: Destination[] = [
     slug: "canada",
     name: "Canada",
     shortName: "Canada",
+    region: "North America",
     purposes: "Visit, study",
     visaTypes: [
       { name: "Visitor visa", forWho: "Tourism and visiting family" },
@@ -424,6 +430,7 @@ export const destinations: Destination[] = [
     slug: "schengen",
     name: "Schengen Area",
     shortName: "the Schengen Area",
+    region: "Europe",
     purposes: "Short-stay visits to Europe",
     visaTypes: [
       {
@@ -441,6 +448,7 @@ export const destinations: Destination[] = [
     slug: "uae",
     name: "United Arab Emirates",
     shortName: "the UAE",
+    region: "Middle East",
     purposes: "Tourism, business",
     visaTypes: [
       { name: "Tourist visa", forWho: "Holidays and visiting family" },
@@ -456,6 +464,7 @@ export const destinations: Destination[] = [
     slug: "china",
     name: "China",
     shortName: "China",
+    region: "East Asia",
     purposes: "Business, tourism",
     visaTypes: [
       { name: "Business visa (M)", forWho: "Trade, meetings and trade fairs" },

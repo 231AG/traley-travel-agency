@@ -86,6 +86,8 @@ export interface Destination {
   slug: string;
   name: string;
   shortName: string;
+  /** Short geographic label shown on destination cards. */
+  region: string;
   purposes: string;
   visaTypes: VisaType[];
   officialSource: ExternalLink;

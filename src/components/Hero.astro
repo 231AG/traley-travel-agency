@@ -18,13 +18,18 @@ import QuoteCard from "@components/quote/QuoteCard.astro";
     />
     <div class="absolute inset-0 bg-linear-to-r from-navy from-0% to-transparent to-40%"></div>
   </div>
-  <div class="container-page relative grid grid-cols-[minmax(0,1fr)] gap-10 pt-12 pb-14 md:pt-16 lg:grid-cols-[1fr_minmax(0,28rem)] lg:gap-16 lg:py-20">
+  <div class="container-page relative grid grid-cols-[minmax(0,1fr)] gap-10 pt-10 pb-14 md:pt-14 lg:grid-cols-[1fr_minmax(0,29rem)] lg:gap-16 lg:py-[clamp(0.75rem,3vh,3.5rem)]">
     <div class="self-center">
-      <h1 id="hero-title" class="text-4xl text-white md:text-5xl">
+      <h1
+        id="hero-title"
+        class="text-4xl tracking-tight text-white motion-safe:animate-settle md:text-5xl"
+      >
         {hero.title}
       </h1>
-      <p class="mt-5 max-w-xl text-lg text-on-navy-muted">{hero.subtitle}</p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      <p class="mt-5 max-w-xl text-lg text-on-navy-muted motion-safe:animate-rise motion-safe:[animation-delay:120ms]">
+        {hero.subtitle}
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3 motion-safe:animate-rise motion-safe:[animation-delay:220ms]">
         <a href="#quote" class="btn btn-gold w-full sm:w-auto" data-quote-focus>
           {ctas.quote}
         </a>
@@ -39,7 +44,7 @@ import QuoteCard from "@components/quote/QuoteCard.astro";
           <span class="sr-only">{ctas.newTab}</span>
         </a>
       </div>
-      <p class="mt-8 flex max-w-md items-start gap-2 text-sm text-on-navy-muted">
+      <p class="mt-8 flex max-w-md items-start gap-2 text-sm text-on-navy-muted motion-safe:animate-rise motion-safe:[animation-delay:320ms]">
         <Icon name="pin" size={20} class="mt-0.5 shrink-0 text-gold" />
         {hero.location}
       </p>
