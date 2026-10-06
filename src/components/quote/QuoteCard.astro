@@ -3,7 +3,7 @@
  * The boarding-pass quote card. Markup only; behavior lives in
  * src/shared/quote/controller.ts and is wired through data attributes.
  */
-import { business, quote } from "@content/site";
+import { quote } from "@content/site";
 import type { QuoteType } from "@lib/types";
 import Icon from "@components/Icon.astro";
 import ConciergeFields from "@components/quote/ConciergeFields.astro";
@@ -51,20 +51,6 @@ const fields = { flights: FlightFields, visa: VisaFields, concierge: ConciergeFi
   <div class="p-5 sm:px-7 sm:py-6 lg:py-5">
     <h2 class="text-2xl">{title}</h2>
     <p class="mt-1 text-sm text-muted">{quote.subtitle}</p>
-    <div class="mt-4 grid gap-2 rounded-md border border-border bg-cream p-3 text-sm text-muted sm:grid-cols-3">
-      <span class="flex items-center gap-2">
-        <Icon name="clock" size={18} class="shrink-0 text-gold-text" />
-        Under 30 min
-      </span>
-      <span class="flex items-center gap-2">
-        <Icon name="receipt" size={18} class="shrink-0 text-gold-text" />
-        Receipts
-      </span>
-      <span class="flex items-center gap-2">
-        <Icon name="pin" size={18} class="shrink-0 text-gold-text" />
-        {business.city}
-      </span>
-    </div>
 
     <div
       role="tablist"
