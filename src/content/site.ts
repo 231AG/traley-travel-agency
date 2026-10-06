@@ -173,59 +173,33 @@ export const images = {
   },
   flights: {
     id: "flights",
-    caption: "Photo: aircraft on the apron at Roberts International",
-    alt: "A passenger jet flying overhead against a blue sky",
+    caption: "Photo: traveler at the airport checking flight details",
+    alt: "A traveler with luggage checking flight details on a phone at an airport",
     file: "flights",
-    credit: {
-      photographer: "Jordan Sanchez (Unsplash)",
-      source: "https://commons.wikimedia.org/wiki/File:Passenger_airplane_(Unsplash).jpg",
-      license: "CC0",
-    },
   },
   visa: {
     id: "visa",
-    caption: "Photo: passport and application documents on a desk",
-    alt: "A passport and printed travel papers on a desk",
+    caption: "Photo: visa documents being reviewed at a travel agency desk",
+    alt: "A travel consultant reviewing passport and visa documents with a client",
     file: "visa",
-    credit: {
-      photographer: "Alex Robert (Unsplash)",
-      source: "https://commons.wikimedia.org/wiki/File:Passport_documents_desk_(Unsplash).jpg",
-      license: "CC0",
-    },
   },
   concierge: {
     id: "concierge",
-    caption: "Photo: a real Liberian location, Monrovia or the coast",
-    alt: "A Welcome to Liberia sign in the arrivals hall at Roberts International Airport",
+    caption: "Photo: airport pickup arranged before arrival",
+    alt: "A professional driver greeting an arriving traveler with luggage outside an airport",
     file: "concierge",
-    credit: {
-      photographer: "Sm105",
-      source: "https://commons.wikimedia.org/wiki/File:Arrivals_at_new_terminal_GLRB.jpg",
-      license: "CC BY-SA 4.0",
-    },
   },
   team: {
     id: "team",
-    caption: "Photo: the real Tarley team at their Monrovia office",
-    alt: "A laptop, phone, coffee and travel magazine on a desk, ready for trip planning",
+    caption: "Photo: travel consultants helping a client plan a trip",
+    alt: "Travel consultants sitting with a client in a bright office and planning a trip",
     file: "team",
-    credit: {
-      photographer: "Ewan Robertson (Unsplash)",
-      source:
-        "https://commons.wikimedia.org/wiki/File:Round_the_world_trip_planning_(Unsplash).jpg",
-      license: "CC0",
-    },
   },
   office: {
     id: "office",
-    caption: "Photo: the Tarley office entrance on Old Road, so visitors recognize it",
-    alt: "Colored pins on a wooden map",
+    caption: "Photo: welcoming travel agency office reception",
+    alt: "A visitor entering a bright travel agency reception area",
     file: "office",
-    credit: {
-      photographer: "delfi de la Rua (Unsplash)",
-      source: "https://commons.wikimedia.org/wiki/File:Map_with_colorful_pins_(Unsplash).jpg",
-      license: "CC0",
-    },
   },
 } satisfies Record<string, ImageSlot>;
 
