@@ -10,14 +10,15 @@ interface Props {
 const { service } = Astro.props;
 ---
 
-<article class="flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-card">
+<article class="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-card transition-[translate,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-border-strong hover:shadow-quote">
   <div class="relative aspect-[16/9] bg-mist">
     <Picture
       image={service.image}
       sizes="(min-width: 64rem) 380px, (min-width: 48rem) 50vw, 100vw"
-      class="absolute inset-0 size-full object-cover"
+      class="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.035]"
       placeholderClass="photo-slot absolute inset-0 size-full"
     />
+    <div class="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-navy/35 to-transparent"></div>
     <span class="absolute -bottom-6 left-6 inline-flex size-12 items-center justify-center rounded-full bg-navy text-gold ring-4 ring-white">
       <Icon name={service.icon} size={24} />
     </span>

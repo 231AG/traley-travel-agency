@@ -207,7 +207,6 @@ export const nav: Link[] = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
   { label: "Visa", href: "/visa" },
-  { label: "How it works", href: "/#how-it-works" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -230,10 +229,10 @@ export const ctas = {
 export const whatsappGreeting = "Hello Tarley Travel, I have a question about a trip.";
 
 export const hero = {
-  title: "Travel the World without a guesswork.",
+  title: "Travel the World without a guesswork",
   subtitle:
-    "Flights, visa assistance, and arrival arrangements for visitors to Liberia, handled by one team on WhatsApp.",
-  location: "Based in Monrovia, serving travelers across Liberia and the diaspora",
+    "Flight booking, visa application support, hotels and airport pickup from a Monrovia travel agency you can reach on WhatsApp.",
+  location: `Office on ${business.street}, ${business.city}. Open ${business.hoursShort}.`,
 };
 
 export const trustLabel = "Why travelers use Tarley";
@@ -262,8 +261,8 @@ export const trust: TrustItem[] = [
 ];
 
 export const servicesIntro = {
-  title: "Everything you need before and during your trip",
-  text: "Holiday, honeymoon and group packages are available on request.",
+  title: "Travel services built for real trips from Liberia",
+  text: "Choose one service or ask us to combine flights, visas, hotels and arrival support into one plan.",
 };
 
 export const services: Service[] = [
@@ -273,7 +272,7 @@ export const services: Service[] = [
     icon: "plane",
     title: "Flights & hotels",
     summary:
-      "We compare fares from the airlines flying out of Monrovia and book the one that fits your dates and budget.",
+      "We compare flight and hotel options for your dates, then send the best-fit choices with the full price shown up front.",
     checklist: [
       "One-way, return and multi-city",
       "Hotels at your destination",
@@ -289,7 +288,7 @@ export const services: Service[] = [
     icon: "passport",
     title: "Visa assistance",
     summary:
-      "We prepare your file, book your appointment and check every document. Embassies decide; we make sure nothing is missing.",
+      "We help you prepare a complete application file, review documents and book appointments. Embassies decide; we keep the process clear.",
     checklist: [
       "Tourist, family, study and business visas",
       "Document checklist and review",
@@ -305,7 +304,7 @@ export const services: Service[] = [
     icon: "pin",
     title: "Liberia concierge",
     summary:
-      "Coming home or visiting for the first time? Your pickup, room and driver are arranged before you land.",
+      "Landing at Roberts International? We arrange airport pickup, accommodation and a driver before you arrive.",
     checklist: [
       "Airport pickup at Roberts International",
       "Hotels and guesthouses",
@@ -453,9 +452,11 @@ export const destinations: Destination[] = [
 ];
 
 export const about = {
+  eyebrow: "Meet Tarley Travel",
   title: "Your travel plans, handled by people who know Liberia",
   lead: `${business.name} is a travel agency based in ${business.city}, ${business.country}.`,
-  story: placeholders.about.interim,
+  story:
+    "From finding a flight to preparing your visa application, our Monrovia team helps you put the details in place. Traveling to Liberia? We can arrange your pickup, hotel and driver before you land.",
   labels: { office: "Office", hours: "Hours", phone: "Phone & WhatsApp", email: "Email" },
 };
 
@@ -483,7 +484,6 @@ export const footer = {
   ] satisfies Link[],
   company: [
     { label: "About us", href: "/about" },
-    { label: "How it works", href: "/#how-it-works" },
     { label: "Contact", href: "/contact" },
   ] satisfies Link[],
   copyright: `© ${new Date().getFullYear()} ${business.name}. All rights reserved.`,
@@ -506,8 +506,8 @@ export const creditsPage = {
 
 export const quote = {
   title: "Request a quote",
-  subtitle: "Tell us where you're going. We reply on WhatsApp.",
-  noPayment: "No payment needed to get a quote.",
+  subtitle: "Share a few details. A real person replies on WhatsApp.",
+  noPayment: "Free quote. No payment until you confirm.",
   tabsLabel: "Quote type",
   tabs: [
     { id: "flights", label: "Flights" },
@@ -591,7 +591,7 @@ export const quote = {
 
 export const flightsPage = {
   title: "Flights & hotels from Monrovia",
-  lead: "Tell us where and when. We compare what the airlines flying out of Roberts International offer and send you the options that fit.",
+  lead: "Tell us where and when. We compare flight and hotel options from Monrovia and send clear prices before anything is booked.",
   includedTitle: "What we book",
   included: [
     {
@@ -613,7 +613,7 @@ export const flightsPage = {
   ] satisfies { icon: IconName; title: string; text: string }[],
   pricingTitle: "How pricing works",
   pricing: [
-    "Each option we send shows the full price: the fare, taxes and our service fee.",
+    "Each option shows the full price: fare, taxes and our service fee.",
     "You choose. Nothing is booked until you confirm.",
     `You pay by ${business.paymentMethods.join(", ").replace(/, ([^,]*)$/, " or $1")}, and you get a receipt for every payment.`,
     "Your e-ticket and booking details come to you on WhatsApp and email.",
@@ -626,10 +626,11 @@ export const flightsPage = {
 };
 
 export const visaPage = {
-  title: "Visa assistance",
-  lead: "We help you prepare a complete application, so you go to your appointment ready.",
+  title: "Visa assistance in Monrovia",
+  lead: "We help travelers in Liberia prepare complete visa files for the US, UK, Canada, Schengen Area, UAE, China and other destinations.",
   doesTitle: "What we do",
-  doesLead: "From the first question to the appointment, we prepare the application with you.",
+  doesLead:
+    "From the first question to the appointment, we prepare the application with you and keep the requirements current.",
   does: [
     { icon: "compass", text: "Work out which visa fits your trip" },
     { icon: "list", text: "Give you the document checklist for your case" },
@@ -660,8 +661,8 @@ export const destinationPage = {
 };
 
 export const conciergePage = {
-  title: "Liberia concierge",
-  lead: "Coming home after years away, or visiting Liberia for the first time? We arrange the first days so you can land and go.",
+  title: "Liberia airport pickup and arrival concierge",
+  lead: "Coming home after years away, or visiting Liberia for the first time? We arrange pickup, rooms and drivers so your first days are already handled.",
   includedTitle: "What we arrange",
   included: [
     {
@@ -719,6 +720,9 @@ export const contactPage = {
   closedDay: "Sunday",
   closed: "Closed",
   mapTitle: "Find the office",
+  mapLabel: "Old Road, Oldest Congo Town, Monrovia",
+  mapNote:
+    "The map shows our area in Monrovia. Message us for the exact office pin and directions before you visit.",
   directions: "Ask for directions",
   directionsMessage: "Hello Tarley Travel, could you send me directions to your office?",
   followTitle: "Follow us",
@@ -747,24 +751,24 @@ export const jumpToQuote = "Get a free quote";
 
 export const meta = {
   home: {
-    title: "Tarley Travel | Flights, visas and arrivals from Monrovia, Liberia",
+    title: "Travel Agency in Monrovia, Liberia | Tarley Travel",
     description:
-      "Flights, visa assistance and Liberia arrival arrangements from one team in Monrovia. Get a free quote on WhatsApp.",
+      "Tarley Travel helps with flights, hotels, visa assistance and Liberia airport pickup from Monrovia. Get a free quote on WhatsApp.",
   },
   flights: {
-    title: "Flights & hotels from Monrovia | Tarley Travel",
+    title: "Flight Booking & Hotels in Monrovia | Tarley Travel",
     description:
-      "Flight and hotel bookings from Roberts International Airport, with the full price shown before you pay. Get a free quote on WhatsApp.",
+      "Book flights and hotels from Monrovia with clear prices, receipts and WhatsApp support from Tarley Travel.",
   },
   visa: {
-    title: "Visa assistance in Monrovia | Tarley Travel",
+    title: "Visa Assistance in Monrovia, Liberia | Tarley Travel",
     description:
-      "Help preparing visa applications for the US, UK, Canada, Schengen Area, UAE and China. Document review and appointment booking.",
+      "Visa application support in Liberia for the US, UK, Canada, Schengen Area, UAE and China. Document review and appointment booking.",
   },
   concierge: {
-    title: "Liberia arrival concierge | Tarley Travel",
+    title: "Liberia Airport Pickup & Arrival Concierge | Tarley Travel",
     description:
-      "Airport pickup at Roberts International, hotels, a car with driver and day trips, arranged before you land in Liberia.",
+      "Arrange airport pickup at Roberts International, hotels, a car with driver and day trips before you land in Liberia.",
   },
   about: {
     title: "About Tarley Travel | Travel agency in Monrovia, Liberia",
@@ -788,7 +792,7 @@ export const meta = {
 
 export function destinationMeta(destination: Destination): PageMeta {
   return {
-    title: `${destination.name} visa help from Liberia | Tarley Travel`,
-    description: `Help preparing your ${destination.name} visa application from Monrovia: visa types, document review and appointment booking.`,
+    title: `${destination.name} Visa Help from Liberia | Tarley Travel`,
+    description: `Visa assistance in Monrovia for ${destination.name}: application guidance, document review and appointment support.`,
   };
 }

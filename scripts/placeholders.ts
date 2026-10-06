@@ -62,7 +62,7 @@ const bracketRows = [...tokenPages.entries()].map(
 );
 
 const stockRows = Object.values(images)
-  .filter((slot) => slot.file && slot.credit)
+  .filter((slot) => "credit" in slot)
   .map(
     (slot) =>
       `| \`${slot.id}\` | ${slot.alt} (${slot.credit?.photographer}, ${slot.credit?.license}) | ${slot.caption} |`,

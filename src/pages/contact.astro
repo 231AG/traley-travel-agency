@@ -1,168 +1,131 @@
 ---
-import {
-  business,
-  contactPage,
-  ctas,
-  images,
-  meta,
-  placeholders,
-  social,
-  whatsappGreeting,
-} from "@content/site";
+import { business, contactPage, ctas, meta, social, whatsappGreeting } from "@content/site";
 import Base from "@layouts/Base.astro";
 import PageHeader from "@components/PageHeader.astro";
-import Picture from "@components/Picture.astro";
-import SectionTitle from "@components/SectionTitle.astro";
 import Icon from "@components/Icon.astro";
-import Text from "@components/Text.astro";
 import { whatsappUrl } from "@lib/quote/whatsapp";
 
 const m = contactPage.methods;
-const wa = whatsappUrl(whatsappGreeting);
-const directions = whatsappUrl(contactPage.directionsMessage);
-const week = [
-  ...business.openingHoursSpec.days.map((day) => ({ day, hours: business.hoursRange })),
-  { day: contactPage.closedDay, hours: contactPage.closed },
+const mapUrl = `https://www.google.com/maps/embed?origin=mfe&pb=!1m2!2m1!1s${encodeURIComponent(business.addressLine)}`;
+const methods = [
+  { ...m.phone, href: business.phoneHref, label: business.phoneDisplay },
+  { ...m.email, href: `mailto:${business.email}`, label: business.email },
 ];
-const cardClass =
-  "flex flex-col rounded-md border border-border bg-white p-6 transition-[translate,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-card";
 ---
 
 <Base meta={meta.contact} jsonLd>
   <PageHeader title={contactPage.title} lead={contactPage.lead} />
-  <div class="container-page py-14 md:py-20">
-    <ul class="reveal-stagger grid gap-4 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
-      <li class="on-dark relative flex flex-col overflow-hidden rounded-md bg-navy p-6 text-on-navy-muted md:col-span-2 md:p-8 lg:col-span-1">
-        <span
-          class="absolute -right-10 -bottom-12 size-44 rounded-full border-[22px] border-white/5"
-          aria-hidden="true"
-        ></span>
-        <div class="relative flex items-center gap-3">
-          <span class="grid size-12 place-items-center rounded-full bg-gold text-navy">
-            <Icon name="whatsapp" size={24} />
-          </span>
-          <span class="rounded-sm bg-white/10 px-2 py-0.5 text-sm font-medium text-gold">
-            {contactPage.fastest}
-          </span>
+  <div class="container-page py-12 md:py-16">
+    <section
+      class="grid gap-8 border-b border-border pb-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16"
+      aria-labelledby="contact-whatsapp"
+    >
+      <div class="min-w-0 border-l-4 border-gold pl-6 md:pl-8">
+        <div class="flex items-center gap-3 text-gold-text">
+          <Icon name="whatsapp" size={26} />
+          <span class="text-sm font-semibold">{contactPage.fastest}</span>
         </div>
-        <h2 class="relative mt-5 text-2xl text-white md:text-3xl">{m.whatsapp.title}</h2>
-        <p class="relative mt-1">{m.whatsapp.text}</p>
-        <div class="relative mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-6">
-          <a href={wa} target="_blank" rel="noopener noreferrer" class="btn btn-gold">
-            <Icon name="whatsapp" size={18} />
-            {ctas.whatsappLong}
-            <span class="sr-only">{ctas.newTab}</span>
-          </a>
-          <span class="text-white">{business.phoneDisplay}</span>
-        </div>
-      </li>
-      <li class={cardClass}>
-        <span class="grid size-11 place-items-center rounded-full bg-navy text-gold">
-          <Icon name={m.phone.icon} size={22} />
-        </span>
-        <h2 class="mt-4 font-sans text-lg font-semibold">{m.phone.title}</h2>
-        <p class="mt-1 text-sm text-muted">{m.phone.text}</p>
-        <a href={business.phoneHref} class="link mt-auto inline-flex min-h-11 items-center pt-3">
-          {ctas.call}
-        </a>
-      </li>
-      <li class={cardClass}>
-        <span class="grid size-11 place-items-center rounded-full bg-navy text-gold">
-          <Icon name={m.email.icon} size={22} />
-        </span>
-        <h2 class="mt-4 font-sans text-lg font-semibold">{m.email.title}</h2>
-        <p class="mt-1 text-sm text-muted">{m.email.text}</p>
+        <h2 id="contact-whatsapp" class="mt-4 text-3xl">
+          {ctas.whatsappLong}
+        </h2>
+        <p class="mt-3 text-muted">{m.whatsapp.text}</p>
+        <p class="mt-2 text-sm text-muted">{business.hoursShort}</p>
         <a
-          href={`mailto:${business.email}`}
-          class="link mt-auto inline-flex min-h-11 items-center pt-3 break-all"
+          href={whatsappUrl(whatsappGreeting)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-navy mt-6"
         >
-          {business.email}
+          <Icon name="whatsapp" size={18} />
+          {business.phoneDisplay}
+          <span class="sr-only">{ctas.newTab}</span>
         </a>
-      </li>
-    </ul>
-
-    <section class="mt-16 md:mt-20" aria-labelledby="map-title">
-      <SectionTitle id="map-title">{contactPage.mapTitle}</SectionTitle>
-      <div class="reveal mt-6 grid overflow-hidden rounded-md border border-border bg-white md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-        <div class="relative min-h-48">
-          <Picture
-            image={images.office}
-            sizes="(min-width: 48rem) 460px, 100vw"
-            class="absolute inset-0 size-full object-cover"
-            placeholderClass="photo-slot absolute inset-0 size-full"
-          />
-        </div>
-        <div class="p-6 md:p-8">
-          <p class="flex items-start gap-3 text-xl font-medium text-navy">
-            <Icon name="pin" size={24} class="mt-1 shrink-0 text-gold-text" />
-            {business.addressLine}
-          </p>
-          <p class="mt-3 max-w-lg text-muted">
-            <Text value={placeholders.mapPin.interim} />
-          </p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a
-              href={business.mapsSearch}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn-navy"
-            >
-              <Icon name="pin" size={18} />
-              {ctas.mapsOpen}
-              <span class="sr-only">{ctas.newTab}</span>
-            </a>
-            <a href={directions} target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-              <Icon name="whatsapp" size={18} />
-              {contactPage.directions}
-              <span class="sr-only">{ctas.newTab}</span>
-            </a>
+      </div>
+      <div class="divide-y divide-border">
+        {methods.map((method) => (
+          <div class="flex min-w-0 gap-4 py-5 first:pt-0">
+            <Icon name={method.icon} size={22} class="mt-1 shrink-0 text-gold-text" />
+            <div class="min-w-0">
+              <h2 class="font-sans text-lg font-semibold">{method.title}</h2>
+              <p class="mt-1 text-sm text-muted">{method.text}</p>
+              <a href={method.href} class="link inline-flex min-h-11 items-center break-all">
+                {method.label}
+              </a>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </section>
-
-    <div class="mt-16 grid grid-cols-[minmax(0,1fr)] gap-12 md:mt-20 lg:grid-cols-2">
-      <section aria-labelledby="hours-title">
-        <SectionTitle id="hours-title">{contactPage.hoursTitle}</SectionTitle>
-        <div class="reveal mt-6 rounded-md bg-cream p-6">
-          <dl class="divide-y divide-border">
-            {week.map((row) => (
-              <div class="flex items-center justify-between gap-4 py-2.5">
-                <dt class="font-medium text-ink">{row.day}</dt>
-                <dd class:list={[row.hours === contactPage.closed ? "text-muted" : "text-ink"]}>
-                  {row.hours}
-                </dd>
-              </div>
-            ))}
-          </dl>
-          <p class="mt-4 flex items-center gap-2 text-sm text-muted">
-            <Icon name="clock" size={18} class="shrink-0 text-gold-text" />
-            {business.replyTime}
+    <section
+      class="grid gap-8 py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.8fr)] lg:gap-12"
+      aria-labelledby="map-title"
+    >
+      <div class="min-w-0">
+        <h2 id="map-title" class="text-3xl">
+          {contactPage.mapTitle}
+        </h2>
+        <address class="mt-5 flex gap-3 text-lg not-italic">
+          <Icon name="pin" size={22} class="mt-1 shrink-0 text-gold-text" />
+          {business.addressLine}
+        </address>
+        <div class="mt-7 border-y border-border py-5">
+          <h3 class="flex items-center gap-2 font-sans text-base font-semibold">
+            <Icon name="clock" size={18} />
+            {contactPage.hoursTitle}
+          </h3>
+          <p class="mt-3 text-sm text-muted">{business.hours}</p>
+          <p class="mt-2 text-sm text-muted">
+            {contactPage.closedDay}: {contactPage.closed}
           </p>
         </div>
-      </section>
-      <section aria-labelledby="follow-title">
-        <SectionTitle id="follow-title">{contactPage.followTitle}</SectionTitle>
-        <p class="reveal mt-3 text-muted">{contactPage.followText}</p>
-        <ul class="reveal-stagger mt-6 grid gap-3 sm:grid-cols-2">
-          {social.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex min-h-16 items-center gap-4 rounded-md border border-border bg-white px-5 font-semibold text-navy transition-[translate,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-card"
-              >
-                <span class="grid size-10 place-items-center rounded-full bg-navy text-gold">
-                  <Icon name={item.icon} size={20} />
-                </span>
-                {item.label}
-                <span class="sr-only">{ctas.newTab}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
+        <p class="mt-5 text-sm text-muted">{contactPage.mapNote}</p>
+        <a
+          href={whatsappUrl(contactPage.directionsMessage)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-outline mt-5"
+        >
+          <Icon name="pin" size={18} />
+          {contactPage.directions}
+          <span class="sr-only">{ctas.newTab}</span>
+        </a>
+      </div>
+      <div class="min-w-0 overflow-hidden rounded-md border border-border bg-mist">
+        <iframe
+          src={mapUrl}
+          title={contactPage.mapLabel}
+          width="800"
+          height="480"
+          loading="eager"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+          class="h-[360px] w-full border-0 md:h-[480px]"
+        ></iframe>
+      </div>
+    </section>
+    <section
+      class="flex flex-wrap items-center justify-between gap-5 border-t border-border pt-7"
+      aria-labelledby="follow-title"
+    >
+      <h2 id="follow-title" class="font-sans text-lg font-semibold">
+        {contactPage.followTitle}
+      </h2>
+      <ul class="flex flex-wrap gap-6">
+        {social.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex min-h-11 items-center gap-2 font-medium text-navy hover:text-royal"
+            >
+              <Icon name={item.icon} size={20} />
+              {item.label}
+              <span class="sr-only">{ctas.newTab}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   </div>
 </Base>

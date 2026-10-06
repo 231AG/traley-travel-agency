@@ -51,6 +51,7 @@ const csp = [
   `style-src 'self' ${[...styleHashes].join(" ")}`,
   "img-src 'self' data:",
   "font-src 'self'",
+  "frame-src https://www.google.com",
   `connect-src 'self'${analyticsOn ? " https://cloudflareinsights.com" : ""}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",

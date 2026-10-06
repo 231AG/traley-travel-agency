@@ -1,6 +1,8 @@
 ---
 /** Inner-page body: content on the left, the quote card in a sticky column on the right. */
 import type { QuoteType } from "@lib/types";
+import { trust } from "@content/site";
+import Icon from "@components/Icon.astro";
 import QuoteCard from "@components/quote/QuoteCard.astro";
 
 interface Props {
@@ -15,6 +17,20 @@ const { initial, title, destination } = Astro.props;
 <div class="container-page grid grid-cols-[minmax(0,1fr)] gap-12 py-14 md:py-20 lg:grid-cols-[minmax(0,1fr)_26rem] lg:gap-16">
   <div class="min-w-0">
     <slot />
+    <section class="reveal mt-14 rounded-md border border-border bg-cream p-6" aria-labelledby="trust-title">
+      <h2 id="trust-title" class="text-2xl">Why travelers choose Tarley</h2>
+      <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+        {trust.map((item) => (
+          <li class="flex gap-3">
+            <Icon name={item.icon} size={22} class="mt-0.5 shrink-0 text-gold-text" />
+            <div>
+              <p class="font-semibold text-navy">{item.title}</p>
+              <p class="mt-1 text-sm text-muted">{item.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
   </div>
   <aside class="lg:sticky lg:top-24 lg:self-start">
     <QuoteCard
