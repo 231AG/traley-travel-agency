@@ -230,7 +230,7 @@ export const ctas = {
 export const whatsappGreeting = "Hello Tarley Travel, I have a question about a trip.";
 
 export const hero = {
-  title: "Travel from Liberia without the guesswork.",
+  title: "Travel the World without a guesswork.",
   subtitle:
     "Flights, visa assistance, and arrival arrangements for visitors to Liberia, handled by one team on WhatsApp.",
   location: "Based in Monrovia, serving travelers across Liberia and the diaspora",
