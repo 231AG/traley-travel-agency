@@ -29,6 +29,30 @@
       1600
     ]
   },
+  "monrovia-coast": {
+    "width": 1080,
+    "height": 608,
+    "widths": [
+      480,
+      800
+    ]
+  },
+  "monrovia-street": {
+    "width": 1080,
+    "height": 1346,
+    "widths": [
+      480,
+      800
+    ]
+  },
+  "monrovia-view": {
+    "width": 1080,
+    "height": 1328,
+    "widths": [
+      480,
+      800
+    ]
+  },
   "office": {
     "width": 1672,
     "height": 941,
@@ -37,6 +61,31 @@
       800,
       1200,
       1600
+    ]
+  },
+  "rental-fleet": {
+    "width": 1200,
+    "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "rental-ford": {
+    "width": 900,
+    "height": 1600,
+    "widths": [
+      480,
+      800
+    ]
+  },
+  "rental-sedan": {
+    "width": 1024,
+    "height": 768,
+    "widths": [
+      480,
+      800
     ]
   },
   "team": {

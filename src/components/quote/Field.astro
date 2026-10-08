@@ -11,7 +11,7 @@ interface Props {
 const { id, label, hint, optional, class: className } = Astro.props;
 ---
 
-<div class={className}>
+<div class:list={["min-w-0", className]}>
   <label for={id} class="field-label">
     {label}
     {optional && <span class="ml-1 font-normal text-muted">({optional})</span>}

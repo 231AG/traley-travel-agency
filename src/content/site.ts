@@ -39,7 +39,7 @@ export const business = {
   phoneDisplay: "+231 886 504 519",
   phoneHref: "tel:+231886504519",
   whatsappNumber: "231886504519",
-  email: "info@tarleytravelllc.com",
+  email: "info@tarleytravel.com",
   city: "Monrovia",
   country: "Liberia",
   countryCode: "LR",
@@ -67,8 +67,8 @@ export const business = {
 export const factsToConfirm = [
   {
     item: "Email",
-    value: "info@tarleytravelllc.com",
-    why: "It is on a different domain from the website (tarleytravel.com). Confirm it receives mail, or supply an @tarleytravel.com address.",
+    value: "info@tarleytravel.com",
+    why: "Confirm the mailbox is configured to receive customer messages.",
   },
   {
     item: "Office address spelling",
@@ -159,6 +159,42 @@ export const placeholders = {
 
 /** Photo slots. Captions describe the shot needed; slots without `file` render as visible placeholders. */
 export const images = {
+  monrovia: {
+    id: "monrovia-coast",
+    file: "monrovia-coast",
+    caption: "Monrovia's coastline",
+    alt: "Monrovia buildings and palm-lined roads beside the Atlantic Ocean",
+  },
+  city: {
+    id: "monrovia-street",
+    file: "monrovia-street",
+    caption: "Around Monrovia",
+    alt: "Traffic and local businesses along a palm-lined street in Monrovia",
+  },
+  cityView: {
+    id: "monrovia-view",
+    file: "monrovia-view",
+    caption: "Monrovia city life",
+    alt: "Elevated view of a busy avenue and businesses in Monrovia",
+  },
+  sedan: {
+    id: "rental-sedan",
+    file: "rental-sedan",
+    caption: "White sedan available for rent",
+    alt: "White rental sedan shown from the front and side",
+  },
+  ford: {
+    id: "rental-ford",
+    file: "rental-ford",
+    caption: "Red Ford Fusion available for rent",
+    alt: "Front view of a red Ford Fusion rental car",
+  },
+  fleet: {
+    id: "rental-fleet",
+    file: "rental-fleet",
+    caption: "Rental vehicles in Liberia",
+    alt: "Blue Mitsubishi and white Ford rental vehicles parked in Liberia",
+  },
   hero: {
     id: "hero",
     caption: "Hero photo: traveler holding a passport at the airport, full-bleed",
@@ -302,17 +338,17 @@ export const services: Service[] = [
     id: "concierge",
     slug: "/concierge",
     icon: "pin",
-    title: "Liberia concierge",
+    title: "Car rentals & Liberia concierge",
     summary:
-      "Landing at Roberts International? We arrange airport pickup, accommodation and a driver before you arrive.",
+      "Daily and long-term car rentals, airport pickup and drop-off, local tours and transport for events or business in Liberia.",
     checklist: [
-      "Airport pickup at Roberts International",
-      "Hotels and guesthouses",
-      "Car with driver",
-      "Day trips outside Monrovia",
+      "Airport pickup and drop-off",
+      "Daily and long-term car rentals",
+      "Wedding and event transportation",
+      "Delivery and business transport",
     ],
     cta: "Plan your arrival",
-    image: images.concierge,
+    image: images.sedan,
   },
 ];
 
@@ -541,7 +577,14 @@ export const quote = {
   },
   travelerOptions: ["1 adult", "2 adults", "3 adults", "4 adults", "5 adults", "6 or more"],
   reasons: ["Tourism", "Visiting family", "Study", "Business", "Other"],
-  conciergeServices: ["Airport pickup", "Hotel or guesthouse", "Car with driver", "Day trips"],
+  conciergeServices: [
+    "Airport pickup or drop-off",
+    "Hotel or lodge",
+    "Car rental",
+    "Tours or staycation",
+    "Wedding or event transport",
+    "Delivery or business transport",
+  ],
   stub: {
     from: "From",
     to: "To",
@@ -597,12 +640,12 @@ export const flightsPage = {
     {
       icon: "plane",
       title: "Flights",
-      text: "One-way, return and multi-city tickets, for one person or a whole family.",
+      text: "Domestic and international flights: one-way, return and multi-city tickets for individuals, families and groups.",
     },
     {
       icon: "bed",
-      title: "Hotels",
-      text: "Rooms at your destination, close to where you need to be.",
+      title: "Hotels & lodges",
+      text: "Hotel and lodge reservations in Liberia and at your destination.",
     },
     { icon: "car", title: "Car rental", text: "A car waiting when you land, if you want one." },
     {
@@ -620,7 +663,7 @@ export const flightsPage = {
   ],
   packagesTitle: "Packages on request",
   packagesText:
-    "Holiday, honeymoon and group packages are put together for each trip. Tell us who is going, where and when, and we build the package with you.",
+    "Local and international tour packages, vacations, staycations, honeymoons and group trips. Tell us your dates, budget and interests, and we help arrange the travel and accommodation.",
   packagesCta: "Ask about a package",
   formTitle: "Get a flight quote",
 };
@@ -661,26 +704,49 @@ export const destinationPage = {
 };
 
 export const conciergePage = {
-  title: "Liberia airport pickup and arrival concierge",
-  lead: "Coming home after years away, or visiting Liberia for the first time? We arrange pickup, rooms and drivers so your first days are already handled.",
+  fleetTitle: "Cars available for rent",
+  fleetText:
+    "Choose a daily or long-term rental. Send us your dates and preferred car for availability, pricing and rental terms.",
+  fleetCta: "Ask about this car",
+  fleet: [
+    { name: "White sedan", image: images.sedan },
+    { name: "Red Ford Fusion", image: images.ford },
+    { name: "Mitsubishi & Ford", image: images.fleet },
+  ],
+  title: "Car rentals & travel services in Liberia",
+  lead: "Rent a car for a day or a longer stay. Our Monrovia team also arranges airport transfers, hotels and lodges, local tours, event transport and business deliveries.",
   includedTitle: "What we arrange",
   included: [
     {
       icon: "plane",
-      title: "Airport pickup",
-      text: "A driver waiting at Roberts International when you land.",
+      title: "Airport pickup & drop-off",
+      text: "Transfers to and from Roberts International Airport, arranged around your flight.",
     },
     {
       icon: "bed",
-      title: "Hotels and guesthouses",
-      text: "A room booked in Monrovia or wherever you are staying.",
+      title: "Hotels, lodges & staycations",
+      text: "Accommodation and vacation planning in Monrovia and across Liberia.",
     },
     {
       icon: "car",
-      title: "Car with driver",
-      text: "For errands, family visits and getting around the city.",
+      title: "Daily & long-term car rentals",
+      text: "Cars for errands, family visits and longer stays. Ask about availability and driver arrangements for your dates.",
     },
-    { icon: "pin", title: "Day trips", text: "Trips outside Monrovia, planned around your time." },
+    {
+      icon: "pin",
+      title: "Local tours",
+      text: "Day trips and tour packages around Liberia, planned around your time and interests.",
+    },
+    {
+      icon: "people",
+      title: "Wedding & event transport",
+      text: "Transportation for wedding parties, guests and other events.",
+    },
+    {
+      icon: "car",
+      title: "Delivery & business transport",
+      text: "Transport and deliveries for your business. Share the route, schedule and what needs moving.",
+    },
   ] as const,
   howTitle: "How it works",
   how: [
@@ -696,7 +762,7 @@ export const aboutPage = {
   title: "About Tarley Travel",
   lead: about.lead,
   storyTitle: "Our story",
-  teamTitle: "The team",
+  teamTitle: "Based in Monrovia",
   visitTitle: "Visit the office",
   howWeWorkTitle: "How we work",
   howWeWork: [
@@ -766,9 +832,9 @@ export const meta = {
       "Visa application support in Liberia for the US, UK, Canada, Schengen Area, UAE and China. Document review and appointment booking.",
   },
   concierge: {
-    title: "Liberia Airport Pickup & Arrival Concierge | Tarley Travel",
+    title: "Car Rentals & Airport Transfers in Liberia | Tarley Travel",
     description:
-      "Arrange airport pickup at Roberts International, hotels, a car with driver and day trips before you land in Liberia.",
+      "Daily and long-term car rentals in Monrovia, airport pickup and drop-off, local tours, event transport and business deliveries with Tarley Travel.",
   },
   about: {
     title: "About Tarley Travel | Travel agency in Monrovia, Liberia",

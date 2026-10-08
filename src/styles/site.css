@@ -203,6 +203,9 @@
 }
 @utility field-input {
   display: block;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
   width: 100%;
   min-height: 3rem;
   padding: 0.625rem 0.875rem;
@@ -228,6 +231,14 @@
   margin-top: 0.375rem;
   font-size: var(--text-sm);
   color: var(--color-error);
+}
+input.field-input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  &::-webkit-date-and-time-value {
+    min-width: 0;
+    text-align: left;
+  }
 }
 
 /*
